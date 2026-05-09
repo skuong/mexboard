@@ -7,7 +7,7 @@ mod clipboard_monitor;
 mod cloud;
 mod commands;
 mod crypto;
-mod db;
+mod database;
 mod detection;
 mod schema;
 mod shortcuts;
@@ -69,7 +69,7 @@ fn main() {
 
             commands::init_keyring().expect("failed to initialize keyring store");
 
-            let database = db::initialization::init(app);
+            let database = database::initialization::init(app);
             app.manage(database);
 
             caret::init();

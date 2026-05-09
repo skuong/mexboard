@@ -13,7 +13,6 @@ export const buildImageClipboardItem = (
     image_data: base64Data,
     image_width: width,
     image_height: height,
-    char_count: null,
     line_count: null,
     source_app: null,
     sort_order: sortOrder,

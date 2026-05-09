@@ -6,18 +6,16 @@ pub type DbResult<T> = Result<T, String>;
 
 #[derive(Debug, Serialize, Deserialize, Clone, specta::Type)]
 pub struct ClipboardItemRow {
-    pub id: i64,
+    pub id: i16,
     pub content_type: String,
     pub text_content: Option<String>,
     pub image_data: Option<String>,
-    pub image_width: Option<i64>,
-    pub image_height: Option<i64>,
-    pub char_count: Option<i64>,
-    pub line_count: Option<i64>,
+    pub image_width: Option<i32>,
+    pub image_height: Option<i32>,
+    pub line_count: Option<i16>,
     pub source_app: Option<String>,
     pub is_favorite: bool,
     pub sort_order: String,
-    pub copy_count: i64,
     pub kv_key: Option<String>,
     pub detected_date: Option<String>,
     pub detected_color: Option<String>,
@@ -33,18 +31,16 @@ pub struct ClipboardItemRow {
 impl From<SelectClipboardItems> for ClipboardItemRow {
     fn from(row: SelectClipboardItems) -> Self {
         Self {
-            id: row.id,
+            id: row.id as i16,
             content_type: row.content_type,
             text_content: row.text_content,
             image_data: row.image_data,
-            image_width: row.image_width,
-            image_height: row.image_height,
-            char_count: row.char_count,
-            line_count: row.line_count,
+            image_width: row.image_width.map(|v| v as i32),
+            image_height: row.image_height.map(|v| v as i32),
+            line_count: row.line_count.map(|v| v as i16),
             source_app: row.source_app,
             is_favorite: row.is_favorite != 0,
             sort_order: row.sort_order,
-            copy_count: row.copy_count,
             kv_key: row.kv_key,
             detected_date: row.detected_date,
             detected_color: row.detected_color,
@@ -64,10 +60,9 @@ pub struct InsertClipboardItemParams {
     pub content_type: String,
     pub text_content: Option<String>,
     pub image_data: Option<String>,
-    pub image_width: Option<i64>,
-    pub image_height: Option<i64>,
-    pub char_count: Option<i64>,
-    pub line_count: Option<i64>,
+    pub image_width: Option<i32>,
+    pub image_height: Option<i32>,
+    pub line_count: Option<i16>,
     pub source_app: Option<String>,
     pub sort_order: String,
     pub kv_key: Option<String>,
@@ -77,6 +72,6 @@ pub struct InsertClipboardItemParams {
 
 #[derive(Debug, Deserialize, specta::Type)]
 pub struct UpdateSortOrderParams {
-    pub id: i64,
+    pub id: i16,
     pub sort_order: String,
 }

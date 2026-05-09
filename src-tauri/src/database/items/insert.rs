@@ -51,7 +51,7 @@ impl Database {
                     params.image_data,
                     params.image_width,
                     params.image_height,
-                    params.char_count,
+                    None::<i64>,
                     params.line_count,
                     params.source_app,
                     params.sort_order,
@@ -81,7 +81,7 @@ impl Database {
     }
 
     /// Delete all duplicates of an item by content_hash, keeping only the given ID.
-    pub fn delete_duplicates(&self, id: i64) -> DbResult<i64> {
+    pub fn delete_duplicates(&self, id: i16) -> DbResult<i16> {
         let inner = self.lock()?;
         let ci = &inner.schema.clipboard_items;
 
@@ -89,7 +89,7 @@ impl Database {
             .db
             .select(())
             .from(*ci)
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .get()
             .map_err(error_to_string)?;
 
@@ -106,6 +106,6 @@ impl Database {
             )
             .map_err(error_to_string)?;
 
-        Ok(deleted as i64)
+        Ok(deleted as i16)
     }
 }

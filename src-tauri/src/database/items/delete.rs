@@ -5,14 +5,14 @@ use super::super::utils::*;
 use super::super::Database;
 
 impl Database {
-    pub fn delete_item(&self, id: i64) -> DbResult<()> {
+    pub fn delete_item(&self, id: i16) -> DbResult<()> {
         let inner = self.lock()?;
         let ci = &inner.schema.clipboard_items;
 
         inner
             .db
             .delete(*ci)
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .execute()
             .map_err(error_to_string)?;
 

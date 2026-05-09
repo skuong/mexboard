@@ -7,12 +7,10 @@ export type ClipboardItem = {
   image_data: string | null;
   image_width: number | null;
   image_height: number | null;
-  char_count: number | null;
   line_count: number | null;
   source_app: string | null;
   is_favorite: boolean;
   sort_order: string;
-  copy_count: number;
   kv_key: string | null;
   detected_date: string | null;
   detected_color: string | null;

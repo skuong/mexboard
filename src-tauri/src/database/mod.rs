@@ -1,4 +1,8 @@
+pub mod commands;
+pub use commands::*;
+
 pub mod initialization;
+
 mod items;
 mod schema;
 mod settings;

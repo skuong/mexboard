@@ -11,7 +11,6 @@ export const buildTextClipboardItem = (
     image_data: null,
     image_width: null,
     image_height: null,
-    char_count: text.length,
     line_count: text.split("\n").length,
     source_app: null,
     sort_order: sortOrder,

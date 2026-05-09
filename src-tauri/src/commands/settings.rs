@@ -1,4 +1,4 @@
-use crate::db::Database;
+use crate::database::Database;
 use tauri::State;
 
 #[tauri::command]

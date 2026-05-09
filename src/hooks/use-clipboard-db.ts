@@ -11,28 +11,28 @@ async function unwrap<T>(
 
 export const clipboardDb = {
   getAllItems: (limit: number, offset = 0, favoritesFirst = false) =>
-    unwrap(commands.dbGetAllItems(limit, offset, favoritesFirst)) as Promise<
+    unwrap(commands.getAllClipboardItems(limit, offset, favoritesFirst)) as Promise<
       ClipboardItem[]
     >,
 
   insertItem: (params: InsertClipboardItemParams) =>
-    unwrap(commands.dbInsertItem(params)) as Promise<ClipboardItem>,
+    unwrap(commands.insertClipboardItem(params)) as Promise<ClipboardItem>,
 
   bumpItem: (id: number, sortOrder: string) =>
-    unwrap(commands.dbBumpItem(id, sortOrder)) as Promise<ClipboardItem>,
+    unwrap(commands.bumpClipboardItem(id, sortOrder)) as Promise<ClipboardItem>,
 
-  deleteItem: (id: number) => unwrap(commands.dbDeleteItem(id)),
+  deleteItem: (id: number) => unwrap(commands.deleteClipboardItem(id)),
 
-  clearAll: () => unwrap(commands.dbClearAll()),
+  clearAll: () => unwrap(commands.clearClipboard()),
 
   toggleFavorite: (id: number) =>
-    unwrap(commands.dbToggleFavorite(id)) as Promise<ClipboardItem>,
+    unwrap(commands.toggleClipboardItemFavorite(id)) as Promise<ClipboardItem>,
 
   updateSortOrders: (items: UpdateSortOrderParams[]) =>
-    unwrap(commands.dbUpdateSortOrders(items)),
+    unwrap(commands.updateClipboardSortOrder(items)),
 
-  dedupItem: (id: number) => unwrap(commands.dbDedupItem(id)),
+  dedupItem: (id: number) => unwrap(commands.dedupClipboardItem(id)),
 
   updateNote: (id: number, note: string | null) =>
-    unwrap(commands.dbUpdateNote(id, note)) as Promise<ClipboardItem>,
+    unwrap(commands.updateClipboardItemNote(id, note)) as Promise<ClipboardItem>,
 };

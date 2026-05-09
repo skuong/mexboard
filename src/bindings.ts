@@ -4,7 +4,7 @@ import { invoke as __TAURI_INVOKE } from "@tauri-apps/api/core";
 
 /** Commands */
 export const commands = {
-	// Copies content to clipboard, hides the window, and simulates Ctrl+V.
+	/**  Copies content to clipboard, hides the window, and simulates Ctrl+V. */
 	pasteItem: (contentType: string, textContent: string | null, imageData: string | null) => typedError<null, string>(__TAURI_INVOKE("paste_item", { contentType, textContent, imageData })),
 	/**
 	 *  Writes a file:// URI to the clipboard as text/uri-list, hides the window,
@@ -20,15 +20,6 @@ export const commands = {
 	setMonitoring: (enabled: boolean) => __TAURI_INVOKE<void>("set_monitoring", { enabled }),
 	isWaylandSession: () => __TAURI_INVOKE<boolean>("is_wayland_session"),
 	isCosmicDataControlEnabled: () => __TAURI_INVOKE<boolean>("is_cosmic_data_control_enabled"),
-	dbGetAllItems: (limit: number, offset: number, favoritesFirst: boolean) => typedError<ClipboardItemRow[], string>(__TAURI_INVOKE("db_get_all_items", { limit, offset, favoritesFirst })),
-	dbInsertItem: (params: InsertClipboardItemParams) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("db_insert_item", { params })),
-	dbBumpItem: (id: number, sortOrder: string) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("db_bump_item", { id, sortOrder })),
-	dbDeleteItem: (id: number) => typedError<null, string>(__TAURI_INVOKE("db_delete_item", { id })),
-	dbClearAll: () => typedError<null, string>(__TAURI_INVOKE("db_clear_all")),
-	dbToggleFavorite: (id: number) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("db_toggle_favorite", { id })),
-	dbUpdateSortOrders: (items: UpdateSortOrderParams[]) => typedError<null, string>(__TAURI_INVOKE("db_update_sort_orders", { items })),
-	dbDedupItem: (id: number) => typedError<number, string>(__TAURI_INVOKE("db_dedup_item", { id })),
-	dbUpdateNote: (id: number, note: string | null) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("db_update_note", { id, note })),
 	fetchLinkPreview: (url: string) => typedError<LinkPreviewData, string>(__TAURI_INVOKE("fetch_link_preview", { url })),
 	/**
 	 *  Downloads a media URL to a temporary file and returns the file path
@@ -51,6 +42,19 @@ export const commands = {
 	getSessionToken: () => __TAURI_INVOKE<string | null>("get_session_token"),
 	saveSessionToken: (token: string) => typedError<null, string>(__TAURI_INVOKE("save_session_token", { token })),
 	deleteSessionToken: () => typedError<null, string>(__TAURI_INVOKE("delete_session_token")),
+	isWebsocketConnected: () => __TAURI_INVOKE<boolean>("is_websocket_connected"),
+	connectWebsocket: (urlString: string) => typedError<null, string>(__TAURI_INVOKE("connect_websocket", { urlString })),
+	disconnectWebsocket: () => typedError<null, string>(__TAURI_INVOKE("disconnect_websocket")),
+	sendWebsocketMessage: (message: string) => typedError<null, string>(__TAURI_INVOKE("send_websocket_message", { message })),
+	insertClipboardItem: (params: InsertClipboardItemParams) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("insert_clipboard_item", { params })),
+	getAllClipboardItems: (limit: number, offset: number, favoritesFirst: boolean) => typedError<ClipboardItemRow[], string>(__TAURI_INVOKE("get_all_clipboard_items", { limit, offset, favoritesFirst })),
+	bumpClipboardItem: (id: number, sortOrder: string) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("bump_clipboard_item", { id, sortOrder })),
+	updateClipboardItemNote: (id: number, note: string | null) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("update_clipboard_item_note", { id, note })),
+	dedupClipboardItem: (id: number) => typedError<number, string>(__TAURI_INVOKE("dedup_clipboard_item", { id })),
+	clearClipboard: () => typedError<null, string>(__TAURI_INVOKE("clear_clipboard")),
+	deleteClipboardItem: (id: number) => typedError<null, string>(__TAURI_INVOKE("delete_clipboard_item", { id })),
+	updateClipboardSortOrder: (items: UpdateSortOrderParams[]) => typedError<null, string>(__TAURI_INVOKE("update_clipboard_sort_order", { items })),
+	toggleClipboardItemFavorite: (id: number) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("toggle_clipboard_item_favorite", { id })),
 };
 
 /* Types */
@@ -61,12 +65,10 @@ export type ClipboardItemRow = {
 	image_data: string | null,
 	image_width: number | null,
 	image_height: number | null,
-	char_count: number | null,
 	line_count: number | null,
 	source_app: string | null,
 	is_favorite: boolean,
 	sort_order: string,
-	copy_count: number,
 	kv_key: string | null,
 	detected_date: string | null,
 	detected_color: string | null,
@@ -85,7 +87,6 @@ export type InsertClipboardItemParams = {
 	image_data: string | null,
 	image_width: number | null,
 	image_height: number | null,
-	char_count: number | null,
 	line_count: number | null,
 	source_app: string | null,
 	sort_order: string,

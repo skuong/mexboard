@@ -7,7 +7,7 @@ use super::super::utils::*;
 use super::super::Database;
 
 impl Database {
-    pub fn bump_item(&self, id: i64, sort_order: &str) -> DbResult<ClipboardItemRow> {
+    pub fn bump_item(&self, id: i16, sort_order: &str) -> DbResult<ClipboardItemRow> {
         let inner = self.lock()?;
         let ci = &inner.schema.clipboard_items;
         let now = timestamp_now();
@@ -20,7 +20,7 @@ impl Database {
                     .with_sort_order(sort_order)
                     .with_updated_at(&now),
             )
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .execute()
             .map_err(error_to_string)?;
 
@@ -37,14 +37,14 @@ impl Database {
             .db
             .select(())
             .from(*ci)
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .get()
             .map_err(error_to_string)?;
 
         Ok(ClipboardItemRow::from(row))
     }
 
-    pub fn update_sort_order(&self, id: i64, sort_order: &str) -> DbResult<()> {
+    pub fn update_sort_order(&self, id: i16, sort_order: &str) -> DbResult<()> {
         let inner = self.lock()?;
         let ci = &inner.schema.clipboard_items;
 
@@ -52,7 +52,7 @@ impl Database {
             .db
             .update(*ci)
             .set(UpdateClipboardItems::default().with_sort_order(sort_order))
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .execute()
             .map_err(error_to_string)?;
 
@@ -66,7 +66,7 @@ impl Database {
         Ok(())
     }
 
-    pub fn toggle_favorite(&self, id: i64) -> DbResult<ClipboardItemRow> {
+    pub fn toggle_favorite(&self, id: i16) -> DbResult<ClipboardItemRow> {
         let inner = self.lock()?;
         let ci = &inner.schema.clipboard_items;
 
@@ -74,7 +74,7 @@ impl Database {
             .db
             .select(())
             .from(*ci)
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .get()
             .map_err(error_to_string)?;
 
@@ -84,7 +84,7 @@ impl Database {
             .db
             .update(*ci)
             .set(UpdateClipboardItems::default().with_is_favorite(new_fav))
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .execute()
             .map_err(error_to_string)?;
 
@@ -92,14 +92,14 @@ impl Database {
             .db
             .select(())
             .from(*ci)
-            .r#where(eq(ci.id, id))
+            .r#where(eq(ci.id, id as i64))
             .get()
             .map_err(error_to_string)?;
 
         Ok(ClipboardItemRow::from(row))
     }
 
-    pub fn update_note(&self, id: i64, note: Option<&str>) -> DbResult<ClipboardItemRow> {
+    pub fn update_note(&self, id: i16, note: Option<&str>) -> DbResult<ClipboardItemRow> {
         let inner = self.lock()?;
         let ci = &inner.schema.clipboard_items;
 

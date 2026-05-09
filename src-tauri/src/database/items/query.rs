@@ -7,8 +7,8 @@ use super::super::Database;
 impl Database {
     pub fn get_all_items(
         &self,
-        limit: i64,
-        offset: i64,
+        limit: i16,
+        offset: i16,
         favorites_first: bool,
     ) -> DbResult<Vec<ClipboardItemRow>> {
         let inner = self.lock()?;

@@ -1,4 +1,4 @@
-use crate::db::Database;
+use crate::database::Database;
 use tauri::{App, Manager};
 
 pub fn init(app: &App) -> Database {

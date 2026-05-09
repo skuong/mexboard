@@ -1,5 +1,4 @@
 mod clipboard;
-mod db;
 mod keyring;
 mod media;
 mod settings;
@@ -9,7 +8,6 @@ mod system;
 mod window;
 
 pub use clipboard::*;
-pub use db::*;
 pub use keyring::*;
 pub use media::*;
 pub use settings::*;
@@ -20,8 +18,10 @@ pub use window::*;
 
 pub use keyring::init as init_keyring;
 
+use crate::database::*;
 use crate::main_window;
 use crate::websocket::*;
+
 use tauri::{AppHandle, Manager};
 use tauri_specta::{collect_commands, Builder};
 
@@ -38,15 +38,6 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         set_monitoring,
         is_wayland_session,
         is_cosmic_data_control_enabled,
-        db_get_all_items,
-        db_insert_item,
-        db_bump_item,
-        db_delete_item,
-        db_clear_all,
-        db_toggle_favorite,
-        db_update_sort_orders,
-        db_dedup_item,
-        db_update_note,
         fetch_link_preview,
         download_media_to_temp,
         get_setting,
@@ -69,6 +60,17 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         connect_websocket,
         disconnect_websocket,
         send_websocket_message,
+        // Start: Database
+        insert_clipboard_item,
+        get_all_clipboard_items,
+        bump_clipboard_item,
+        update_clipboard_item_note,
+        dedup_clipboard_item,
+        clear_clipboard,
+        delete_clipboard_item,
+        update_clipboard_sort_order,
+        toggle_clipboard_item_favorite,
+        // End: Database
     ])
 }
 

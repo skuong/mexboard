@@ -82,7 +82,7 @@ fn to_tauri_accelerator(accelerator: &str) -> String {
 }
 
 fn load_accelerator(app: &AppHandle) -> String {
-    let Some(db) = app.try_state::<crate::db::Database>() else {
+    let Some(db) = app.try_state::<crate::database::Database>() else {
         return DEFAULT_TOGGLE_ACCELERATOR.to_string();
     };
     let raw = match db.get_setting(HOTKEYS_SETTING_KEY) {
