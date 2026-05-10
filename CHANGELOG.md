@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/sokhuong-uon/mexboard/compare/v1.21.2...v1.22.0) (2026-05-10)
+
+
+### Features
+
+* can connect to websocket ([24bd473](https://github.com/sokhuong-uon/mexboard/commit/24bd473631fa275663652f56d82d69e0d4354b8d))
+
 ## [1.21.2](https://github.com/sokhuong-uon/mexboard/compare/v1.21.1...v1.21.2) (2026-05-03)
 
 
