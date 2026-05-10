@@ -3,7 +3,7 @@ use futures_util::StreamExt;
 use std::sync::Arc;
 use tauri::{command, AppHandle, Emitter, State};
 use tokio_tungstenite::connect_async;
-use url::Url;
+use tokio_tungstenite::tungstenite::client::IntoClientRequest;
 
 #[command]
 #[specta::specta]
@@ -11,6 +11,7 @@ pub async fn connect_websocket(
     state: State<'_, WebSocketState>,
     app: AppHandle,
     url_string: String,
+    bearer_token: String,
 ) -> Result<(), String> {
     let read_handle = state.read_handle.read().await;
     if let Some(handle) = read_handle.as_ref() {
@@ -18,8 +19,13 @@ pub async fn connect_websocket(
     }
     drop(read_handle);
 
-    let url = Url::parse(&url_string).map_err(|error| error.to_string())?;
-    let (ws_stream, _) = connect_async(url.as_str())
+    let mut request = url_string.into_client_request().unwrap();
+    request.headers_mut().insert(
+        "Authorization",
+        format!("Bearer {}", bearer_token).parse().unwrap(),
+    );
+
+    let (ws_stream, _) = connect_async(request)
         .await
         .map_err(|e| format!("Connect failed: {}", e))?;
 
