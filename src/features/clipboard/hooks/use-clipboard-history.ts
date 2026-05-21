@@ -4,7 +4,6 @@ import { useClipboardHistoryQuery } from "@/features/clipboard/hooks/use-clipboa
 import { useAddClipboardContentToHistory } from "@/features/clipboard/hooks/use-add-clipboard-content-to-history";
 import { useDeleteClipboardItem } from "@/features/clipboard/hooks/use-delete-clipboard-item";
 import { useToggleClipboardFavorite } from "@/features/clipboard/hooks/use-toggle-clipboard-favorite";
-import { useUpdateClipboardNote } from "@/features/clipboard/hooks/use-update-clipboard-note";
 import { useReorderClipboardItems } from "@/features/clipboard/hooks/use-reorder-clipboard-items";
 import { useSplitClipboardEnvItem } from "@/features/clipboard/hooks/use-split-clipboard-env-item";
 
