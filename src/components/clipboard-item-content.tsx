@@ -140,25 +140,6 @@ export const ClipboardItemContent = ({ item }: { item: ClipboardItem }) => {
       return <DraggableMedia url={item.text_content!} />;
     }
 
-    if (mediaType === "video") {
-      return (
-        <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Film className="size-4" />
-            <p className="text-sm truncate flex-1">{item.text_content}</p>
-          </div>
-          <video
-            src={item.text_content!}
-            muted
-            loop
-            autoPlay
-            playsInline
-            className="max-w-full max-h-40 rounded-md object-contain bg-muted"
-          />
-        </div>
-      );
-    }
-
     return (
       <div className="flex flex-col gap-1.5">
         <p className="wrap-break-word text-card-foreground text-sm leading-relaxed truncate">
