@@ -13,7 +13,6 @@ export const SearchResultItem = memo(function SearchResultItem({
   onDelete,
   onToggleFavorite,
   onSplitEnv,
-  onUpdateNote,
   colorMenuOpen,
   onColorMenuOpenChange,
 }: {
@@ -25,7 +24,6 @@ export const SearchResultItem = memo(function SearchResultItem({
   onDelete: (id: number) => void;
   onToggleFavorite: (id: number) => void;
   onSplitEnv?: (id: number) => void;
-  onUpdateNote?: (id: number, note: string | null) => void;
   colorMenuOpen?: boolean;
   onColorMenuOpenChange?: (open: boolean) => void;
 }) {
@@ -60,7 +58,6 @@ export const SearchResultItem = memo(function SearchResultItem({
         onDelete={onDelete}
         onToggleFavorite={onToggleFavorite}
         onSplitEnv={onSplitEnv}
-        onUpdateNote={onUpdateNote}
         colorMenuOpen={colorMenuOpen}
         onColorMenuOpenChange={onColorMenuOpenChange}
       />

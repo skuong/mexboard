@@ -1,5 +1,5 @@
-import { memo, useCallback, useRef, useState } from "react";
-import { GripHorizontal, StickyNote } from "lucide-react";
+import { memo, useCallback, useRef } from "react";
+import { GripHorizontal } from "lucide-react";
 import { ClipboardItem as ClipboardItemType } from "@/types/clipboard";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClipboardItemContent } from "@/components/clipboard-item-content";
@@ -8,7 +8,6 @@ import { ClipboardItemActions } from "@/components/clipboard-item-actions";
 import { ColorFormatMenu } from "@/components/color-format-menu";
 import { QuickPasteBadge } from "@/components/quick-paste-badge";
 import { QUICK_PASTE_MODIFIER } from "@/features/hotkey/hooks/use-modifier-held";
-import { useClipboardNoteStore } from "@/features/clipboard/stores/clipboard-note-store";
 
 type ClipboardItemProps = {
   item: ClipboardItemType;
@@ -19,7 +18,6 @@ type ClipboardItemProps = {
   onDelete: (id: number) => void;
   onToggleFavorite?: (id: number) => void;
   onSplitEnv?: (id: number) => void;
-  onUpdateNote?: (id: number, note: string | null) => void;
   colorMenuOpen?: boolean;
   onColorMenuOpenChange?: (open: boolean) => void;
 };
@@ -32,7 +30,6 @@ export const ClipboardItem = memo(function ClipboardItem({
   onCopy,
   onDelete,
   onSplitEnv,
-  onUpdateNote,
   colorMenuOpen,
   onColorMenuOpenChange,
 }: ClipboardItemProps) {
@@ -84,38 +81,6 @@ export const ClipboardItem = memo(function ClipboardItem({
     [onSplitEnv, item.id],
   );
 
-  const [editingNote, setEditingNoteRaw] = useState(false);
-  const setIsEditingNoteGlobal = useClipboardNoteStore(
-    (s) => s.setIsEditingNote,
-  );
-  const setEditingNote = useCallback(
-    (v: boolean) => {
-      setEditingNoteRaw(v);
-      setIsEditingNoteGlobal(v);
-    },
-    [setIsEditingNoteGlobal],
-  );
-  const [noteValue, setNoteValue] = useState(item.note ?? "");
-
-  const handleNoteSubmit = useCallback(() => {
-    const trimmed = noteValue.trim();
-    onUpdateNote?.(item.id, trimmed || null);
-    setEditingNote(false);
-  }, [noteValue, onUpdateNote, item.id]);
-
-  const handleNoteKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        handleNoteSubmit();
-      } else if (e.key === "Escape") {
-        setNoteValue(item.note ?? "");
-        setEditingNote(false);
-      }
-    },
-    [handleNoteSubmit, item.note],
-  );
-
   return (
     <>
       <Card
@@ -143,33 +108,6 @@ export const ClipboardItem = memo(function ClipboardItem({
           <div className="flex flex-col gap-1.5 flex-1 min-w-0 pl-2">
             <ClipboardItemContent item={item} />
             <ClipboardItemMeta item={item} />
-
-            {editingNote ? (
-              <input
-                autoFocus
-                value={noteValue}
-                onChange={(e) => setNoteValue(e.target.value)}
-                onBlur={handleNoteSubmit}
-                onKeyDown={handleNoteKeyDown}
-                placeholder="Add a note..."
-                aria-label="Edit clipboard item note"
-                className="text-[11px] bg-transparent border-b border-muted-foreground/30 outline-none text-muted-foreground focus:text-foreground focus:border-foreground/50 py-0.5 w-full"
-              />
-            ) : (
-              <button
-                onClick={() => {
-                  setNoteValue(item.note ?? "");
-                  setEditingNote(true);
-                }}
-                className="flex items-center gap-1 text-[11px] text-muted-foreground/50 hover:text-muted-foreground transition-colors cursor-pointer w-fit opacity-0 group-hover:opacity-100"
-                style={item.note ? { opacity: 1 } : undefined}
-              >
-                <StickyNote className="size-3" />
-                <span className={item.note ? "text-muted-foreground" : ""}>
-                  {item.note || "Add note"}
-                </span>
-              </button>
-            )}
           </div>
 
           <div className="flex flex-col items-center shrink-0">

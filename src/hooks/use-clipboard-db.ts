@@ -33,6 +33,4 @@ export const clipboardDb = {
 
   dedupItem: (id: number) => unwrap(commands.dedupClipboardItem(id)),
 
-  updateNote: (id: number, note: string | null) =>
-    unwrap(commands.updateClipboardItemNote(id, note)) as Promise<ClipboardItem>,
 };

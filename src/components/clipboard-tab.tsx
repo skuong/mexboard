@@ -51,7 +51,6 @@ export function ClipboardTab({ onPaste, isActive }: ClipboardTabProps) {
     toggleFavorite,
     reorderItems,
     splitEnvItem,
-    updateNote,
   } = useClipboardHistory(historyLimit, false);
 
   const { previousContentRef } = useClipboardMonitor({
@@ -120,7 +119,6 @@ export function ClipboardTab({ onPaste, isActive }: ClipboardTabProps) {
             onToggleFavorite={toggleFavorite}
             onReorder={reorderItems}
             onSplitEnv={splitEnvItem}
-            onUpdateNote={updateNote}
             onToggleFavoriteFilter={toggleFavoriteFilter}
             isSearching={isSearching}
             hasMore={hasMore && !isSearching}

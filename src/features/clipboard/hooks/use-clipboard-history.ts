@@ -25,7 +25,6 @@ export const useClipboardHistory = (
   );
   const deleteItem = useDeleteClipboardItem(invalidate);
   const toggleFavorite = useToggleClipboardFavorite(invalidate);
-  const updateNote = useUpdateClipboardNote(invalidate);
   const reorderItems = useReorderClipboardItems(
     historyRef,
     invalidate,
@@ -44,7 +43,6 @@ export const useClipboardHistory = (
     addContentToHistory,
     deleteItem,
     toggleFavorite,
-    updateNote,
     reorderItems,
     splitEnvItem,
   };

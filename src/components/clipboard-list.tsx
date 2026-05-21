@@ -28,7 +28,6 @@ type ClipboardListProps = {
   onToggleFavorite: (id: number) => void;
   onReorder: (activeId: number, overId: number) => void;
   onSplitEnv?: (id: number) => void;
-  onUpdateNote?: (id: number, note: string | null) => void;
   onToggleFavoriteFilter?: () => void;
   isSearching?: boolean;
   hasMore?: boolean;
@@ -45,7 +44,6 @@ export const ClipboardList = ({
   onToggleFavorite,
   onReorder,
   onSplitEnv,
-  onUpdateNote,
   onToggleFavoriteFilter,
   isSearching = false,
   hasMore = false,
@@ -129,7 +127,6 @@ export const ClipboardList = ({
             onDelete={onDelete}
             onToggleFavorite={onToggleFavorite}
             onSplitEnv={onSplitEnv}
-            onUpdateNote={onUpdateNote}
             colorMenuOpen={colorMenuItemId === item.id}
             onColorMenuOpenChange={getColorMenuHandler(item.id)}
           />
@@ -167,7 +164,6 @@ export const ClipboardList = ({
             onDelete={onDelete}
             onToggleFavorite={onToggleFavorite}
             onSplitEnv={onSplitEnv}
-            onUpdateNote={onUpdateNote}
             colorMenuOpen={colorMenuItemId === item.id}
             onColorMenuOpenChange={getColorMenuHandler(item.id)}
           />

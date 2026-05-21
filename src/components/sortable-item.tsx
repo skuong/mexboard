@@ -15,7 +15,6 @@ export const SortableItem = memo(function SortableItem({
   onDelete,
   onToggleFavorite,
   onSplitEnv,
-  onUpdateNote,
   colorMenuOpen,
   onColorMenuOpenChange,
 }: {
@@ -28,7 +27,6 @@ export const SortableItem = memo(function SortableItem({
   onDelete: (id: number) => void;
   onToggleFavorite: (id: number) => void;
   onSplitEnv?: (id: number) => void;
-  onUpdateNote?: (id: number, note: string | null) => void;
   colorMenuOpen?: boolean;
   onColorMenuOpenChange?: (open: boolean) => void;
 }) {
@@ -75,7 +73,6 @@ export const SortableItem = memo(function SortableItem({
         onDelete={onDelete}
         onToggleFavorite={onToggleFavorite}
         onSplitEnv={onSplitEnv}
-        onUpdateNote={onUpdateNote}
         colorMenuOpen={colorMenuOpen}
         onColorMenuOpenChange={onColorMenuOpenChange}
       />
