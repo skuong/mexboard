@@ -13,8 +13,8 @@ import { useClipboard } from "@/hooks/use-clipboard";
 import { useSystemTheme } from "@/hooks/use-system-theme";
 import { usePasteActions } from "@/hooks/use-paste-actions";
 import { useHotkeysConfig } from "@/features/hotkey/hooks/use-hotkeys-config";
-import { useBetterAuth } from "@/features/auth/hooks/use-better-auth";
-import { onOpenUrl } from "@tauri-apps/plugin-deep-link";
+
+import { initializeBetterAuth } from "@/features/auth/lib/initialize-better-auth";
 
 type TabValue = "clipboard" | "gif" | "symbols";
 
@@ -35,15 +35,8 @@ function App() {
   const tabs = useTabs();
 
   useEffect(() => {
-    const unlisten = onOpenUrl((urls) => {
-      console.log("DEEP LINK ARRIVED:", urls);
-    });
-    return () => {
-      unlisten.then((f) => f());
-    };
+    return initializeBetterAuth();
   }, []);
-
-  useBetterAuth();
 
   useHotkey(
     hotkeys.cycleTabs,

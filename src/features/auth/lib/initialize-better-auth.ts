@@ -16,5 +16,5 @@ export function initializeBetterAuth() {
 
   const unlisten = onOpenUrl(handleAuthDeepLinkUrlsCallback)
 
-  return () => unlisten.then((f) => f())
+  return () => void unlisten.then((f) => f())
 }
