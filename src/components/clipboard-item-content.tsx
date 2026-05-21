@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { ChevronDown, Film } from "lucide-react";
 import { ClipboardItem } from "@/types/clipboard";
-import { LinkPreview, isUrl } from "@/components/link-preview";
+import { isUrl } from "@/components/link-preview";
 import { ClipboardItemColor } from "@/components/clipboard-item-color";
 import { ClipboardItemFile } from "@/components/clipboard-item-file";
 import {
@@ -164,7 +164,6 @@ export const ClipboardItemContent = ({ item }: { item: ClipboardItem }) => {
         <p className="wrap-break-word text-card-foreground text-sm leading-relaxed truncate">
           {item.text_content}
         </p>
-        <LinkPreview url={item.text_content!} />
       </div>
     );
   }
