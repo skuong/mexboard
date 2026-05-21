@@ -2,7 +2,7 @@ import { memo, useCallback, useRef } from "react";
 import { GripHorizontal } from "lucide-react";
 import { ClipboardItem as ClipboardItemType } from "@/types/clipboard";
 import { Card, CardContent } from "@/components/ui/card";
-import { ClipboardItemContent } from "@/components/clipboard-item-content";
+import { ClipboardItemContent } from "@/features/clipboard/components/clipboard-item-content";
 import { ClipboardItemMeta } from "@/components/clipboard-item-meta";
 import { ClipboardItemActions } from "@/components/clipboard-item-actions";
 import { ColorFormatMenu } from "@/components/color-format-menu";
