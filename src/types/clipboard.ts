@@ -28,9 +28,6 @@ export type ContentFilter =
   | "secret"
   | "env"
   | "url"
-  | "color"
-  | "date"
-  | "note";
 
 export type DateRange = "all" | "today" | "week" | "month";
 
@@ -51,9 +48,6 @@ export const CONTENT_FILTER_LABELS: Record<ContentFilter, string> = {
   secret: "Secrets",
   env: "Key-Value",
   url: "URLs",
-  color: "Colors",
-  date: "Dates",
-  note: "Has Note",
 };
 
 export type ClipboardError = {

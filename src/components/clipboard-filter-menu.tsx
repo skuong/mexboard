@@ -7,10 +7,8 @@ import {
   Image,
   KeyRound,
   Link,
-  Palette,
   ShieldAlert,
   Star,
-  StickyNote,
 } from "lucide-react";
 import {
   ClipboardFilters,
@@ -38,9 +36,6 @@ const CONTENT_FILTER_ICONS: Record<ContentFilter, React.ReactNode> = {
   secret: <ShieldAlert className="size-4" />,
   env: <KeyRound className="size-4" />,
   url: <Link className="size-4" />,
-  color: <Palette className="size-4" />,
-  date: <Calendar className="size-4" />,
-  note: <StickyNote className="size-4" />,
 };
 
 const DATE_RANGE_OPTIONS: {
