@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHotkey, useHotkeys } from "@tanstack/react-hotkeys";
+import { useHotkey } from "@tanstack/react-hotkeys";
 
 import { useHotkeysConfig } from "@/features/hotkey/hooks/use-hotkeys-config";
 import type { ClipboardItem as ClipboardItemType } from "@/types/clipboard";
@@ -140,20 +140,6 @@ export function useClipboardListHotkeys({
       if (items.length > 0) setActiveIndex(items.length - 1);
     },
     { enabled: !hotkeysDisabled },
-  );
-
-  // Mod+1..9 quick-paste: works in list and search, including when search input is focused.
-  useHotkeys(
-    Array.from({ length: QUICK_PASTE_LIMIT }, (_, i) => ({
-      hotkey: `Mod+${(i + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` as const,
-      callback: () => {
-        const target = items[i];
-        if (!target) return;
-        if (onPaste) onPaste(target);
-        else onCopy(target);
-      },
-      options: { enabled: !hotkeysDisabled && items.length > i },
-    })),
   );
 
   return {

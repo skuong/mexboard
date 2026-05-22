@@ -92,18 +92,8 @@ export const useClipboard = () => {
     return { type: "empty" };
   }, [read, readImage]);
 
-  const write = useCallback(
-    async (text: string): Promise<void> => {
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(text);
-          setError(null);
-          return;
-        }
-      } catch (error) {
-        logError("Browser clipboard API failed", error);
-      }
-
+  const writeTextToClipboard = useCallback(
+    async (text: string) => {
       const result = await commands.writeClipboard(text);
       if (result.status === "ok") {
         setError(null);
@@ -122,25 +112,25 @@ export const useClipboard = () => {
     [logError],
   );
 
-  const writeImage = useCallback(
-    async (base64Data: string): Promise<void> => {
-      const result = await commands.writeClipboardImage(base64Data);
-      if (result.status === "ok") {
-        setError(null);
-        return;
-      }
+  const writeImageToClipboard = useCallback(
+    async (base64ImageData: string) => {
+      //@ts-ignore
+      const { status, error } = await commands.writeClipboardImage(base64ImageData);
+      if (status === 'ok') return setError(null)
 
       const errorMessage = logError(
         "Failed to write image to clipboard",
-        result.error,
+        error,
       );
+
       setError({
         id: Date.now().toString(),
         message: `Failed to write image to clipboard: ${errorMessage}`,
         timestamp: new Date(),
         retryable: true,
       });
-      throw result.error;
+
+      throw error;
     },
     [logError],
   );
@@ -170,8 +160,8 @@ export const useClipboard = () => {
     read,
     readImage,
     readContent,
-    write,
-    writeImage,
+    writeTextToSystemClipboard: writeTextToClipboard,
+    writeImageToSystemClipboard: writeImageToClipboard,
     reinitialize,
     error,
     dismissError,

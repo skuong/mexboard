@@ -24,8 +24,8 @@ function App() {
 
   useContextMenu();
 
-  const { write } = useClipboard();
-  const { pasteClipboardItem, pasteText } = usePasteActions();
+  const { writeTextToSystemClipboard } = useClipboard();
+  const { pasteClipboardItem } = usePasteActions();
 
   return (
     <TooltipProvider>
@@ -51,8 +51,7 @@ function App() {
           className="flex flex-col overflow-hidden min-h-0 data-hidden:hidden"
         >
           <SymbolsView
-            onSelect={write}
-            onPaste={pasteText}
+            onSelect={writeTextToSystemClipboard}
             isActive={activeTab === "symbols"}
           />
         </TabsContent>

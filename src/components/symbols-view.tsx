@@ -1,31 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
-import { useHotkeys } from "@tanstack/react-hotkeys";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
-import { QuickPasteBadge } from "@/components/quick-paste-badge";
-import {
-  QUICK_PASTE_MODIFIER,
-  useModifierHeld,
-} from "@/features/hotkey/hooks/use-modifier-held";
 import { SymbolsSearchBox } from "@/features/symbols/components/symbols-search-box";
 import { useSymbolsSearchQueryStore } from "@/features/symbols/stores/symbols-search-query-store";
 import { SYMBOL_DATA } from "@/lib/symbol-data";
 import { cn } from "@/utils/cn";
 
-const QUICK_PASTE_LIMIT = 9;
-
 type SymbolsViewProps = {
   onSelect: (char: string) => void;
-  onPaste?: (char: string) => void;
   isActive?: boolean;
 };
 
 export const SymbolsView = ({
   onSelect,
-  onPaste,
   isActive = true,
 }: SymbolsViewProps) => {
   const searchQuery = useSymbolsSearchQueryStore((state) => state.searchQuery);
@@ -41,35 +31,6 @@ export const SymbolsView = ({
       ),
     })).filter((cat) => cat.symbols.length > 0);
   }, [searchQuery]);
-
-  // Flat ordering across categories so quick-paste numbering matches reading order
-  const flatSymbols = useMemo(
-    () => filtered.flatMap((cat) => cat.symbols),
-    [filtered],
-  );
-
-  const quickIndexByChar = useMemo(() => {
-    const map = new Map<string, number>();
-    for (let i = 0; i < Math.min(flatSymbols.length, QUICK_PASTE_LIMIT); i++) {
-      map.set(flatSymbols[i].char, i + 1);
-    }
-    return map;
-  }, [flatSymbols]);
-
-  const modifierHeld = useModifierHeld();
-
-  useHotkeys(
-    Array.from({ length: QUICK_PASTE_LIMIT }, (_, i) => ({
-      hotkey: `Mod+${(i + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` as const,
-      callback: () => {
-        const target = flatSymbols[i];
-        if (!target) return;
-        if (onPaste) onPaste(target.char);
-        else onSelect(target.char);
-      },
-      options: { enabled: isActive && flatSymbols.length > i },
-    })),
-  );
 
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -104,28 +65,14 @@ export const SymbolsView = ({
 
               <div className="grid grid-cols-6 gap-1.5">
                 {category.symbols.map((symbol) => {
-                  const quickIndex = quickIndexByChar.get(symbol.char);
-
                   return (
                     <div key={symbol.char + symbol.name} className="relative">
-                      {isActive && modifierHeld && quickIndex != null && (
-                        <QuickPasteBadge
-                          index={quickIndex}
-                          className="-top-1 -left-1"
-                        />
-                      )}
-
                       <Tooltip>
                         <TooltipTrigger
                           render={
                             <button
                               type="button"
                               aria-label={symbol.name}
-                              aria-keyshortcuts={
-                                quickIndex != null
-                                  ? `${QUICK_PASTE_MODIFIER}+${quickIndex}`
-                                  : undefined
-                              }
                               onClick={() => handleClick(symbol.char)}
                               className={cn(
                                 "flex w-full items-center justify-center bg-muted/60 rounded-lg aspect-square font-normal transition-all cursor-pointer select-none hover:bg-accent hover:text-accent-foreground active:scale-90",

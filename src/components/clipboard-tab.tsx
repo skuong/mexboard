@@ -20,8 +20,14 @@ type ClipboardTabProps = {
 };
 
 export function ClipboardTab({ onPaste, isActive }: ClipboardTabProps) {
-  const { readContent, write, writeImage, reinitialize, error, dismissError } =
-    useClipboard();
+  const {
+    readContent,
+    writeTextToSystemClipboard,
+    writeImageToSystemClipboard,
+    reinitialize,
+    error,
+    dismissError,
+  } = useClipboard();
 
   const isMonitoring = useClipboardMonitoringStore(
     (state) => state.isMonitoring,
@@ -67,12 +73,12 @@ export function ClipboardTab({ onPaste, isActive }: ClipboardTabProps) {
   const handleCopy = useCallback(
     async (item: ClipboardItem) => {
       if (item.content_type === "text" && item.text_content) {
-        await write(item.text_content);
+        await writeTextToSystemClipboard(item.text_content);
       } else if (item.content_type === "image" && item.image_data) {
-        await writeImage(item.image_data);
+        await writeImageToSystemClipboard(item.image_data);
       }
     },
-    [write, writeImage],
+    [writeTextToSystemClipboard, writeImageToSystemClipboard],
   );
 
   const handleRetry = useCallback(async () => {

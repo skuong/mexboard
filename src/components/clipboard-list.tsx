@@ -9,11 +9,7 @@ import {
   ClipboardItem as ClipboardItemType,
   ClipboardContent,
 } from "@/types/clipboard";
-import { useModifierHeld } from "@/features/hotkey/hooks/use-modifier-held";
-import {
-  useClipboardListHotkeys,
-  QUICK_PASTE_LIMIT,
-} from "@/features/clipboard/hooks/use-clipboard-list-hotkeys";
+import { useClipboardListHotkeys } from "@/features/clipboard/hooks/use-clipboard-list-hotkeys";
 import { isItemCopied } from "@/features/clipboard/utils/is-item-copied";
 import { SortableItem } from "./sortable-item";
 import { SearchResultItem } from "./search-result-item";
@@ -49,9 +45,6 @@ export const ClipboardList = ({
   onLoadMore,
   isActive = true,
 }: ClipboardListProps) => {
-  const modifierHeld = useModifierHeld();
-  const showQuickPaste = isActive && modifierHeld;
-
   const { activeIndex, colorMenuItemId, setColorMenuItemId } =
     useClipboardListHotkeys({
       items,
@@ -106,9 +99,6 @@ export const ClipboardList = ({
     return <EmptyState isSearching={isSearching} />;
   }
 
-  const quickIndexFor = (index: number) =>
-    showQuickPaste && index < QUICK_PASTE_LIMIT ? index + 1 : null;
-
   if (isSearching) {
     return (
       <ClipboardItemsGrid
@@ -120,7 +110,6 @@ export const ClipboardList = ({
             item={item}
             isActive={index === activeIndex}
             isCopied={isItemCopied(item, currentContent)}
-            quickIndex={quickIndexFor(index)}
             onCopy={onCopy}
             onDelete={onDelete}
             onToggleFavorite={onToggleFavorite}
@@ -157,7 +146,6 @@ export const ClipboardList = ({
             index={index}
             isActive={index === activeIndex}
             isCopied={isItemCopied(item, currentContent)}
-            quickIndex={quickIndexFor(index)}
             onCopy={onCopy}
             onDelete={onDelete}
             onToggleFavorite={onToggleFavorite}

@@ -6,13 +6,10 @@ import { ClipboardItemContent } from "@/features/clipboard/components/clipboard-
 import { ClipboardItemMeta } from "@/components/clipboard-item-meta";
 import { ClipboardItemActions } from "@/components/clipboard-item-actions";
 import { ColorFormatMenu } from "@/components/color-format-menu";
-import { QuickPasteBadge } from "@/components/quick-paste-badge";
-import { QUICK_PASTE_MODIFIER } from "@/features/hotkey/hooks/use-modifier-held";
 
 type ClipboardItemProps = {
   item: ClipboardItemType;
   isCopied: boolean;
-  quickIndex?: number | null;
   dragHandleRef?: (element: Element | null) => void;
   onCopy: (item: ClipboardItemType) => void;
   onDelete: (id: number) => void;
@@ -25,7 +22,6 @@ type ClipboardItemProps = {
 export const ClipboardItem = memo(function ClipboardItem({
   item,
   isCopied,
-  quickIndex,
   dragHandleRef,
   onCopy,
   onDelete,
@@ -88,15 +84,7 @@ export const ClipboardItem = memo(function ClipboardItem({
         className="gap-2 py-3 group relative"
         onDoubleClick={handleCopy}
         onContextMenu={handleContextMenu}
-        aria-keyshortcuts={
-          quickIndex != null
-            ? `${QUICK_PASTE_MODIFIER}+${quickIndex}`
-            : undefined
-        }
       >
-        {quickIndex != null && (
-          <QuickPasteBadge index={quickIndex} className="top-1.5 left-1.5" />
-        )}
         <CardContent className="flex items-start gap-2 px-1 relative">
           <div
             ref={dragHandleRef}
