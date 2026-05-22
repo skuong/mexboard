@@ -1,15 +1,14 @@
-import { Copy, Check, Trash2, SplitSquareHorizontal } from "lucide-react";
+import { Trash2, SplitSquareHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
+import { CopyToClipboardButton } from "@/features/clipboard/components/copy-to-clipboard-button";
 
 type ClipboardItemActionsProps = {
   isCopied: boolean;
-  onCopy: () => void;
   onDelete: () => void;
   onSplitEnv?: () => void;
   showSplit: boolean;
@@ -17,7 +16,6 @@ type ClipboardItemActionsProps = {
 
 export const ClipboardItemActions = ({
   isCopied,
-  onCopy,
   onDelete,
   onSplitEnv,
   showSplit,
@@ -25,25 +23,8 @@ export const ClipboardItemActions = ({
   return (
     <div className="flex invisible group-hover:visible flex-col items-center gap-0.5 shrink-0 pt-0.5">
       <Tooltip>
-        <TooltipTrigger
-          render={
-            <Button
-              variant="ghost"
-              size="icon-xs"
-              onClick={isCopied ? undefined : onCopy}
-              className={cn(
-                "text-neutral-400 dark:text-neutral-600 dark:hover:text-foreground hover:text-foreground cursor-pointer",
-                isCopied && "text-green-500",
-              )}
-            />
-          }
-        >
-          {isCopied ? (
-            <Check className="size-3.5" />
-          ) : (
-            <Copy className="size-3.5" />
-          )}
-        </TooltipTrigger>
+        <TooltipTrigger render={<CopyToClipboardButton />}></TooltipTrigger>
+
         <TooltipContent className="pointer-events-none">
           {isCopied ? "Currently in clipboard" : "Copy to clipboard"}
         </TooltipContent>

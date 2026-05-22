@@ -6,6 +6,7 @@ import { ClipboardItemContent } from "@/features/clipboard/components/clipboard-
 import { ClipboardItemMeta } from "@/components/clipboard-item-meta";
 import { ClipboardItemActions } from "@/components/clipboard-item-actions";
 import { ColorFormatMenu } from "@/components/color-format-menu";
+import { ClipboardItemContextProvider } from "@/features/clipboard/components/clipboard-item-context-provider";
 
 type ClipboardItemProps = {
   item: ClipboardItemType;
@@ -78,7 +79,7 @@ export const ClipboardItem = memo(function ClipboardItem({
   );
 
   return (
-    <>
+    <ClipboardItemContextProvider item={item}>
       <Card
         ref={cardRef}
         className="gap-2 py-3 group relative"
@@ -104,7 +105,6 @@ export const ClipboardItem = memo(function ClipboardItem({
             )}
             <ClipboardItemActions
               isCopied={isCopied}
-              onCopy={handleCopy}
               onDelete={handleDelete}
               onSplitEnv={onSplitEnv ? handleSplitEnv : undefined}
               showSplit={!!item.is_env && !item.kv_key}
@@ -121,6 +121,6 @@ export const ClipboardItem = memo(function ClipboardItem({
           anchor={getAnchor}
         />
       )}
-    </>
+    </ClipboardItemContextProvider>
   );
 });

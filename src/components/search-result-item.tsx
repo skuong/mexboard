@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
-import { ClipboardItem } from "@/components/clipboard-item";
+import { ClipboardItem } from "@/features/clipboard/components/clipboard-item";
 import { ClipboardItem as ClipboardItemType } from "@/types/clipboard";
 
 export const SearchResultItem = memo(function SearchResultItem({
