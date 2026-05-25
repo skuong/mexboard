@@ -1,7 +1,7 @@
 import "@/main.css";
 import { useEffect } from "react";
 import { ClipboardTab } from "@/features/clipboard/components/clipboard-tab";
-import { SymbolsTab } from "@/components/symbols-view";
+import { SymbolsTab } from "@/features/symbols/components/symbols-tab";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useSystemTheme } from "@/hooks/use-system-theme";
