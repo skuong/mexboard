@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useClipboard } from "@/hooks/use-clipboard";
 import {
   Tooltip,
   TooltipTrigger,
@@ -10,14 +11,10 @@ import { SYMBOL_DATA } from "@/lib/symbol-data";
 import { cn } from "@/utils/cn";
 
 type SymbolsViewProps = {
-  onSelect: (char: string) => void;
   isActive?: boolean;
 };
 
-export const SymbolsView = ({
-  onSelect,
-  isActive = true,
-}: SymbolsViewProps) => {
+export const SymbolsView = ({ isActive = true }: SymbolsViewProps) => {
   const searchQuery = useSymbolsSearchQueryStore((state) => state.searchQuery);
 
   const filtered = useMemo(() => {
@@ -34,8 +31,10 @@ export const SymbolsView = ({
 
   const [copied, setCopied] = useState<string | null>(null);
 
+  const { writeTextToSystemClipboard } = useClipboard();
+
   const handleClick = (char: string) => {
-    onSelect(char);
+    writeTextToSystemClipboard(char);
     setCopied(char);
   };
 
