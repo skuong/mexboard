@@ -4,15 +4,7 @@ import { HotkeysSettings } from "@/features/preferences/components/hotkeys-setti
 import { Cloud, Keyboard, Settings2 } from "lucide-react";
 import { SyncCloudConnect } from "@/features/sync/components/sync-cloud-connect";
 
-type SettingsBodyProps = {
-  historyLimit: number;
-  onHistoryLimitChange: (limit: number) => void;
-};
-
-export function SettingsSheetBody({
-  historyLimit,
-  onHistoryLimitChange,
-}: SettingsBodyProps) {
+export function SettingsSheetBody() {
   return (
     <Tabs defaultValue="general" className="px-6 pb-6">
       <TabsList className="w-full mb-3">
@@ -30,10 +22,7 @@ export function SettingsSheetBody({
       </TabsList>
 
       <TabsContent value="general">
-        <GeneralSettings
-          historyLimit={historyLimit}
-          onHistoryLimitChange={onHistoryLimitChange}
-        />
+        <GeneralSettings />
       </TabsContent>
 
       <TabsContent value="cloud">

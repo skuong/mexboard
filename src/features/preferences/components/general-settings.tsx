@@ -1,24 +1,15 @@
 import { Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { SheetClose } from "@/components/ui/sheet";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { PAGE_LIMIT_OPTIONS } from "@/hooks/use-settings";
-import { useSystemInfo } from "@/hooks/use-system-info";
 import { useClipboardMonitoringStore } from "@/features/clipboard/stores/clipboard-monitoring-store";
 import { useClearClipboardHistory } from "@/features/clipboard/hooks/use-clear-clipboard-history";
 import { useHasClipboardHistory } from "@/features/clipboard/hooks/use-has-clipboard-history";
 import { SettingRow } from "../setting-row";
+import { useSettings } from "@/hooks/use-settings";
 
-type GeneralSettingsProps = {
-  historyLimit: number;
-  onHistoryLimitChange: (limit: number) => void;
-};
-
-export function GeneralSettings({
-  historyLimit,
-  onHistoryLimitChange,
-}: GeneralSettingsProps) {
+export function GeneralSettings() {
   const isMonitoring = useClipboardMonitoringStore(
     (state) => state.isMonitoring,
   );
@@ -27,10 +18,10 @@ export function GeneralSettings({
   );
   const hasHistory = useHasClipboardHistory();
   const clearAll = useClearClipboardHistory();
-  const systemInfo = useSystemInfo();
+  const { historyLimit, setHistoryLimit } = useSettings();
+
   return (
     <div className="flex flex-col gap-1">
-      {/* ── Monitoring row ── */}
       <SettingRow
         label="Monitoring"
         description={isMonitoring ? "Active" : "Paused"}
@@ -55,7 +46,6 @@ export function GeneralSettings({
 
       <div className="h-px bg-border/60 my-1" />
 
-      {/* ── Page limit row ── */}
       <div className="py-2">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[13px] font-medium text-foreground">
@@ -69,7 +59,7 @@ export function GeneralSettings({
           value={[String(historyLimit)]}
           onValueChange={(value) => {
             if (value.length > 0)
-              onHistoryLimitChange(Number(value[value.length - 1]));
+              setHistoryLimit(Number(value[value.length - 1]));
           }}
           className="w-full"
         >
@@ -85,7 +75,6 @@ export function GeneralSettings({
         </ToggleGroup>
       </div>
 
-      {/* ── Danger zone ── */}
       {hasHistory && (
         <>
           <div className="h-px bg-border/60 my-1" />
@@ -101,19 +90,6 @@ export function GeneralSettings({
               <Trash2 className="size-3.5" />
               Clear all history
             </SheetClose>
-          </div>
-        </>
-      )}
-
-      {/* ── System info ── */}
-      {systemInfo.isWayland && (
-        <>
-          <div className="h-px bg-border/60 my-1" />
-          <div className="py-2">
-            <Badge variant="outline" className="text-xs">
-              Wayland
-              {systemInfo.isCosmicDataControlEnabled && " • Data Control"}
-            </Badge>
           </div>
         </>
       )}

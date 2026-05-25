@@ -1,6 +1,6 @@
 import { ClipboardList } from "@/components/clipboard-list";
 import { ClipboardItemSkeletonList } from "@/components/clipboard-item-skeleton";
-import { ClipboardHeader } from "@/components/clipboard-window-header";
+import { ClipboardTabHeader } from "@/features/clipboard/components/clipboard-tab-header";
 import { useSettings } from "@/hooks/use-settings";
 import { useClipboardHistory } from "@/features/clipboard/hooks/use-clipboard-history";
 import { useClipboardFilters } from "@/hooks/use-clipboard-filters";
@@ -11,7 +11,7 @@ export function ClipboardTab() {
     (state) => state.searchQuery,
   );
 
-  const { historyLimit, setHistoryLimit } = useSettings();
+  const { historyLimit } = useSettings();
   const { history, hasMore, loadMore, isLoaded, currentContent, deleteItem } =
     useClipboardHistory(historyLimit, false);
 
@@ -24,12 +24,7 @@ export function ClipboardTab() {
 
   return (
     <>
-      <ClipboardHeader
-        historyLimit={historyLimit}
-        onHistoryLimitChange={setHistoryLimit}
-        filters={filters}
-        onFiltersChange={setFilters}
-      />
+      <ClipboardTabHeader filters={filters} onFiltersChange={setFilters} />
 
       <div className="flex-1 overflow-y-auto">
         {!isLoaded ? (

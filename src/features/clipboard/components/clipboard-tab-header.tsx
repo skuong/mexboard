@@ -4,15 +4,11 @@ import { ClipboardFilterMenu } from "@/components/clipboard-filter-menu";
 import { ClipboardSearchBox } from "@/features/clipboard/components/clipboard-search-box";
 
 type ClipboardHeaderProps = {
-  historyLimit: number;
-  onHistoryLimitChange: (limit: number) => void;
   filters: ClipboardFilters;
   onFiltersChange: (filters: ClipboardFilters) => void;
 };
 
-export const ClipboardHeader = ({
-  historyLimit,
-  onHistoryLimitChange,
+export const ClipboardTabHeader = ({
   filters,
   onFiltersChange,
 }: ClipboardHeaderProps) => {
@@ -25,10 +21,7 @@ export const ClipboardHeader = ({
         onFiltersChange={onFiltersChange}
       />
 
-      <SettingsSheet
-        historyLimit={historyLimit}
-        onHistoryLimitChange={onHistoryLimitChange}
-      />
+      <SettingsSheet />
     </header>
   );
 };

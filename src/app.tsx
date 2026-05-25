@@ -1,6 +1,6 @@
 import "@/main.css";
 import { useEffect } from "react";
-import { ClipboardTab } from "@/components/clipboard-tab";
+import { ClipboardTab } from "@/features/clipboard/components/clipboard-tab";
 import { SymbolsView } from "@/components/symbols-view";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";

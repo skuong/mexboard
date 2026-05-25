@@ -10,15 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { SettingsSheetBody } from "@/features/preferences/components/settings-sheet-body";
 
-type SettingsSheetProps = {
-  historyLimit: number;
-  onHistoryLimitChange: (limit: number) => void;
-};
-
-export function SettingsSheet({
-  historyLimit,
-  onHistoryLimitChange,
-}: SettingsSheetProps) {
+export function SettingsSheet() {
   return (
     <Sheet>
       <SheetTrigger
@@ -44,10 +36,7 @@ export function SettingsSheet({
           </SheetDescription>
         </SheetHeader>
 
-        <SettingsSheetBody
-          historyLimit={historyLimit}
-          onHistoryLimitChange={onHistoryLimitChange}
-        />
+        <SettingsSheetBody />
       </SheetContent>
     </Sheet>
   );
