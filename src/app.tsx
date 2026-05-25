@@ -14,7 +14,7 @@ import { initializeBetterAuth } from "@/features/auth/lib/initialize-better-auth
 import { useTabs } from "@/features/tab/hooks/use-tabs";
 import { useContextMenu } from "@/features/context-menu/hooks/use-context-menu";
 
-function App() {
+export default function App() {
   useSystemTheme();
   const { tabs, activeTab, setActiveTab } = useTabs();
 
@@ -72,5 +72,3 @@ function App() {
     </TooltipProvider>
   );
 }
-
-export default App;
