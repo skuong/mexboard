@@ -1,12 +1,4 @@
-type Symbol = {
-  char: string;
-  name: string;
-};
-
-type SymbolCategory = {
-  label: string;
-  symbols: Symbol[];
-};
+import { SymbolCategory } from "@/features/symbols/types/symbol-category";
 
 export const SYMBOL_DATA: SymbolCategory[] = [
   {

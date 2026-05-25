@@ -1,7 +1,7 @@
 import "@/main.css";
 import { useEffect } from "react";
 import { ClipboardTab } from "@/features/clipboard/components/clipboard-tab";
-import { SymbolsView } from "@/components/symbols-view";
+import { SymbolsTab } from "@/components/symbols-view";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useSystemTheme } from "@/hooks/use-system-theme";
@@ -41,7 +41,7 @@ export default function App() {
           keepMounted
           className="flex flex-col overflow-hidden min-h-0 data-hidden:hidden"
         >
-          <SymbolsView isActive={activeTab === "symbols"} />
+          <SymbolsTab />
         </TabsContent>
 
         <div

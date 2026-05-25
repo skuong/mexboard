@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/input-group";
 
 export function ClipboardSearchBox({ className }: ComponentProps<"div">) {
-  const ref = useRef<HTMLInputElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const focusSearch = () => {
-    ref.current?.focus();
+    searchInputRef.current?.focus();
   };
 
   const { hotkeys } = useHotkeysConfig();
@@ -34,7 +34,7 @@ export function ClipboardSearchBox({ className }: ComponentProps<"div">) {
     <div className={cn("relative size-full", className)}>
       <InputGroup className="border-none ring-2 ring-muted">
         <InputGroupInput
-          ref={ref}
+          ref={searchInputRef}
           type="search"
           placeholder="Search clipboard…"
           aria-label="Search clipboard history"
