@@ -1,3 +1,11 @@
+# [1.25.0](https://github.com/sokhuong-uon/mexboard/compare/v1.24.0...v1.25.0) (2026-05-27)
+
+
+### Features
+
+* add cursor-pointer to some buttons: ([29557f9](https://github.com/sokhuong-uon/mexboard/commit/29557f913b9bb8006a9026909f93a5cdb7aa01e7))
+* use shadcn button for clear history button ([a75eb8b](https://github.com/sokhuong-uon/mexboard/commit/a75eb8b5568c417ac20973c5ad1d08740a2fb0ec))
+
 # [1.24.0](https://github.com/sokhuong-uon/mexboard/compare/v1.23.4...v1.24.0) (2026-05-25)
 
 
