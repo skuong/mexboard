@@ -50,7 +50,11 @@ export default function App() {
         >
           <TabsList className="bg-transparent">
             {tabs.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                className="cursor-pointer"
+              >
                 <tab.icon />
               </TabsTrigger>
             ))}

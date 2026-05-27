@@ -115,7 +115,7 @@ export const ClipboardFilterMenu = () => {
             variant="ghost"
             size="icon-sm"
             className={cn(
-              "shrink-0 text-neutral-400 dark:text-neutral-600 relative",
+              "text-neutral-400 dark:text-neutral-600 relative cursor-pointer",
               hasActiveFilters && "text-amber-500 dark:text-amber-400",
             )}
             aria-label="Filter clipboard"

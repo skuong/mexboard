@@ -67,7 +67,7 @@ export function GeneralSettings() {
             <ToggleGroupItem
               key={option}
               value={String(option)}
-              className="flex-1 text-xs"
+              className="flex-1 text-xs cursor-pointer"
             >
               {option}
             </ToggleGroupItem>

@@ -18,7 +18,7 @@ export function SettingsSheet() {
           <Button
             variant="ghost"
             size="icon-sm"
-            className="text-neutral-400 dark:text-neutral-600"
+            className="text-neutral-400 dark:text-neutral-600 cursor-pointer"
           />
         }
       >

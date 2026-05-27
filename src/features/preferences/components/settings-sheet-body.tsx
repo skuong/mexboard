@@ -8,15 +8,15 @@ export function SettingsSheetBody() {
   return (
     <Tabs defaultValue="general" className="px-6 pb-6">
       <TabsList className="w-full mb-3">
-        <TabsTrigger value="general" className="flex-1 text-xs">
+        <TabsTrigger value="general" className="cursor-pointer">
           <Settings2 />
         </TabsTrigger>
 
-        <TabsTrigger value="cloud" className="flex-1 text-xs gap-1.5">
+        <TabsTrigger value="cloud" className="cursor-pointer">
           <Cloud />
         </TabsTrigger>
 
-        <TabsTrigger value="keymap" className="flex-1 text-xs">
+        <TabsTrigger value="keymap" className="cursor-pointer">
           <Keyboard />
         </TabsTrigger>
       </TabsList>
