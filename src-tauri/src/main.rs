@@ -38,7 +38,14 @@ fn main() {
         )
         .expect("failed to export specta bindings");
 
+    let log_level = if cfg!(debug_assertions) {
+        tauri_plugin_log::log::LevelFilter::Debug
+    } else {
+        tauri_plugin_log::log::LevelFilter::Off
+    };
+
     tauri::Builder::default()
+        .plugin(tauri_plugin_log::Builder::new().level(log_level).build())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
             let command = parse_command_from_args(&args);
@@ -80,15 +87,14 @@ fn main() {
 
             let start_urls = app.deep_link().get_current()?;
             if let Some(urls) = start_urls {
-                // app was likely started by a deep link
-                println!("deep link URLs: {:?}", urls);
+                log::info!("deep link URLs (likely a cold start): {:?}", urls);
             }
 
             let app_handle = app.handle().clone();
             app.deep_link().on_open_url(move |event| {
                 let urls = event.urls();
 
-                println!("deep link URLs: {:?}", urls);
+                log::info!("deep link URLs: {:?}", urls);
                 if let Some(url) = urls.first() {
                     let _ = app_handle
                         .notification()
