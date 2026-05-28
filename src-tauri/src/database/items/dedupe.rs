@@ -1,38 +1,21 @@
-use drizzle::core::expr::*;
-
-use crate::schema::*;
-
-use super::super::schema::*;
 use super::super::utils::*;
 use super::super::Database;
+use crate::schema::*;
+use drizzle::core::expr::*;
 
 impl Database {
-    pub fn dedupe(&self, id: i16) -> DbResult<i16> {
-        let inner = self.lock()?;
-        let ci = &inner.schema.clipboard_items;
+    pub fn check_duplication_by_hash(&self, hash: &str) -> Result<u32, String> {
+        let drizzle = self.lock()?;
+        let clipboards = &drizzle.schema.clipboards;
 
-        let item: SelectClipboardItems = inner
+        let clipboard: SelectClipboards = drizzle
             .db
             .select(())
-            .from(*ci)
-            .r#where(eq(ci.id, id as i64))
+            .from(*clipboards)
+            .r#where(eq(clipboards.hash, hash))
             .get()
             .map_err(error_to_string)?;
 
-        let hash = &item.hash;
-        if item.hash.is_empty() {
-            return Ok(0);
-        }
-
-        let deleted = inner
-            .db
-            .conn()
-            .execute(
-                "DELETE FROM clipboard_items WHERE hash = ?1 AND id != ?2",
-                rusqlite::params![hash, id],
-            )
-            .map_err(error_to_string)?;
-
-        Ok(deleted as i16)
+        Ok(clipboard.id)
     }
 }

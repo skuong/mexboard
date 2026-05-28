@@ -2,6 +2,7 @@ use crate::handle_command;
 use std::sync::Mutex;
 use tauri::{AppHandle, Manager};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, ShortcutEvent, ShortcutState};
+use tauri_plugin_store::StoreExt;
 
 #[cfg(target_os = "macos")]
 pub const DEFAULT_TOGGLE_ACCELERATOR: &str = "Shift+Meta+V";
@@ -12,7 +13,7 @@ pub const DEFAULT_TOGGLE_ACCELERATOR: &str = "Alt+Meta+V";
 #[cfg(target_os = "linux")]
 pub const DEFAULT_TOGGLE_ACCELERATOR: &str = "Meta+V";
 
-const HOTKEYS_SETTING_KEY: &str = "hotkeys";
+const SETTINGS_FILE_NAME: &str = "settings.json";
 const TOGGLE_FIELD: &str = "toggleWindowVisibility";
 
 #[derive(Default)]
@@ -82,22 +83,17 @@ fn to_tauri_accelerator(accelerator: &str) -> String {
 }
 
 fn load_accelerator(app: &AppHandle) -> String {
-    let Some(db) = app.try_state::<crate::database::Database>() else {
-        return DEFAULT_TOGGLE_ACCELERATOR.to_string();
-    };
-    let raw = match db.get_setting(HOTKEYS_SETTING_KEY) {
-        Ok(Some(s)) => s,
-        _ => return DEFAULT_TOGGLE_ACCELERATOR.to_string(),
-    };
-    let parsed: serde_json::Value = match serde_json::from_str(&raw) {
-        Ok(v) => v,
-        Err(_) => return DEFAULT_TOGGLE_ACCELERATOR.to_string(),
-    };
-    parsed
-        .get(TOGGLE_FIELD)
-        .and_then(|v| v.as_str())
-        .map(|s| s.to_string())
-        .unwrap_or_else(|| DEFAULT_TOGGLE_ACCELERATOR.to_string())
+    let toggle_window_visibility_shortcut = app
+        .store(SETTINGS_FILE_NAME)
+        .ok()
+        .and_then(|store| {
+            store
+                .get(TOGGLE_FIELD)
+                .and_then(|v| v.as_str().map(String::from))
+        })
+        .unwrap_or_else(|| DEFAULT_TOGGLE_ACCELERATOR.to_string());
+
+    toggle_window_visibility_shortcut
 }
 
 fn print_hint() {

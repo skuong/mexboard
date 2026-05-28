@@ -1,5 +1,5 @@
-pub fn error_to_string<E: std::fmt::Display>(e: E) -> String {
-    e.to_string()
+pub fn error_to_string<Error: std::fmt::Display>(error: Error) -> String {
+    error.to_string()
 }
 
 pub fn timestamp_now() -> String {

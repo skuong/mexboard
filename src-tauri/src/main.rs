@@ -39,6 +39,7 @@ fn main() {
         .expect("failed to export specta bindings");
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
             let command = parse_command_from_args(&args);
             handle_command(app, command);

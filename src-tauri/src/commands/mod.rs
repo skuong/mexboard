@@ -1,7 +1,6 @@
 mod clipboard;
 mod keyring;
 mod media;
-mod settings;
 mod shortcuts;
 mod system;
 mod window;
@@ -9,7 +8,6 @@ mod window;
 pub use clipboard::*;
 pub use keyring::*;
 pub use media::*;
-pub use settings::*;
 pub use shortcuts::*;
 pub use system::*;
 pub use window::*;
@@ -37,8 +35,6 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         is_wayland_session,
         is_cosmic_data_control_enabled,
         download_media_to_temp,
-        get_setting,
-        set_setting,
         set_toggle_shortcut,
         get_session_token,
         save_session_token,
@@ -48,13 +44,11 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         disconnect_websocket,
         send_websocket_message,
         // Start: Database
-        insert_clipboard_item,
+        insert_clipboard,
         get_all_clipboard_items,
         bump_clipboard_item,
-        dedup_clipboard_item,
         clear_clipboard,
         delete_clipboard_item,
-        update_clipboard_sort_order,
         toggle_clipboard_item_favorite,
         // End: Database
     ])

@@ -1,8 +1,7 @@
 use drizzle::sqlite::prelude::*;
 
-#[SQLiteTable]
-#[derive(Debug, Serialize, Deserialize, Clone, specta::Type)]
-pub struct ClipboardItems {
+#[SQLiteTable(name = "clipboards")]
+pub struct Clipboards {
     #[column(primary, autoincrement)]
     pub id: u32,
 
@@ -35,15 +34,7 @@ pub struct ClipboardItems {
     pub updated_at: String,
 }
 
-#[SQLiteTable]
-pub struct Settings {
-    #[column(primary)]
-    pub key: String,
-    pub value: String,
-}
-
 #[derive(SQLiteSchema)]
 pub struct Schema {
-    pub clipboard_items: ClipboardItems,
-    pub settings: Settings,
+    pub clipboards: Clipboards,
 }

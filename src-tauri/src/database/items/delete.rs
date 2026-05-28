@@ -1,13 +1,11 @@
-use drizzle::core::expr::*;
-
-use super::super::schema::*;
 use super::super::utils::*;
 use super::super::Database;
+use drizzle::core::expr::*;
 
 impl Database {
-    pub fn delete(&self, id: i16) -> DbResult<()> {
+    pub fn delete(&self, id: i16) -> Result<(), String> {
         let inner = self.lock()?;
-        let ci = &inner.schema.clipboard_items;
+        let ci = &inner.schema.clipboards;
 
         inner
             .db
