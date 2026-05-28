@@ -8,22 +8,20 @@ const ACCOUNT: &str = "session_token";
 pub fn init() -> Result<(), String> {
     #[cfg(target_os = "macos")]
     {
-        let store = apple_native_keyring_store::keychain::Store::new()
-            .map_err(|e| e.to_string())?;
+        let store =
+            apple_native_keyring_store::keychain::Store::new().map_err(|e| e.to_string())?;
         set_default_store(store);
     }
 
     #[cfg(target_os = "windows")]
     {
-        let store = windows_native_keyring_store::Store::new()
-            .map_err(|e| e.to_string())?;
+        let store = windows_native_keyring_store::Store::new().map_err(|e| e.to_string())?;
         set_default_store(store);
     }
 
     #[cfg(target_os = "linux")]
     {
-        let store = zbus_secret_service_keyring_store::Store::new()
-            .map_err(|e| e.to_string())?;
+        let store = zbus_secret_service_keyring_store::Store::new().map_err(|e| e.to_string())?;
         set_default_store(store);
     }
 

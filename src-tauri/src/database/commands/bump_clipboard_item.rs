@@ -1,12 +1,12 @@
-use crate::database::{ClipboardSchema, Database};
+use crate::database::Database;
 use tauri::State;
 
 #[tauri::command]
 #[specta::specta]
 pub fn bump_clipboard_item(
-    id: i16,
+    id: u32,
     sort_order: String,
     database: State<'_, Database>,
-) -> Result<ClipboardSchema, String> {
+) -> Result<(), String> {
     database.bump(id, &sort_order)
 }

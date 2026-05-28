@@ -9,7 +9,7 @@ pub fn init(app: &App) -> Database {
 
     std::fs::create_dir_all(&app_data_dir).expect("db:init: failed to create app data dir");
 
-    let db_path = app_data_dir.join("clipboard.db");
+    let db_path = app_data_dir.join("clipboards.db");
 
     let database =
         Database::new(db_path.to_str().unwrap()).expect("db:init: failed to initialize database");

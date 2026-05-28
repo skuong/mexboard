@@ -25,8 +25,6 @@ export const commands = {
 	 *  along with a small PNG icon for the drag preview.
 	 */
 	downloadMediaToTemp: (url: string) => typedError<[string, string], string>(__TAURI_INVOKE("download_media_to_temp", { url })),
-	getSetting: (key: string) => typedError<string | null, string>(__TAURI_INVOKE("get_setting", { key })),
-	setSetting: (key: string, value: string) => typedError<null, string>(__TAURI_INVOKE("set_setting", { key, value })),
 	setToggleShortcut: (accelerator: string) => typedError<null, string>(__TAURI_INVOKE("set_toggle_shortcut", { accelerator })),
 	getSessionToken: () => __TAURI_INVOKE<string | null>("get_session_token"),
 	saveSessionToken: (token: string) => typedError<null, string>(__TAURI_INVOKE("save_session_token", { token })),
@@ -35,57 +33,41 @@ export const commands = {
 	connectWebsocket: (urlString: string, bearerToken: string) => typedError<null, string>(__TAURI_INVOKE("connect_websocket", { urlString, bearerToken })),
 	disconnectWebsocket: () => typedError<null, string>(__TAURI_INVOKE("disconnect_websocket")),
 	sendWebsocketMessage: (message: string) => typedError<null, string>(__TAURI_INVOKE("send_websocket_message", { message })),
-	insertClipboardItem: (params: InsertClipboardItemParams) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("insert_clipboard_item", { params })),
-	getAllClipboardItems: (limit: number, offset: number, favoritesFirst: boolean) => typedError<ClipboardItemRow[], string>(__TAURI_INVOKE("get_all_clipboard_items", { limit, offset, favoritesFirst })),
-	bumpClipboardItem: (id: number, sortOrder: string) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("bump_clipboard_item", { id, sortOrder })),
-	dedupClipboardItem: (id: number) => typedError<number, string>(__TAURI_INVOKE("dedup_clipboard_item", { id })),
+	insertClipboard: (params: InsertClipboardParams) => __TAURI_INVOKE<void>("insert_clipboard", { params }),
+	getAllClipboardItems: (limit: number, offset: number) => typedError<Clipboard[], string>(__TAURI_INVOKE("get_all_clipboard_items", { limit, offset })),
+	bumpClipboardItem: (id: number, sortOrder: string) => typedError<null, string>(__TAURI_INVOKE("bump_clipboard_item", { id, sortOrder })),
 	clearClipboard: () => typedError<null, string>(__TAURI_INVOKE("clear_clipboard")),
 	deleteClipboardItem: (id: number) => typedError<null, string>(__TAURI_INVOKE("delete_clipboard_item", { id })),
-	updateClipboardSortOrder: (items: UpdateSortOrderParams[]) => typedError<null, string>(__TAURI_INVOKE("update_clipboard_sort_order", { items })),
-	toggleClipboardItemFavorite: (id: number) => typedError<ClipboardItemRow, string>(__TAURI_INVOKE("toggle_clipboard_item_favorite", { id })),
+	toggleClipboardItemFavorite: (id: number) => typedError<boolean, string>(__TAURI_INVOKE("toggle_clipboard_item_favorite", { id })),
 };
 
 /* Types */
-export type ClipboardItemRow = {
+export type Clipboard = {
 	id: number,
-	content_type: string,
-	text_content: string | null,
-	image_data: string | null,
-	image_width: number | null,
-	image_height: number | null,
-	line_count: number | null,
+	sort_order: string,
+	content: string | null,
+	image: number | null,
+	image_preview: number | null,
+	width: number | null,
+	height: number | null,
+	hash: string,
+	mime: string | null,
 	source_app: string | null,
 	is_favorite: boolean,
-	sort_order: string,
-	kv_key: string | null,
-	detected_date: string | null,
-	detected_color: string | null,
-	is_env: boolean,
-	is_secret: boolean,
 	note: string | null,
-	content_hash: string | null,
-	file_mime: string | null,
+	detected_date: string | null,
+	is_color: boolean,
+	kv: string | null,
+	is_secret: boolean,
 	created_at: string,
 	updated_at: string,
 };
 
-export type InsertClipboardItemParams = {
-	content_type: string,
-	text_content: string | null,
-	image_data: string | null,
-	image_width: number | null,
-	image_height: number | null,
-	line_count: number | null,
-	source_app: string | null,
-	sort_order: string,
-	kv_key: string | null,
-	created_at: string,
-	updated_at: string,
-};
-
-export type UpdateSortOrderParams = {
-	id: number,
-	sort_order: string,
+export type InsertClipboardParams = {
+	content: string | null,
+	image: string | null,
+	width: number | null,
+	height: number | null,
 };
 
 /* Tauri Specta runtime */
