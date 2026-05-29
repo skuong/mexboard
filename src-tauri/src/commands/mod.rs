@@ -38,7 +38,6 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         disconnect_websocket,
         send_websocket_message,
         // Start: Database
-        insert_clipboard,
         get_all_clipboard_items,
         bump_clipboard_item,
         clear_clipboard,
