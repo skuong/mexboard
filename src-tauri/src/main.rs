@@ -8,6 +8,7 @@ mod clipboard_monitor;
 mod commands;
 mod crypto;
 mod database;
+mod deep_link;
 mod detection;
 mod schema;
 mod shortcuts;
@@ -20,8 +21,6 @@ use clipboard::ClipboardManager;
 use clipboard_monitor::MonitorState;
 use commands::create_command_builder;
 use tauri::Manager;
-use tauri_plugin_deep_link::DeepLinkExt;
-use tauri_plugin_notification::NotificationExt;
 use websocket::WebSocketState;
 use window::main_window;
 
@@ -68,11 +67,7 @@ fn main() {
         .manage(WebSocketState::new())
         .setup(move |app| {
             cli::handle_cli_args(app, None);
-
-            #[cfg(any(target_os = "linux", all(debug_assertions, windows)))]
-            app.deep_link().register_all()?;
-
-            commands::init_keyring().expect("failed to initialize keyring store");
+            commands::init_keyring().expect("Failed to initialize keyring store");
 
             let database = database::initialization::init(app);
             app.manage(database);
@@ -85,25 +80,8 @@ fn main() {
 
             shortcuts::register(app.handle());
 
-            let start_urls = app.deep_link().get_current()?;
-            if let Some(urls) = start_urls {
-                log::info!("deep link URLs (likely a cold start): {:?}", urls);
-            }
-
-            let app_handle = app.handle().clone();
-            app.deep_link().on_open_url(move |event| {
-                let urls = event.urls();
-
-                log::info!("deep link URLs: {:?}", urls);
-                if let Some(url) = urls.first() {
-                    let _ = app_handle
-                        .notification()
-                        .builder()
-                        .title("Mexboard")
-                        .body(format!("Authentication received: {}", url))
-                        .show();
-                }
-            });
+            deep_link::register_all(app.handle());
+            deep_link::handle_links(app.handle());
 
             Ok(())
         })
