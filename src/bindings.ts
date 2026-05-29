@@ -28,7 +28,6 @@ export const commands = {
 	connectWebsocket: (urlString: string, bearerToken: string) => typedError<null, string>(__TAURI_INVOKE("connect_websocket", { urlString, bearerToken })),
 	disconnectWebsocket: () => typedError<null, string>(__TAURI_INVOKE("disconnect_websocket")),
 	sendWebsocketMessage: (message: string) => typedError<null, string>(__TAURI_INVOKE("send_websocket_message", { message })),
-	insertClipboard: (params: InsertClipboardParams) => __TAURI_INVOKE<void>("insert_clipboard", { params }),
 	getAllClipboardItems: (limit: number, offset: number) => typedError<Clipboard[], string>(__TAURI_INVOKE("get_all_clipboard_items", { limit, offset })),
 	bumpClipboardItem: (id: number, sortOrder: string) => typedError<null, string>(__TAURI_INVOKE("bump_clipboard_item", { id, sortOrder })),
 	clearClipboard: () => typedError<null, string>(__TAURI_INVOKE("clear_clipboard")),
@@ -41,11 +40,11 @@ export type Clipboard = {
 	id: number,
 	sort_order: string,
 	content: string | null,
-	image: number | null,
-	image_preview: number | null,
+	image: number[] | null,
+	image_preview: number[] | null,
 	width: number | null,
 	height: number | null,
-	hash: string,
+	hash: number[],
 	mime: string | null,
 	source_app: string | null,
 	is_favorite: boolean,
@@ -56,13 +55,6 @@ export type Clipboard = {
 	is_secret: boolean,
 	created_at: string,
 	updated_at: string,
-};
-
-export type InsertClipboardParams = {
-	content: string | null,
-	image: string | null,
-	width: number | null,
-	height: number | null,
 };
 
 /* Tauri Specta runtime */
