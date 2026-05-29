@@ -1,1 +1,1 @@
-pub mod hash_content;
+pub mod hash_bytes;

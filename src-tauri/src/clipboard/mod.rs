@@ -1,6 +1,7 @@
 mod image;
 mod manager;
 mod mexboard;
+pub mod monitoring;
 
 pub use manager::ClipboardManager;
 use serde::{Deserialize, Serialize};
