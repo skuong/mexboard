@@ -1,5 +1,5 @@
+use crate::clipboard::monitoring::MonitorState;
 use crate::clipboard::ClipboardManager;
-use crate::clipboard_monitor::MonitorState;
 use crate::detection::env;
 use crate::utils::simulate_ctrl_v::simulate_ctrl_v;
 use std::sync::atomic::Ordering;

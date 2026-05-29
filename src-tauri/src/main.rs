@@ -4,7 +4,6 @@
 mod caret;
 mod cli;
 mod clipboard;
-mod clipboard_monitor;
 mod commands;
 mod crypto;
 mod database;
@@ -18,7 +17,6 @@ pub mod websocket;
 mod window;
 
 use clipboard::ClipboardManager;
-use clipboard_monitor::MonitorState;
 use commands::create_command_builder;
 use tauri::Manager;
 use websocket::WebSocketState;
@@ -62,7 +60,7 @@ fn main() {
         .plugin(tauri_plugin_drag::init())
         .plugin(tauri_plugin_opener::init())
         .manage(ClipboardManager::new())
-        .manage(MonitorState::new())
+        .manage(clipboard::monitoring::MonitorState::new())
         .manage(shortcuts::ToggleShortcut::default())
         .manage(WebSocketState::new())
         .setup(move |app| {
@@ -76,7 +74,7 @@ fn main() {
             tray::setup(app)?;
             main_window::setup(app);
 
-            clipboard_monitor::start_monitor(app.handle());
+            clipboard::monitoring::start(app.handle());
 
             shortcuts::register(app.handle());
 
