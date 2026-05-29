@@ -9,12 +9,12 @@ pub struct Clipboards {
 
     pub content: Option<String>,
 
-    pub image: Option<u8>,
-    pub image_preview: Option<u8>,
+    pub image: Option<Vec<u8>>,
+    pub image_preview: Option<Vec<u8>>,
     pub width: Option<u32>,
     pub height: Option<u32>,
 
-    pub hash: String,
+    pub hash: Vec<u8>,
     pub mime: Option<String>,
 
     pub source_app: Option<String>,

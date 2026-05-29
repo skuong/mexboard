@@ -1,9 +1,6 @@
 pub mod get_all_clipboard_items;
 pub use get_all_clipboard_items::*;
 
-pub mod insert_clipboard;
-pub use insert_clipboard::*;
-
 pub mod clear_clipboard;
 pub use clear_clipboard::*;
 
