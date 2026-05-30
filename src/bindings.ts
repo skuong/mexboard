@@ -7,7 +7,7 @@ export const commands = {
 	/**  Copies content to clipboard, hides the window, and simulates Ctrl+V. */
 	pasteItem: (contentType: string, textContent: string | null, imageData: string | null) => typedError<null, string>(__TAURI_INVOKE("paste_item", { contentType, textContent, imageData })),
 	readClipboard: () => typedError<string, string>(__TAURI_INVOKE("read_clipboard")),
-	readClipboardImage: () => typedError<[string, number, number] | null, string>(__TAURI_INVOKE("read_clipboard_image")),
+	readClipboardImage: () => typedError<[number[], number, number] | null, string>(__TAURI_INVOKE("read_clipboard_image")),
 	writeClipboard: (text: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard", { text })),
 	writeClipboardImage: (base64Data: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard_image", { base64Data })),
 	reinitializeClipboard: () => typedError<null, string>(__TAURI_INVOKE("reinitialize_clipboard")),

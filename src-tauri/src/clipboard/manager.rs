@@ -15,33 +15,15 @@ impl ClipboardManager {
         }
     }
 
-    pub async fn read(&self) -> Result<String, String> {
+    pub async fn read_text(&self) -> Result<String, String> {
         self.clipboard.read_text().await
     }
 
-    pub async fn read_image(&self) -> Result<Option<(String, u32, u32)>, String> {
-        match self.clipboard.read_image().await? {
-            Some((rgba_bytes, width, height)) => {
-                let hash = image::hash_bytes(&rgba_bytes);
-                if let Some(cached) = self.latest_image_cache.get(hash) {
-                    return Ok(Some(cached));
-                }
-
-                let png_bytes = image::encode_rgba_to_png(&rgba_bytes, width, height)
-                    .map_err(|e| format!("Failed to encode image as PNG: {}", e))?;
-                let base64_data = BASE64.encode(&png_bytes);
-                self.latest_image_cache
-                    .set(hash, base64_data.clone(), width, height);
-                Ok(Some((base64_data, width, height)))
-            }
-            None => {
-                self.latest_image_cache.clear();
-                Ok(None)
-            }
-        }
+    pub async fn read_image(&self) -> Result<Option<(Vec<u8>, u32, u32)>, String> {
+        self.clipboard.read_image().await
     }
 
-    pub async fn write(&self, text: String) -> Result<(), String> {
+    pub async fn write_text(&self, text: String) -> Result<(), String> {
         self.clipboard.write(text).await
     }
 
