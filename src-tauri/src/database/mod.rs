@@ -23,24 +23,16 @@ impl Database {
     pub fn new(db_path: &str) -> Result<Self, String> {
         let conn = Connection::open(db_path).map_err(error_to_string)?;
 
-        conn.execute_batch("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;")
+        conn.execute_batch("PRAGMA journal_mode=WAL;")
             .map_err(error_to_string)?;
 
-        let (db, _) = Drizzle::new(conn, ());
         let schema = Schema::new();
+        let (db, _) = Drizzle::new(conn, ());
+
         db.push(&schema).map_err(error_to_string)?;
 
-        db.conn()
-            .execute(
-                "CREATE INDEX IF NOT EXISTS idx_clipboards_hash ON clipboards(hash)",
-                [],
-            )
-            .map_err(error_to_string)?;
-
-        let schema = Schema::new();
-        let inner = DrizzleState { db, schema };
         Ok(Self {
-            drizzle: Mutex::new(inner),
+            drizzle: Mutex::new(DrizzleState { db, schema }),
         })
     }
 

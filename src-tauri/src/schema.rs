@@ -14,6 +14,7 @@ pub struct Clipboards {
     pub width: Option<u32>,
     pub height: Option<u32>,
 
+    #[column(unique)]
     pub hash: Vec<u8>,
     pub mime: Option<String>,
 
