@@ -8,14 +8,14 @@ use tauri::{AppHandle, Manager, State};
 #[tauri::command]
 #[specta::specta]
 pub async fn read_clipboard(manager: State<'_, ClipboardManager>) -> Result<String, String> {
-    manager.read().await
+    manager.read_text().await
 }
 
 #[tauri::command]
 #[specta::specta]
 pub async fn read_clipboard_image(
     manager: State<'_, ClipboardManager>,
-) -> Result<Option<(String, u32, u32)>, String> {
+) -> Result<Option<(Vec<u8>, u32, u32)>, String> {
     manager.read_image().await
 }
 
@@ -25,7 +25,7 @@ pub async fn write_clipboard(
     text: String,
     manager: State<'_, ClipboardManager>,
 ) -> Result<(), String> {
-    manager.write(text).await
+    manager.write_text(text).await
 }
 
 #[tauri::command]
@@ -73,7 +73,7 @@ pub async fn paste_item(
     let write_result = match content_type.as_str() {
         "text" => {
             let text = text_content.ok_or("missing text_content")?;
-            manager.write(text).await
+            manager.write_text(text).await
         }
         "image" => {
             let data = image_data.ok_or("missing image_data")?;

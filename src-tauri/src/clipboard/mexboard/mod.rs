@@ -1,6 +1,7 @@
 mod is_clipboard_instance_exists;
 mod read_image;
 mod read_text;
+mod with_clipboard;
 mod write_image;
 mod write_text;
 
