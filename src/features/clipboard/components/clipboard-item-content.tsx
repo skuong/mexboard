@@ -1,27 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import { ClipboardItem } from "@/types/clipboard";
-import { isHttpUrl } from "@/utils/is-http-url";
-import { ClipboardItemColor } from "@/components/clipboard-item-color";
-import { ClipboardItemFile } from "@/components/clipboard-item-file";
 import {
   Collapsible,
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@/components/ui/collapsible";
-import { useDraggableMedia } from "@/hooks/use-draggable-media";
-
-const IMAGE_EXT = /\.(gif|webp|png|jpg|jpeg|svg)(\?.*)?$/i;
-const VIDEO_EXT = /\.(mp4|webm|mov)(\?.*)?$/i;
-
-function getMediaType(url: string): "image" | "video" | null {
-  try {
-    const path = new URL(url).pathname;
-    if (IMAGE_EXT.test(path)) return "image";
-    if (VIDEO_EXT.test(path)) return "video";
-  } catch {}
-  return null;
-}
+import { useClipboardItem } from "../hooks/use-clipboard-item";
 
 const CollapsibleText = ({ text }: { text: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,64 +42,7 @@ const CollapsibleText = ({ text }: { text: string }) => {
   );
 };
 
-const DraggableMedia = ({ url }: { url: string }) => {
-  const { preload, handleDragStart } = useDraggableMedia(url);
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      <img
-        src={url}
-        alt="Media preview"
-        loading="lazy"
-        draggable={false}
-        onMouseEnter={preload}
-        onMouseDown={handleDragStart}
-        className="max-w-full max-h-40 rounded-md object-contain bg-muted cursor-grab"
-      />
-    </div>
-  );
-};
-
-export const ClipboardItemContent = ({ item }: { item: ClipboardItem }) => {
-  if (item.content_type === "image") {
-    return (
-      <div className="flex flex-col gap-2">
-        {item.image_data && (
-          <img
-            src={`data:image/png;base64,${item.image_data}`}
-            alt="Clipboard image"
-            className="max-w-full max-h-80 rounded-md object-contain bg-muted"
-          />
-        )}
-      </div>
-    );
-  }
-
-  if (item.file_mime && item.text_content) {
-    return (
-      <ClipboardItemFile path={item.text_content} fileMime={item.file_mime} />
-    );
-  }
-
-  if (item.detected_color) {
-    return <ClipboardItemColor item={item} />;
-  }
-
-  if (isHttpUrl(item.text_content || "")) {
-    const mediaType = getMediaType(item.text_content!);
-
-    if (mediaType === "image") {
-      return <DraggableMedia url={item.text_content!} />;
-    }
-
-    return (
-      <div className="flex flex-col gap-1.5">
-        <p className="wrap-break-word text-card-foreground text-sm leading-relaxed truncate">
-          {item.text_content}
-        </p>
-      </div>
-    );
-  }
-
-  return <CollapsibleText text={item.text_content || ""} />;
-};
+export function ClipboardItemContent() {
+  const item = useClipboardItem();
+  return <CollapsibleText text={item.content || ""} />;
+}

@@ -12,45 +12,14 @@ export const useClipboard = () => {
     return "";
   }, []);
 
-  const readImage = useCallback(async (): Promise<{
-    base64Data: string;
-    width: number;
-    height: number;
-  } | null> => {
-    const result = await commands.readClipboardImage();
-    if (result.status === "ok") {
-      if (result.data) {
-        const [base64Data, width, height] = result.data;
-        return { base64Data, width, height };
-      }
-      return null;
-    }
-
-    return null;
-  }, []);
-
   const readContent = useCallback(async (): Promise<ClipboardContent> => {
-    try {
-      const imageResult = await readImage();
-      if (imageResult) {
-        return {
-          type: "image",
-          base64Data: imageResult.base64Data,
-          width: imageResult.width,
-          height: imageResult.height,
-        };
-      }
-    } catch {
-      // Image read failed, try text
-    }
-
     const text = await read();
     if (text) {
       return { type: "text", text };
     }
 
     return { type: "empty" };
-  }, [read, readImage]);
+  }, [read]);
 
   const writeTextToClipboard = useCallback(
     async (text: string) => {
@@ -86,7 +55,6 @@ export const useClipboard = () => {
 
   return {
     read,
-    readImage,
     readContent,
     writeTextToSystemClipboard: writeTextToClipboard,
     writeImageToSystemClipboard: writeImageToClipboard,
