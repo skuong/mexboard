@@ -13,17 +13,11 @@ export function CopyToClipboardButton({
     useInternalCurrentClipboardItem();
 
   const clipboard = useClipboardItem();
-  const { writeImageToSystemClipboard, writeTextToSystemClipboard } =
-    useClipboard();
+  const { writeTextToSystemClipboard } = useClipboard();
 
   const onCopy = async () => {
-    if (clipboard.content_type === "text" && clipboard.text_content) {
-      await writeTextToSystemClipboard(clipboard.text_content);
-      setCurrentClipboard(clipboard);
-    } else if (clipboard.content_type === "image" && clipboard.image_data) {
-      await writeImageToSystemClipboard(clipboard.image_data);
-      setCurrentClipboard(clipboard);
-    }
+    clipboard.content && (await writeTextToSystemClipboard(clipboard.content));
+    setCurrentClipboard(clipboard);
   };
 
   const isCopied = currentInternalClipboard?.id === clipboard.id;

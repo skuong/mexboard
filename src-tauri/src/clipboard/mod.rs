@@ -3,6 +3,7 @@ mod manager;
 mod mexboard;
 pub mod monitoring;
 
+use drizzle::sqlite::SQLiteFromRow;
 pub use manager::ClipboardManager;
 use serde::{Deserialize, Serialize};
 
@@ -70,6 +71,78 @@ impl From<SelectClipboards> for Clipboard {
 
             created_at: item.created_at,
             updated_at: item.updated_at,
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, specta::Type, SQLiteFromRow)]
+#[from(crate::schema::Clipboards)]
+pub struct PartialSelectClipboards {
+    pub id: u32,
+    pub content: Option<String>,
+    pub sort_order: String,
+    pub width: Option<u32>,
+    pub height: Option<u32>,
+    pub hash: Vec<u8>,
+    pub mime: Option<String>,
+    pub is_favorite: bool,
+    pub is_color: bool,
+    pub is_secret: bool,
+    pub created_at: String,
+    pub updated_at: String,
+}
+
+impl From<SelectClipboards> for PartialSelectClipboards {
+    fn from(item: SelectClipboards) -> Self {
+        Self {
+            id: item.id,
+            sort_order: item.sort_order,
+
+            content: item.content,
+
+            width: item.width,
+            height: item.height,
+
+            hash: item.hash,
+
+            mime: item.mime,
+            is_favorite: item.is_favorite,
+            is_color: item.is_color,
+            is_secret: item.is_secret,
+            created_at: item.created_at,
+            updated_at: item.updated_at,
+        }
+    }
+}
+
+impl From<PartialSelectClipboards> for Clipboard {
+    fn from(item: PartialSelectClipboards) -> Self {
+        Self {
+            id: item.id,
+            sort_order: item.sort_order,
+
+            content: item.content,
+
+            width: item.width,
+            height: item.height,
+
+            hash: item.hash,
+
+            mime: item.mime,
+
+            is_favorite: item.is_favorite,
+            is_color: item.is_color,
+            is_secret: item.is_secret,
+
+            created_at: item.created_at,
+            updated_at: item.updated_at,
+
+            image: None,
+            image_preview: None,
+            source_app: None,
+            note: None,
+            detected_date: None,
+            kv: None,
         }
     }
 }

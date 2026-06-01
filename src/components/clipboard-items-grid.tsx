@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import type { ClipboardItem as ClipboardItemType } from "@/types/clipboard";
 import { SortableItem } from "./sortable-item";
+import { Clipboard } from "@/bindings";
 
 type ClipboardItemsGridProps = {
-  items: ClipboardItemType[];
+  items: Clipboard[];
   ariaLabel?: string;
   footer?: ReactNode;
 };

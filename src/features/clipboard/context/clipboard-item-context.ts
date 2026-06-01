@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import type { ClipboardItem } from "@/types/clipboard";
+import { Clipboard } from "@/bindings";
 
-export const ClipboardItemContext = createContext<ClipboardItem | undefined>(undefined);
+export const ClipboardItemContext = createContext<Clipboard | undefined>(undefined);

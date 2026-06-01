@@ -1,31 +1,30 @@
 import { EmptyState } from "@/components/clipboard-empty-state";
 import { Button } from "@/components/ui/button";
 import { ClipboardItemsGrid } from "@/components/clipboard-items-grid";
-import { ClipboardItem as ClipboardItemType } from "@/types/clipboard";
+import { useClipboardSearchQueryStore } from "@/features/clipboard/stores/clipboard-search-query-store";
+import { useClipboards } from "@/features/clipboard/hooks/use-clipboards";
 
-type ClipboardListProps = {
-  items: ClipboardItemType[];
-  isSearching?: boolean;
-  hasMore?: boolean;
-  onLoadMore?: () => void;
-};
+export const ClipboardList = () => {
+  const { data, hasNextPage, fetchNextPage } = useClipboards(5);
 
-export const ClipboardList = ({
-  items,
-  isSearching = false,
-  hasMore = false,
-  onLoadMore,
-}: ClipboardListProps) => {
-  if (items.length === 0) {
+  const searchQuery = useClipboardSearchQueryStore(
+    (state) => state.searchQuery,
+  );
+
+  const isSearching = searchQuery.trim().length > 0;
+
+  if (!data) {
     return <EmptyState isSearching={isSearching} />;
   }
 
-  const loadMoreButton = hasMore && onLoadMore && (
+  const items = data.pages.flatMap((page) => page);
+
+  const loadMoreButton = hasNextPage && (
     <li className="list-none">
       <Button
         variant="ghost"
         className="w-full text-muted-foreground"
-        onClick={onLoadMore}
+        onClick={() => fetchNextPage()}
       >
         Load more
       </Button>
