@@ -42,6 +42,12 @@ pub struct Clipboard {
     pub updated_at: String,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone, specta::Type)]
+pub struct ClipboardsResponse {
+    pub items: Vec<Clipboard>,
+    pub total: u32,
+}
+
 impl From<SelectClipboards> for Clipboard {
     fn from(item: SelectClipboards) -> Self {
         Self {

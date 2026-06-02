@@ -1,28 +1,39 @@
-import type { ReactNode } from "react";
 import { SortableItem } from "./sortable-item";
-import { Clipboard } from "@/bindings";
+import { Button } from "@/components/ui/button";
+import { useClipboards } from "@/features/clipboard/hooks/use-clipboards";
 
 type ClipboardItemsGridProps = {
-  items: Clipboard[];
   ariaLabel?: string;
-  footer?: ReactNode;
 };
 
-export function ClipboardItemsGrid({
-  items,
-  ariaLabel,
-  footer,
-}: ClipboardItemsGridProps) {
+export function ClipboardItemsGrid({ ariaLabel }: ClipboardItemsGridProps) {
+  const { data, hasNextPage, fetchNextPage } = useClipboards(5);
+
+  if (!data) return;
+
+  const clipboards = data.pages.flatMap((page) => page.items);
+
   return (
     <ul
       className="grid grid-cols-1 gap-3 px-4 pt-1 md:grid-cols-2"
       role={ariaLabel ? "listbox" : undefined}
       aria-label={ariaLabel}
     >
-      {items.map((item) => (
-        <SortableItem key={item.id} item={item} />
+      {clipboards.map((clipboard) => (
+        <SortableItem key={clipboard.id} item={clipboard} />
       ))}
-      {footer}
+
+      {hasNextPage && (
+        <li className="list-none">
+          <Button
+            variant="ghost"
+            className="w-full text-muted-foreground"
+            onClick={() => fetchNextPage()}
+          >
+            Load more
+          </Button>
+        </li>
+      )}
     </ul>
   );
 }
