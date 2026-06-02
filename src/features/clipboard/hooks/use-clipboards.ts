@@ -1,16 +1,15 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, InfiniteData } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/features/clipboard/constant/query-key";
-import { commands } from "@/bindings";
+import { commands, ClipboardsResponse } from "@/bindings";
 
 export function useClipboards(limit: number) {
-  return useInfiniteQuery({
+  return useInfiniteQuery<ClipboardsResponse, string, InfiniteData<ClipboardsResponse, number>, string[], number>({
     queryKey: [QUERY_KEY.CLIPBOARDS],
     initialPageParam: 0,
-    getNextPageParam: () => undefined /*todo */,
-    getPreviousPageParam: () => {
-      return undefined /*todo */
+    getNextPageParam: (lastPage, allPages) => {
+      return allPages.length * limit < lastPage.total ? allPages.length : undefined;
     },
-    queryFn: async ({ pageParam = 0 }: { pageParam: number }) => {
+    queryFn: async ({ pageParam }) => {
       const result = await commands.getAllClipboardItems(limit, pageParam * limit)
 
       if (result.status === "error") throw result.error;
