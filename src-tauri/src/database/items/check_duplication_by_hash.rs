@@ -1,24 +1,22 @@
+use crate::clipboard::OnlyIdSelectClipboards;
+
 use super::super::utils::*;
 use super::super::Database;
-use rusqlite::OptionalExtension;
+use drizzle::core::expr::eq;
 
 impl Database {
     pub fn check_duplication_by_hash(&self, hash: blake3::Hash) -> Result<u32, String> {
         let drizzle = self.lock()?;
-        let conn = drizzle.db.conn();
+        let clipboards = &drizzle.schema.clipboards;
 
-        let id: Option<u32> = conn
-            .query_row(
-                "SELECT id FROM clipboards WHERE hash = ? LIMIT 1",
-                [hash.as_bytes()],
-                |row| row.get(0),
-            )
-            .optional()
+        let clipboard: OnlyIdSelectClipboards = drizzle
+            .db
+            .select((clipboards.id,))
+            .from(*clipboards)
+            .r#where(eq(clipboards.hash, hash.as_bytes()))
+            .get()
             .map_err(error_to_string)?;
 
-        match id {
-            Some(id) => Ok(id),
-            None => Err("No duplicate found".to_string()),
-        }
+        Ok(clipboard.id)
     }
 }
