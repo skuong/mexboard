@@ -152,3 +152,9 @@ impl From<PartialSelectClipboards> for Clipboard {
         }
     }
 }
+
+#[derive(Debug, Clone, SQLiteFromRow)]
+#[from(crate::schema::Clipboards)]
+pub struct OnlyIdSelectClipboards {
+    pub id: u32,
+}
