@@ -18,47 +18,40 @@ impl Database {
         let sort_order = get_new_max_sort_order(&drizzle)?;
         let now = Utc::now().to_rfc3339();
 
-        let image_preview = if let Some(rgba_buffer) =
-            ImageBuffer::<Rgba<u8>, _>::from_raw(params.width, params.height, params.image.clone())
-        {
-            let img = DynamicImage::ImageRgba8(rgba_buffer);
-            let thumbnail = img.thumbnail(400, 400);
-            let mut buffer = Vec::new();
+        let dynamic_image =
+            ImageBuffer::<Rgba<u8>, _>::from_raw(params.width, params.height, params.image)
+                .map(DynamicImage::ImageRgba8)
+                .ok_or_else(|| "Failed to create image buffer from raw bytes".to_string())?;
 
-            if thumbnail
-                .write_to(&mut Cursor::new(&mut buffer), ImageFormat::WebP)
-                .is_ok()
-            {
-                Some(buffer)
-            } else {
-                None
-            }
-        } else {
-            None
-        };
+        let mut image_webp = Vec::new();
+        dynamic_image
+            .write_to(&mut Cursor::new(&mut image_webp), ImageFormat::WebP)
+            .map_err(|err| format!("Failed to encode image to WebP: {}", err))?;
 
-        if let Some(preview) = image_preview {
-            drizzle
-                .db
-                .insert(*clipboards)
-                .values([InsertClipboards::new(
-                    sort_order,
-                    params.hash,
-                    false,
-                    false,
-                    false,
-                    now.clone(),
-                    now,
-                )
-                .with_image(params.image)
-                .with_image_preview(preview)
-                .with_width(params.width)
-                .with_height(params.height)])
-                .execute()
-                .map_err(error_to_string)?;
-        } else {
-            log::error!("No preview image. Can't insert image")
-        }
+        let mut preview_webp = Vec::new();
+        dynamic_image
+            .thumbnail(400, 400)
+            .write_to(&mut Cursor::new(&mut preview_webp), ImageFormat::WebP)
+            .map_err(|err| format!("Failed to encode image to WebP: {}", err))?;
+
+        drizzle
+            .db
+            .insert(*clipboards)
+            .values([InsertClipboards::new(
+                sort_order,
+                params.hash,
+                false,
+                false,
+                false,
+                now.clone(),
+                now,
+            )
+            .with_image(image_webp)
+            .with_image_preview(preview_webp)
+            .with_width(params.width)
+            .with_height(params.height)])
+            .execute()
+            .map_err(error_to_string)?;
 
         Ok(())
     }
