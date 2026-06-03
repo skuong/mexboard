@@ -1,4 +1,7 @@
-use crate::database::{structs::insert_clipboard_db_params::InsertClipboardDbParams, Database};
+use crate::database::{
+    structs::insert_clipboard_db_params::InsertClipboardDbParams, structs::InsertImageDbParams,
+    Database,
+};
 use std::sync::atomic::{AtomicBool, Ordering};
 use tauri::{AppHandle, Manager};
 use tokio::time::{interval, Duration};
@@ -76,12 +79,11 @@ pub fn start(app_handle: &AppHandle) {
                                     continue;
                                 }
 
-                                if let Err(err) = db.insert_image(InsertClipboardDbParams {
-                                    content: None,
+                                if let Err(err) = db.insert_image(InsertImageDbParams {
                                     hash: hash.as_bytes().to_vec(),
-                                    image: Some(image.0),
-                                    width: Some(image.1),
-                                    height: Some(image.2),
+                                    image: image.0,
+                                    width: image.1,
+                                    height: image.2,
                                 }) {
                                     log::error!("Failed to insert image: {}", err);
                                 }
