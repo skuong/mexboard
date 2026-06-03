@@ -70,6 +70,21 @@ pub fn start(app_handle: &AppHandle) {
                             if let Some(image) = image {
                                 let hash = crypto::hash_bytes::hash(&image.0);
                                 log::info!("Image hash: {:?}", hash);
+
+                                if let Ok(id) = db.check_duplication_by_hash(hash) {
+                                    log::info!("Duplication found: {}", id);
+                                    continue;
+                                }
+
+                                if let Err(err) = db.insert_image(InsertClipboardDbParams {
+                                    content: None,
+                                    hash: hash.as_bytes().to_vec(),
+                                    image: Some(image.0),
+                                    width: Some(image.1),
+                                    height: Some(image.2),
+                                }) {
+                                    log::error!("Failed to insert image: {}", err);
+                                }
                             }
                         }
                         Err(err) => {
