@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - v2
+      - beta
 
 permissions:
   contents: write
@@ -30,6 +30,13 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Fetch tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git fetch --tags --force
 
       - name: Compute next release
         id: plan

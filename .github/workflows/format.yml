@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - v2
+      - beta
   pull_request:
 
 jobs:
