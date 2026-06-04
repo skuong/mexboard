@@ -1,12 +1,12 @@
-use crate::database::{
-    structs::insert_clipboard_db_params::InsertClipboardDbParams, structs::InsertImageDbParams,
-    Database,
+use crate::{
+    clipboard::{compare_and_insert_image_if_not_exists, compare_and_insert_text_if_not_exists},
+    database::Database,
 };
 use std::sync::atomic::{AtomicBool, Ordering};
 use tauri::{AppHandle, Manager};
 use tokio::time::{interval, Duration};
 
-use crate::{clipboard::manager, crypto};
+use crate::clipboard::manager;
 
 pub struct MonitorState {
     pub is_monitoring: AtomicBool,
@@ -40,53 +40,17 @@ pub fn start(app_handle: &AppHandle) {
             match clipboard_text {
                 Ok(text) => {
                     if !text.is_empty() {
-                        let hash = crypto::hash_bytes::hash(text.as_bytes());
-                        log::info!("Text: {:?}", text);
-                        log::info!("Text hash: {:?}", hash);
-
-                        if let Ok(id) = db.check_duplication_by_hash(hash) {
-                            log::info!("Duplication found: {}", id);
-                            continue;
-                        }
-
-                        log::info!("No duplicate found");
-
-                        if let Err(err) = db.insert_text(InsertClipboardDbParams {
-                            content: Some(text),
-                            hash: hash.as_bytes().to_vec(),
-                            image: None,
-                            width: None,
-                            height: None,
-                        }) {
-                            log::error!("Failed to insert text: {}", err);
-                        }
+                        compare_and_insert_text_if_not_exists(text, &db);
                     }
                 }
-                Err(err) => {
-                    log::error!("Failed to read clipboard as text: {}", err);
-
+                Err(_) => {
                     let clipboard_image =
                         app.state::<manager::ClipboardManager>().read_image().await;
 
                     match clipboard_image {
                         Ok(image) => {
                             if let Some(image) = image {
-                                let hash = crypto::hash_bytes::hash(&image.0);
-                                log::info!("Image hash: {:?}", hash);
-
-                                if let Ok(id) = db.check_duplication_by_hash(hash) {
-                                    log::info!("Duplication found: {}", id);
-                                    continue;
-                                }
-
-                                if let Err(err) = db.insert_image(InsertImageDbParams {
-                                    hash: hash.as_bytes().to_vec(),
-                                    image: image.0,
-                                    width: image.1,
-                                    height: image.2,
-                                }) {
-                                    log::error!("Failed to insert image: {}", err);
-                                }
+                                compare_and_insert_image_if_not_exists(image, &db);
                             }
                         }
                         Err(err) => {

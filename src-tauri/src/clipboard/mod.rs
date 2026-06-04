@@ -7,6 +7,9 @@ use drizzle::sqlite::SQLiteFromRow;
 pub use manager::ClipboardManager;
 use serde::{Deserialize, Serialize};
 
+pub(crate) use mexboard::compare_and_insert_image_if_not_exists;
+pub(crate) use mexboard::compare_and_insert_text_if_not_exists;
+
 use crate::schema::SelectClipboards;
 
 #[derive(Debug, Serialize, Deserialize, Clone, specta::Type)]
