@@ -42,6 +42,24 @@ console.log(`Updated Cargo.toml version to ${newVersion}`);
 
 // Update tauri.conf.json
 const tauriConf = JSON.parse(readFileSync(tauriConfPath, 'utf-8'));
-tauriConf.version = newVersion;
+
+// Sanitize version for Tauri (especially Windows MSI/NSIS)
+// Windows requires numeric-only pre-release identifiers
+// 1.2.3-beta.1 -> 1.2.3-1
+let tauriVersion = newVersion;
+if (tauriVersion.includes('-')) {
+	const parts = tauriVersion.split('-');
+	const baseVersion = parts[0];
+	const preRelease = parts.slice(1).join('-');
+
+	const numericParts = preRelease.match(/\d+/g);
+	if (numericParts) {
+		tauriVersion = `${baseVersion}-${numericParts.join('.')}`;
+	} else {
+		tauriVersion = `${baseVersion}-0`;
+	}
+}
+
+tauriConf.version = tauriVersion;
 writeFileSync(tauriConfPath, `${JSON.stringify(tauriConf, null, 2)}\n`, 'utf-8');
-console.log(`Updated tauri.conf.json version to ${newVersion}`);
+console.log(`Updated tauri.conf.json version to ${tauriVersion} (sanitized from ${newVersion})`);
