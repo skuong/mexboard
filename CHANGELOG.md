@@ -1,3 +1,28 @@
+# [1.26.0-beta.1](https://github.com/sokhuong-uon/mexboard/compare/v1.25.0...v1.26.0-beta.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* add unique constrain to hash column without manually creating index ([eb6b25b](https://github.com/sokhuong-uon/mexboard/commit/eb6b25b162847efc12db1c78a47fc0a57908d0d3))
+* update bindings type matching with image type changes in db schema ([4eeeb83](https://github.com/sokhuong-uon/mexboard/commit/4eeeb83ad9fe0a499b56e66687e1bcdafd26564f))
+* use Vec<u8> for image blob and blake3 hash in db schema ([9c659ab](https://github.com/sokhuong-uon/mexboard/commit/9c659abf3bf4f9a6f4659fee0a430a4828804886))
+
+
+### Features
+
+* add hash comparision function ([6c5730f](https://github.com/sokhuong-uon/mexboard/commit/6c5730f96a458ce8e1b98c07038bf11f6e339232))
+* add image preview using webp format ([0f60491](https://github.com/sokhuong-uon/mexboard/commit/0f604914eb15c59f46501fc4349c4e2916797218))
+* add logging ([7e314aa](https://github.com/sokhuong-uon/mexboard/commit/7e314aaf698d86fd045fc34b58ac2d8fc5288ed5))
+* add sort_order for each item ([35415df](https://github.com/sokhuong-uon/mexboard/commit/35415df392da5ca8bedf49ad752376c23d2ff5bb))
+* can insert image ([845dc4b](https://github.com/sokhuong-uon/mexboard/commit/845dc4b3b83d2b04dab4212b7b19dcf16e98bca8))
+* can insert text and check for duplicate item ([4cd2400](https://github.com/sokhuong-uon/mexboard/commit/4cd24003c3797811fd301a89839655fa1879ad20))
+* can list clipboards on the front-end—again! ([ad7ad26](https://github.com/sokhuong-uon/mexboard/commit/ad7ad2610451f185770ca89c460bc34060221e16))
+* can load next page using infinite query ([fa98bd9](https://github.com/sokhuong-uon/mexboard/commit/fa98bd9cf3ef5fc4340328afcc2af55d9428acf3))
+* can read text again ([4a5a9a0](https://github.com/sokhuong-uon/mexboard/commit/4a5a9a092d4887e689256d6adada431e79a2dbcf))
+* read image if getting ContentNotAvailable while reading text ([03c3b44](https://github.com/sokhuong-uon/mexboard/commit/03c3b4448b2aa506ad64635b7f248bb0e280d974))
+* request image via async uri scheme ([a6b4add](https://github.com/sokhuong-uon/mexboard/commit/a6b4add423de0c0696709038e2662ef1c07baffb))
+* store all image in webp ([3094676](https://github.com/sokhuong-uon/mexboard/commit/3094676c14a87a45e19fd3a091f0067346bbf397))
+
 # [1.25.0](https://github.com/sokhuong-uon/mexboard/compare/v1.24.0...v1.25.0) (2026-05-27)
 
 
