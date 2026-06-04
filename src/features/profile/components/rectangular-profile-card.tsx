@@ -18,7 +18,6 @@ export function RectangularProfileCard() {
 			if (!session) return;
 
 			const { data: state } = await authClient.customer.state();
-			//@ts-expect-error
 			setCustomerState(state);
 		}
 

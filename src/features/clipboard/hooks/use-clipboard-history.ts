@@ -4,7 +4,7 @@ import { useReorderClipboardItems } from '@/features/clipboard/hooks/use-reorder
 import type { ClipboardContent } from '@/types/clipboard';
 
 export const useClipboardHistory = (maxItems: number, favoritesFirst: boolean) => {
-	const { history, historyRef, isLoaded, hasMore, loadMore, invalidate } = useClipboardHistoryQuery(
+	const { history, historyRef, isLoaded, hasMore, loadMore } = useClipboardHistoryQuery(
 		maxItems,
 		favoritesFirst,
 	);
@@ -13,7 +13,7 @@ export const useClipboardHistory = (maxItems: number, favoritesFirst: boolean) =
 		type: 'empty',
 	});
 
-	const reorderItems = useReorderClipboardItems(historyRef, invalidate, maxItems, favoritesFirst);
+	const reorderItems = useReorderClipboardItems(historyRef, maxItems, favoritesFirst);
 
 	return {
 		history,
