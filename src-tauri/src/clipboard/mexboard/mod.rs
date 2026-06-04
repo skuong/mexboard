@@ -1,9 +1,14 @@
+pub mod compare_and_insert_image_if_not_exists;
+pub mod compare_and_insert_text_if_not_exists;
 mod is_clipboard_instance_exists;
 mod read_image;
 mod read_text;
 mod with_clipboard;
 mod write_image;
 mod write_text;
+
+pub(super) use compare_and_insert_image_if_not_exists::compare_and_insert_image_if_not_exists;
+pub(super) use compare_and_insert_text_if_not_exists::compare_and_insert_text_if_not_exists;
 
 use is_clipboard_instance_exists::is_clipboard_instance_exists;
 use read_image::read_image;
