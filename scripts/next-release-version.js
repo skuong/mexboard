@@ -23,7 +23,6 @@ const setOutput = (name, value) => {
 try {
 	const result = await semanticRelease(
 		{
-			ci: false,
 			dryRun: true,
 		},
 		{
