@@ -1,4 +1,4 @@
-export type Symbol = {
+export type MexboardSymbol = {
 	char: string;
 	name: string;
 };

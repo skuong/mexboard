@@ -1,5 +1,5 @@
-import { SettingsSheet } from '@/features/preferences/components/settings-sheet';
 import { ClipboardSearchBox } from '@/features/clipboard/components/clipboard-search-box';
+import { SettingsSheet } from '@/features/preferences/components/settings-sheet';
 
 export const ClipboardTabHeader = () => {
 	return (

@@ -1,7 +1,7 @@
 import { AlertCircle } from 'lucide-react';
-import { ClipboardError } from '@/types/clipboard';
-import { Alert, AlertTitle, AlertDescription, AlertAction } from '@/components/ui/alert';
+import { Alert, AlertAction, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import type { ClipboardError } from '@/types/clipboard';
 
 type ErrorBannerProps = {
 	error: ClipboardError;

@@ -1,5 +1,5 @@
+import { type InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useSyncExternalStore } from 'react';
-import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import {
 	CLIPBOARD_HISTORY_KEY,
 	type ClipboardHistoryPage,

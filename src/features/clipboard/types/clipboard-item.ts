@@ -1,4 +1,4 @@
-import { Mime } from '@/features/clipboard/types/mime';
+import type { Mime } from '@/features/clipboard/types/mime';
 
 export type ClipboardItem = {
 	id: number;

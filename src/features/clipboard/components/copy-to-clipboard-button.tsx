@@ -1,10 +1,10 @@
+import { Check, Copy } from 'lucide-react';
+import type { ComponentProps } from 'react';
 import { Button } from '@/components/ui/button';
-import { Copy, Check } from 'lucide-react';
-import { cn } from '@/utils/cn';
-import { ComponentProps } from 'react';
 import { useClipboardItem } from '@/features/clipboard/hooks/use-clipboard-item';
-import { useClipboard } from '@/hooks/use-clipboard';
 import { useInternalCurrentClipboardItem } from '@/features/clipboard/stores/internal-current-clipboard-item';
+import { useClipboard } from '@/hooks/use-clipboard';
+import { cn } from '@/utils/cn';
 
 export function CopyToClipboardButton({ className }: ComponentProps<typeof Button>) {
 	const { currentClipboard: currentInternalClipboard, setCurrentClipboard } =

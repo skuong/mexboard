@@ -1,4 +1,4 @@
-import { Klipy } from '@/features/klipy/schema/klipy';
+import type { Klipy } from '@/features/klipy/schema/klipy';
 
 export type KlipyResponseData = {
 	current_page: number;

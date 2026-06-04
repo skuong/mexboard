@@ -1,11 +1,10 @@
-import { RotateCcw } from 'lucide-react';
-import { useHotkeyRecorder, formatForDisplay } from '@tanstack/react-hotkeys';
 import type { Hotkey } from '@tanstack/react-hotkeys';
-
-import { Button } from '@/components/ui/button';
+import { formatForDisplay, useHotkeyRecorder } from '@tanstack/react-hotkeys';
+import { RotateCcw } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { HOTKEY_META, type HotkeyAction } from '@/features/hotkey/hotkey-actions';
+import { cn } from '@/lib/utils';
 
 export function HotkeyRow({
 	action,
@@ -73,7 +72,7 @@ export function HotkeyRow({
 						'cursor-pointer select-none font-mono tabular-nums min-w-8 justify-center',
 						isRecording && 'animate-pulse',
 					)}
-					render={<button onClick={handleClick} />}
+					render={<Button onClick={handleClick} />}
 				>
 					{displayText}
 				</Badge>

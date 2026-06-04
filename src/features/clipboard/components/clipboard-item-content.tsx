@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import { useEffect, useRef, useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useClipboardItem } from '../hooks/use-clipboard-item';
 
 const CollapsibleText = ({ text }: { text: string }) => {
@@ -13,7 +13,7 @@ const CollapsibleText = ({ text }: { text: string }) => {
 		if (el) {
 			setIsClamped(el.scrollHeight > el.clientHeight);
 		}
-	}, [text]);
+	}, []);
 
 	return (
 		<Collapsible open={isOpen} onOpenChange={setIsOpen}>

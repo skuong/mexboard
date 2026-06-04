@@ -1,4 +1,4 @@
-import { KlipyFile } from '@/features/klipy/schema/klipy-file';
+import type { KlipyFile } from '@/features/klipy/schema/klipy-file';
 
 export type Klipy = {
 	id: number;

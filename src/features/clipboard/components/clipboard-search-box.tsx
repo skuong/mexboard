@@ -1,11 +1,11 @@
-import { ClipboardFilterMenu } from '@/components/clipboard-filter-menu';
-import { useClipboardSearchQueryStore } from '@/features/clipboard/stores/clipboard-search-query-store';
 import { useHotkey } from '@tanstack/react-hotkeys';
-import { ComponentProps, useRef } from 'react';
+import { useDebouncedCallback } from '@tanstack/react-pacer';
+import { type ComponentProps, useRef } from 'react';
+import { ClipboardFilterMenu } from '@/components/clipboard-filter-menu';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
+import { useClipboardSearchQueryStore } from '@/features/clipboard/stores/clipboard-search-query-store';
 import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
 import { cn } from '@/utils/cn';
-import { useDebouncedCallback } from '@tanstack/react-pacer';
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 
 export function ClipboardSearchBox({ className }: ComponentProps<'div'>) {
 	const searchInputRef = useRef<HTMLInputElement>(null);

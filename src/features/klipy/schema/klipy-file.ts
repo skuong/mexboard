@@ -1,4 +1,4 @@
-import { KlipyMedia } from '@/features/klipy/schema/klipy-media';
+import type { KlipyMedia } from '@/features/klipy/schema/klipy-media';
 
 export type KlipyFile = {
 	hd: KlipyMedia;

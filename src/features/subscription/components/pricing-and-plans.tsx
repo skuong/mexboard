@@ -1,8 +1,8 @@
-import { authClient } from '@/features/auth/lib/better-auth-client';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { authClient } from '@/features/auth/lib/better-auth-client';
 
 const plans = [
 	{

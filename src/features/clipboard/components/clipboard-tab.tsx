@@ -1,8 +1,8 @@
-import { ClipboardList } from '@/components/clipboard-list';
 import { ClipboardItemSkeletonList } from '@/components/clipboard-item-skeleton';
+import { ClipboardList } from '@/components/clipboard-list';
 import { ClipboardTabHeader } from '@/features/clipboard/components/clipboard-tab-header';
-import { useSettings } from '@/hooks/use-settings';
 import { useClipboardHistory } from '@/features/clipboard/hooks/use-clipboard-history';
+import { useSettings } from '@/hooks/use-settings';
 
 export function ClipboardTab() {
 	const { historyLimit } = useSettings();

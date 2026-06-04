@@ -1,0 +1,47 @@
+name: Build Windows
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set release version
+        run: node scripts/sync-version.js "${{ inputs.version }}"
+
+      - name: Build app
+        env:
+          VITE_KLIPY_API_BASE_URL: ${{ vars.VITE_KLIPY_API_BASE_URL }}
+          VITE_KLIPY_PER_PAGE_LIMIT: ${{ vars.VITE_KLIPY_PER_PAGE_LIMIT }}
+          VITE_KLIPY_API_KEY: ${{ secrets.VITE_KLIPY_API_KEY }}
+        run: pnpm tauri build --bundles nsis msi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mexboard-windows
+          path: |
+            src-tauri/target/release/bundle/nsis/*.exe
+            src-tauri/target/release/bundle/msi/*.msi
+          if-no-files-found: error

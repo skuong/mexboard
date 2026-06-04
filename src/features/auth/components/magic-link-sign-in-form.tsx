@@ -1,17 +1,17 @@
-import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { GalleryVerticalEnd, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { GalleryVerticalEnd, Loader2 } from 'lucide-react';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import { authClient } from '@/features/auth/lib/better-auth-client';
 import {
-	MagicLinkSignInSchema,
+	type MagicLinkSignInSchema,
 	magicLinkSignInSchema,
 } from '@/features/auth/schema/magic-link-sign-in-schema';
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 export function MagicLinkSignInForm({ className, ...props }: React.ComponentProps<'div'>) {
 	const form = useForm<MagicLinkSignInSchema>({

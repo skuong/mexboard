@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { commands } from '@/bindings';
-import { ClipboardItem } from '@/types/clipboard';
+import type { ClipboardItem } from '@/types/clipboard';
 
 export function usePasteActions() {
 	const pasteClipboardItem = useCallback(async (item: ClipboardItem) => {

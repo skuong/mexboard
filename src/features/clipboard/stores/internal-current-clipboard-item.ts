@@ -1,5 +1,5 @@
-import { Clipboard } from '@/bindings';
 import { create } from 'zustand';
+import type { Clipboard } from '@/bindings';
 
 type InternalCurrentClipboardItem = {
 	currentClipboard?: Clipboard;

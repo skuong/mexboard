@@ -1,6 +1,6 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import type { Clipboard } from '@/bindings';
 import { ClipboardItemContext } from '@/features/clipboard/context/clipboard-item-context';
-import { Clipboard } from '@/bindings';
 
 export function ClipboardItemContextProvider({
 	item,

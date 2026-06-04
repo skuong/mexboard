@@ -1,11 +1,11 @@
-import { RefObject, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { generateKeyBetween } from 'jittered-fractional-indexing';
-import { ClipboardItem } from '@/types/clipboard';
+import { type RefObject, useCallback } from 'react';
 import {
-	ClipboardHistoryPage,
+	type ClipboardHistoryPage,
 	clipboardHistoryQueryKey,
 } from '@/features/clipboard/hooks/use-clipboard-history-query';
+import type { ClipboardItem } from '@/types/clipboard';
 
 type InfiniteData = {
 	pages: ClipboardHistoryPage[];
@@ -14,7 +14,6 @@ type InfiniteData = {
 
 export const useReorderClipboardItems = (
 	historyRef: RefObject<ClipboardItem[]>,
-	invalidate: () => void,
 	maxItems: number,
 	favoritesFirst: boolean,
 ) => {
@@ -49,13 +48,7 @@ export const useReorderClipboardItems = (
 					};
 				},
 			);
-
-			try {
-			} catch (err) {
-				console.error('Failed to update sort order:', err);
-				invalidate();
-			}
 		},
-		[historyRef, invalidate, maxItems, favoritesFirst, queryClient],
+		[historyRef, maxItems, favoritesFirst, queryClient],
 	);
 };

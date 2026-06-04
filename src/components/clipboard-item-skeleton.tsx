@@ -19,6 +19,7 @@ const SingleSkeleton = () => (
 export const ClipboardItemSkeletonList = ({ count = 6 }: { count?: number }) => (
 	<ul className="grid grid-cols-1 gap-3 p-4 md:grid-cols-2">
 		{Array.from({ length: count }, (_, i) => (
+			// biome-ignore lint/suspicious/noArrayIndexKey: It's a skeleton
 			<li key={i} className="list-none">
 				<SingleSkeleton />
 			</li>

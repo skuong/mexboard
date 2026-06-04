@@ -1,9 +1,9 @@
 import { Clock } from 'lucide-react';
-import { ClipboardItem } from '@/types/clipboard';
-import { formatRelativeDate, formatFullDate } from '@/utils/formatting';
-import { Badge } from '@/components/ui/badge';
 import { classifyFileMime } from '@/components/clipboard-item-file';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import type { ClipboardItem } from '@/types/clipboard';
+import { formatFullDate, formatRelativeDate } from '@/utils/formatting';
 
 export const ClipboardItemMeta = ({ item }: { item: ClipboardItem }) => {
 	const fileKind = item.file_mime ? classifyFileMime(item.file_mime) : null;

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { useSymbolsSearchQueryStore } from '@/features/symbols/stores/symbols-search-query-store';
-import { SYMBOL_DATA } from '@/features/symbols/data/symbol-data';
-import { SymbolsTabHeader } from '@/features/symbols/components/symbols-tab-header';
 import { SymbolItem } from '@/features/symbols/components/symbol-item';
+import { SymbolsTabHeader } from '@/features/symbols/components/symbols-tab-header';
+import { SYMBOL_DATA } from '@/features/symbols/data/symbol-data';
+import { useSymbolsSearchQueryStore } from '@/features/symbols/stores/symbols-search-query-store';
 
 export const SymbolsTab = () => {
 	const searchQuery = useSymbolsSearchQueryStore((state) => state.searchQuery);

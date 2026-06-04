@@ -6,7 +6,7 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!!**/dist", "!!**/src-tauri"]
+		"includes": ["**", "!!**/dist", "!!**/src-tauri", "!**/src/bindings.ts"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -36,5 +36,13 @@
 				"organizeImports": "on"
 			}
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["**/src/components/ui/**"],
+			"linter": {
+				"enabled": false
+			}
+		}
+	]
 }

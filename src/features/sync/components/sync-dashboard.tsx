@@ -1,9 +1,9 @@
-import { authClient } from '@/features/auth/lib/better-auth-client';
-import { PricingAndPlans } from '@/features/subscription/components/pricing-and-plans';
+import type { CustomerState } from '@polar-sh/sdk/models/components/customerstate';
 import { useEffect, useState } from 'react';
-import { CustomerState } from '@polar-sh/sdk/models/components/customerstate';
-import { ManageSubscriptionButton } from '@/features/subscription/components/manage-subscription-button';
+import { authClient } from '@/features/auth/lib/better-auth-client';
 import { RectangularProfileCard } from '@/features/profile/components/rectangular-profile-card';
+import { ManageSubscriptionButton } from '@/features/subscription/components/manage-subscription-button';
+import { PricingAndPlans } from '@/features/subscription/components/pricing-and-plans';
 import { ConnectToServerButton } from '@/features/sync/components/connect-to-server-button';
 
 export function SyncDashboard() {
@@ -17,7 +17,7 @@ export function SyncDashboard() {
 
 			const { data: state } = await authClient.customer.state();
 			console.log('state', state);
-			//@ts-ignore
+			//@ts-expect-error
 			setCustomerState(state);
 		}
 

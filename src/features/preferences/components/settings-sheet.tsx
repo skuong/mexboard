@@ -3,9 +3,9 @@ import { Button } from '@/components/ui/button';
 import {
 	Sheet,
 	SheetContent,
+	SheetDescription,
 	SheetHeader,
 	SheetTitle,
-	SheetDescription,
 	SheetTrigger,
 } from '@/components/ui/sheet';
 import { SettingsSheetBody } from '@/features/preferences/components/settings-sheet-body';

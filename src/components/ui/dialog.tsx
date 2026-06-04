@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog';
+import type * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -91,11 +91,11 @@ function DialogDescription({ className, ...props }: DialogPrimitive.Description.
 
 export {
 	Dialog,
-	DialogTrigger,
 	DialogClose,
 	DialogContent,
-	DialogHeader,
-	DialogFooter,
-	DialogTitle,
 	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
 };

@@ -1,14 +1,13 @@
 import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { SheetClose } from '@/components/ui/sheet';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { cn } from '@/lib/utils';
-import { PAGE_LIMIT_OPTIONS } from '@/hooks/use-settings';
-import { useClipboardMonitoringStore } from '@/features/clipboard/stores/clipboard-monitoring-store';
 import { useClearClipboardHistory } from '@/features/clipboard/hooks/use-clear-clipboard-history';
 import { useHasClipboardHistory } from '@/features/clipboard/hooks/use-has-clipboard-history';
+import { useClipboardMonitoringStore } from '@/features/clipboard/stores/clipboard-monitoring-store';
+import { PAGE_LIMIT_OPTIONS, useSettings } from '@/hooks/use-settings';
+import { cn } from '@/lib/utils';
 import { SettingRow } from '../setting-row';
-import { useSettings } from '@/hooks/use-settings';
-import { Button } from '@/components/ui/button';
 
 export function GeneralSettings() {
 	const isMonitoring = useClipboardMonitoringStore((state) => state.isMonitoring);
@@ -20,7 +19,7 @@ export function GeneralSettings() {
 	return (
 		<div className="flex flex-col gap-1">
 			<SettingRow label="Monitoring" description={isMonitoring ? 'Active' : 'Paused'}>
-				<button
+				<Button
 					onClick={toggleMonitoring}
 					className={cn(
 						'relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border border-transparent transition-colors',
@@ -33,7 +32,7 @@ export function GeneralSettings() {
 							isMonitoring ? 'translate-x-4 bg-background' : 'translate-x-0.5 bg-muted-foreground',
 						)}
 					/>
-				</button>
+				</Button>
 			</SettingRow>
 
 			<div className="h-px bg-border/60 my-1" />

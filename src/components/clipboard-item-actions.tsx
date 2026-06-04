@@ -1,9 +1,9 @@
 import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { CopyToClipboardButton } from '@/features/clipboard/components/copy-to-clipboard-button';
-import { useInternalCurrentClipboardItem } from '@/features/clipboard/stores/internal-current-clipboard-item';
 import { useClipboardItem } from '@/features/clipboard/hooks/use-clipboard-item';
+import { useInternalCurrentClipboardItem } from '@/features/clipboard/stores/internal-current-clipboard-item';
 
 export const ClipboardItemActions = () => {
 	const currentInternalClipboard = useInternalCurrentClipboardItem(
