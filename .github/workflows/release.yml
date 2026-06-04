@@ -55,7 +55,8 @@ jobs:
     if: needs.plan-release.outputs.released == 'true'
     uses: ./.github/workflows/format.yml
 
-  build-linux:
+  release-linux:
+    name: Release Build (Linux)
     needs:
       - plan-release
       - check-format
@@ -67,7 +68,8 @@ jobs:
       version: ${{ needs.plan-release.outputs.version }}
     secrets: inherit
 
-  build-windows:
+  release-windows:
+    name: Release Build (Windows)
     needs:
       - plan-release
       - check-format
@@ -79,7 +81,8 @@ jobs:
       version: ${{ needs.plan-release.outputs.version }}
     secrets: inherit
 
-  build-macos:
+  release-macos:
+    name: Release Build (macOS)
     needs:
       - plan-release
       - check-format
@@ -96,15 +99,15 @@ jobs:
     needs:
       - plan-release
       - check-format
-      - build-linux
-      - build-windows
-      - build-macos
+      - release-linux
+      - release-windows
+      - release-macos
     if: |
       needs.plan-release.outputs.released == 'true' &&
       needs.check-format.result == 'success' &&
-      needs.build-linux.result == 'success' &&
-      needs.build-windows.result == 'success' &&
-      needs.build-macos.result == 'success'
+      needs.release-linux.result == 'success' &&
+      needs.release-windows.result == 'success' &&
+      needs.release-macos.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
