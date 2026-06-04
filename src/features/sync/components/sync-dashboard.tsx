@@ -16,12 +16,9 @@ export function SyncDashboard() {
 			if (!session) return;
 
 			const { data: state } = await authClient.customer.state();
-			console.log('state', state);
-			//@ts-expect-error
 			setCustomerState(state);
 		}
 
-		console.log('session', session);
 		getCustomerState();
 	}, [session]);
 

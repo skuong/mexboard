@@ -3,6 +3,7 @@ mod check_duplication_by_hash;
 mod clear;
 mod delete;
 mod get_all;
+mod get_image_by_id;
 mod get_max_sort_order_internal;
 mod get_new_max_sort_order;
 mod insert;

@@ -1,1 +1,3 @@
-pub mod main_window;
+mod main_window;
+
+pub(crate) use main_window::setup;

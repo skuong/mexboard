@@ -9,6 +9,7 @@ mod crypto;
 mod database;
 mod deep_link;
 mod detection;
+mod media;
 mod schema;
 mod shortcuts;
 mod tray;
@@ -18,9 +19,9 @@ mod window;
 
 use clipboard::ClipboardManager;
 use commands::create_command_builder;
+use media::image_protocol_handler;
 use tauri::Manager;
 use websocket::WebSocketState;
-use window::main_window;
 
 fn main() {
     let command_builder = create_command_builder();
@@ -40,6 +41,9 @@ fn main() {
     };
 
     tauri::Builder::default()
+        .register_asynchronous_uri_scheme_protocol("image", |context, request, responder| {
+            image_protocol_handler(context, request, responder);
+        })
         .plugin(tauri_plugin_cli::init())
         .plugin(tauri_plugin_log::Builder::new().level(log_level).build())
         .plugin(tauri_plugin_store::Builder::new().build())
@@ -72,7 +76,7 @@ fn main() {
 
             caret::init();
             tray::setup(app)?;
-            main_window::setup(app);
+            window::setup(app);
 
             clipboard::monitoring::start(app.handle());
 
