@@ -1,2 +1,1 @@
-export function useWriteImageToClipboard() {
-}
+export function useWriteImageToClipboard() {}

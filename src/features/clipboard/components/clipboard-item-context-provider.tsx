@@ -1,16 +1,12 @@
-import { PropsWithChildren } from "react";
-import { ClipboardItemContext } from "@/features/clipboard/context/clipboard-item-context";
-import { Clipboard } from "@/bindings";
+import { PropsWithChildren } from 'react';
+import { ClipboardItemContext } from '@/features/clipboard/context/clipboard-item-context';
+import { Clipboard } from '@/bindings';
 
 export function ClipboardItemContextProvider({
-  item,
-  children,
+	item,
+	children,
 }: PropsWithChildren<{
-  item: Clipboard;
+	item: Clipboard;
 }>) {
-  return (
-    <ClipboardItemContext.Provider value={item}>
-      {children}
-    </ClipboardItemContext.Provider>
-  );
+	return <ClipboardItemContext.Provider value={item}>{children}</ClipboardItemContext.Provider>;
 }

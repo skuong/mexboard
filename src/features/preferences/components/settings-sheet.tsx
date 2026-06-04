@@ -1,43 +1,40 @@
-import { Settings2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Settings2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { SettingsSheetBody } from "@/features/preferences/components/settings-sheet-body";
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetDescription,
+	SheetTrigger,
+} from '@/components/ui/sheet';
+import { SettingsSheetBody } from '@/features/preferences/components/settings-sheet-body';
 
 export function SettingsSheet() {
-  return (
-    <Sheet>
-      <SheetTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="text-neutral-400 dark:text-neutral-600 cursor-pointer"
-          />
-        }
-      >
-        <Settings2 className="size-5" />
-      </SheetTrigger>
+	return (
+		<Sheet>
+			<SheetTrigger
+				render={
+					<Button
+						variant="ghost"
+						size="icon-sm"
+						className="text-neutral-400 dark:text-neutral-600 cursor-pointer"
+					/>
+				}
+			>
+				<Settings2 className="size-5" />
+			</SheetTrigger>
 
-      <SheetContent
-        side="right"
-        className="data-[side=right]:w-11/12 overflow-y-auto"
-      >
-        <SheetHeader className="pb-2">
-          <SheetTitle>Settings</SheetTitle>
-          <SheetDescription className="sr-only">
-            Configure clipboard monitoring, sync, and keyboard shortcuts.
-          </SheetDescription>
-        </SheetHeader>
+			<SheetContent side="right" className="data-[side=right]:w-11/12 overflow-y-auto">
+				<SheetHeader className="pb-2">
+					<SheetTitle>Settings</SheetTitle>
+					<SheetDescription className="sr-only">
+						Configure clipboard monitoring, sync, and keyboard shortcuts.
+					</SheetDescription>
+				</SheetHeader>
 
-        <SettingsSheetBody />
-      </SheetContent>
-    </Sheet>
-  );
+				<SettingsSheetBody />
+			</SheetContent>
+		</Sheet>
+	);
 }

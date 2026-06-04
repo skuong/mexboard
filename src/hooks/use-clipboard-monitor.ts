@@ -1,71 +1,68 @@
-import { useEffect, useRef } from "react";
-import { commands } from "@/bindings";
-import { listen } from "@tauri-apps/api/event";
-import { ClipboardContent } from "@/types/clipboard";
+import { useEffect, useRef } from 'react';
+import { commands } from '@/bindings';
+import { listen } from '@tauri-apps/api/event';
+import { ClipboardContent } from '@/types/clipboard';
 
 type ClipboardChangeEvent =
-  | { type: "text"; text: string }
-  | { type: "image"; base64Data: string; width: number; height: number };
+	| { type: 'text'; text: string }
+	| { type: 'image'; base64Data: string; width: number; height: number };
 
 type MonitorOptions = {
-  onClipboardChange: (content: ClipboardContent) => void;
-  onCurrentContentUpdate: (content: ClipboardContent) => void;
-  isMonitoring: boolean;
+	onClipboardChange: (content: ClipboardContent) => void;
+	onCurrentContentUpdate: (content: ClipboardContent) => void;
+	isMonitoring: boolean;
 };
 
 export const useClipboardMonitor = ({
-  onClipboardChange,
-  onCurrentContentUpdate,
-  isMonitoring,
+	onClipboardChange,
+	onCurrentContentUpdate,
+	isMonitoring,
 }: MonitorOptions) => {
-  const previousContentRef = useRef<ClipboardContent | null>(null);
+	const previousContentRef = useRef<ClipboardContent | null>(null);
 
-  // Tell backend whether to monitor
-  useEffect(() => {
-    commands.setMonitoring(isMonitoring).catch(console.error);
-  }, [isMonitoring]);
+	// Tell backend whether to monitor
+	useEffect(() => {
+		commands.setMonitoring(isMonitoring).catch(console.error);
+	}, [isMonitoring]);
 
-  // Stable refs for callbacks to avoid re-subscribing on every render
-  const onChangeRef = useRef(onClipboardChange);
-  const onUpdateRef = useRef(onCurrentContentUpdate);
-  useEffect(() => {
-    onChangeRef.current = onClipboardChange;
-  }, [onClipboardChange]);
-  useEffect(() => {
-    onUpdateRef.current = onCurrentContentUpdate;
-  }, [onCurrentContentUpdate]);
+	// Stable refs for callbacks to avoid re-subscribing on every render
+	const onChangeRef = useRef(onClipboardChange);
+	const onUpdateRef = useRef(onCurrentContentUpdate);
+	useEffect(() => {
+		onChangeRef.current = onClipboardChange;
+	}, [onClipboardChange]);
+	useEffect(() => {
+		onUpdateRef.current = onCurrentContentUpdate;
+	}, [onCurrentContentUpdate]);
 
-  // Listen for clipboard-changed events from backend
-  useEffect(() => {
-    const unlisten = listen<ClipboardChangeEvent>(
-      "clipboard-changed",
-      (event) => {
-        const payload = event.payload;
-        let content: ClipboardContent;
+	// Listen for clipboard-changed events from backend
+	useEffect(() => {
+		const unlisten = listen<ClipboardChangeEvent>('clipboard-changed', (event) => {
+			const payload = event.payload;
+			let content: ClipboardContent;
 
-        if (payload.type === "text") {
-          content = { type: "text", text: payload.text };
-        } else {
-          content = {
-            type: "image",
-            base64Data: payload.base64Data,
-            width: payload.width,
-            height: payload.height,
-          };
-        }
+			if (payload.type === 'text') {
+				content = { type: 'text', text: payload.text };
+			} else {
+				content = {
+					type: 'image',
+					base64Data: payload.base64Data,
+					width: payload.width,
+					height: payload.height,
+				};
+			}
 
-        previousContentRef.current = content;
-        onUpdateRef.current(content);
-        onChangeRef.current(content);
-      },
-    );
+			previousContentRef.current = content;
+			onUpdateRef.current(content);
+			onChangeRef.current(content);
+		});
 
-    return () => {
-      unlisten.then((fn) => fn());
-    };
-  }, []);
+		return () => {
+			unlisten.then((fn) => fn());
+		};
+	}, []);
 
-  return {
-    previousContentRef,
-  };
+	return {
+		previousContentRef,
+	};
 };

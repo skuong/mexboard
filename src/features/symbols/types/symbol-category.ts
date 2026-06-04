@@ -1,6 +1,6 @@
-import { Symbol } from "@/features/symbols/types/symbol";
+import { Symbol } from '@/features/symbols/types/symbol';
 
 export type SymbolCategory = {
-  label: string;
-  symbols: Symbol[];
+	label: string;
+	symbols: Symbol[];
 };
