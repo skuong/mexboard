@@ -1,5 +1,5 @@
 use crate::crypto;
-use crate::database::{structs::insert_clipboard_db_params::InsertClipboardDbParams, Database};
+use crate::database::{structs::InsertTextDbParams, Database};
 use tauri::State;
 
 pub fn compare_and_insert_text_if_not_exists(text: String, db: &State<'_, Database>) {
@@ -9,12 +9,9 @@ pub fn compare_and_insert_text_if_not_exists(text: String, db: &State<'_, Databa
         return;
     }
 
-    if let Err(err) = db.insert_text(InsertClipboardDbParams {
+    if let Err(err) = db.insert_text(InsertTextDbParams {
         content: Some(text),
         hash: hash.as_bytes().to_vec(),
-        image: None,
-        width: None,
-        height: None,
     }) {
         log::error!("Failed to insert text: {}", err);
     }

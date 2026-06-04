@@ -5,10 +5,10 @@ use super::super::utils::*;
 use super::super::Database;
 use chrono::Utc;
 
-use super::super::structs::insert_clipboard_db_params::InsertClipboardDbParams;
+use super::super::structs::InsertTextDbParams;
 
 impl Database {
-    pub fn insert_text(&self, params: InsertClipboardDbParams) -> Result<(), String> {
+    pub fn insert_text(&self, params: InsertTextDbParams) -> Result<(), String> {
         let drizzle = self.lock()?;
         let clipboards = &drizzle.schema.clipboards;
 
