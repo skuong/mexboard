@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { commands } from '@/bindings';
-import { SystemInfo } from '@/types/clipboard';
+import type { SystemInfo } from '@/types/clipboard';
 
 const DEFAULT_SYSTEM_INFO: SystemInfo = {
 	isWayland: false,

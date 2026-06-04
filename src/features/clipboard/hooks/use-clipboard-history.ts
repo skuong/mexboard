@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ClipboardContent } from '@/types/clipboard';
 import { useClipboardHistoryQuery } from '@/features/clipboard/hooks/use-clipboard-history-query';
 import { useReorderClipboardItems } from '@/features/clipboard/hooks/use-reorder-clipboard-items';
+import type { ClipboardContent } from '@/types/clipboard';
 
 export const useClipboardHistory = (maxItems: number, favoritesFirst: boolean) => {
 	const { history, historyRef, isLoaded, hasMore, loadMore, invalidate } = useClipboardHistoryQuery(

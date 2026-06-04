@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 import { CLIPBOARD_HISTORY_KEY } from '@/features/clipboard/hooks/use-clipboard-history-query';
 
 export const useClearClipboardHistory = () => {

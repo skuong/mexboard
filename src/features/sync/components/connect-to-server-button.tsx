@@ -1,7 +1,7 @@
-import { authClient } from '@/features/auth/lib/better-auth-client';
+import { useState } from 'react';
 import { commands } from '@/bindings';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { authClient } from '@/features/auth/lib/better-auth-client';
 
 export function ConnectToServerButton() {
 	const { data: session } = authClient.useSession();

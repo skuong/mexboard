@@ -1,5 +1,5 @@
-import { SymbolsSearchBox } from '@/features/symbols/components/symbols-search-box';
 import { SettingsSheet } from '@/features/preferences/components/settings-sheet';
+import { SymbolsSearchBox } from '@/features/symbols/components/symbols-search-box';
 
 export const SymbolsTabHeader = () => {
 	return (

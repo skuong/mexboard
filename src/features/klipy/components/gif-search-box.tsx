@@ -1,11 +1,11 @@
-import { Input } from '@/components/ui/input';
-import { useGifSearchQueryStore } from '@/features/klipy/stores/gif-search-query-store';
 import { useHotkey } from '@tanstack/react-hotkeys';
-import { Search } from 'lucide-react';
-import { ComponentProps, useRef } from 'react';
-import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
-import { cn } from '@/utils/cn';
 import { useDebouncedCallback } from '@tanstack/react-pacer';
+import { Search } from 'lucide-react';
+import { type ComponentProps, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
+import { useGifSearchQueryStore } from '@/features/klipy/stores/gif-search-query-store';
+import { cn } from '@/utils/cn';
 
 type GifSearchBoxProps = ComponentProps<'div'> & {
 	isActive?: boolean;

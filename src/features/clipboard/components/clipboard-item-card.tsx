@@ -1,7 +1,7 @@
 import { memo, useRef } from 'react';
+import { ClipboardItemActions } from '@/components/clipboard-item-actions';
 import { Card, CardContent } from '@/components/ui/card';
 import { ClipboardItemContent } from '@/features/clipboard/components/clipboard-item-content';
-import { ClipboardItemActions } from '@/components/clipboard-item-actions';
 import { useClipboardItem } from '@/features/clipboard/hooks/use-clipboard-item';
 
 export const ClipboardItemCard = memo(function ClipboardItem() {

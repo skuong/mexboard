@@ -1,7 +1,7 @@
-import { Copy, SquarePercent } from 'lucide-react';
-import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
 import { useHotkey } from '@tanstack/react-hotkeys';
+import { Copy, SquarePercent } from 'lucide-react';
 import { useState } from 'react';
+import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
 
 const TAB_ORDER = ['clipboard', 'symbols'] as const;
 

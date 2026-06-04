@@ -1,8 +1,7 @@
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { authClient } from '@/features/auth/lib/better-auth-client';
+import { type PropsWithChildren, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { PropsWithChildren } from 'react';
-import { useState } from 'react';
+import { authClient } from '@/features/auth/lib/better-auth-client';
 
 export function ManageSubscriptionButton({ children }: PropsWithChildren) {
 	const [isLoading, setIsLoading] = useState(false);

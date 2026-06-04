@@ -1,6 +1,6 @@
-import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
+import { type InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
+import { type ClipboardsResponse, commands } from '@/bindings';
 import { QUERY_KEY } from '@/features/clipboard/constant/query-key';
-import { commands, ClipboardsResponse } from '@/bindings';
 
 export function useClipboards(limit: number) {
 	return useInfiniteQuery<

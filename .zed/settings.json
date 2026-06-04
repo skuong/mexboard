@@ -27,7 +27,11 @@
 		},
 		"JavaScript": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "biome" } }]
+			"formatter": [
+				{ "language_server": { "name": "biome" } },
+				{ "code_action": "source.organizeImports.biome" },
+				{ "code_action": "source.fixAll.biome" }
+			]
 		},
 		"JSON": {
 			"format_on_save": "on",

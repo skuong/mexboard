@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { commands } from '@/bindings';
-import { ClipboardContent } from '@/types/clipboard';
+import type { ClipboardContent } from '@/types/clipboard';
 
 export const useClipboard = () => {
 	const read = useCallback(async (): Promise<string> => {
@@ -31,7 +31,7 @@ export const useClipboard = () => {
 	}, []);
 
 	const writeImageToClipboard = useCallback(async (base64ImageData: string) => {
-		//@ts-ignore
+		//@ts-expect-error
 		const { status, error } = await commands.writeClipboardImage(base64ImageData);
 		if (status === 'ok') return;
 

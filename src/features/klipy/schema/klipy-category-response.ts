@@ -1,4 +1,4 @@
-import { KlipyCategory } from '@/features/klipy/schema/klipy-category';
+import type { KlipyCategory } from '@/features/klipy/schema/klipy-category';
 
 export type KlipyCategoryResponse = {
 	result: boolean;

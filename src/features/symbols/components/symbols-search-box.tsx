@@ -1,12 +1,11 @@
-import { useSymbolsSearchQueryStore } from '@/features/symbols/stores/symbols-search-query-store';
 import { useHotkey } from '@tanstack/react-hotkeys';
-import { ComponentProps, useRef } from 'react';
-import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
-import { cn } from '@/utils/cn';
-import { useTabs } from '@/features/tab/hooks/use-tabs';
-
-import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
 import { useDebouncedCallback } from '@tanstack/react-pacer';
+import { type ComponentProps, useRef } from 'react';
+import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
+import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
+import { useSymbolsSearchQueryStore } from '@/features/symbols/stores/symbols-search-query-store';
+import { useTabs } from '@/features/tab/hooks/use-tabs';
+import { cn } from '@/utils/cn';
 
 export function SymbolsSearchBox({ className }: ComponentProps<'div'>) {
 	const searchInputRef = useRef<HTMLInputElement>(null);

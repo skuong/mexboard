@@ -1,6 +1,6 @@
-import { useCallback, useRef } from 'react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { ClipboardItem } from '@/types/clipboard';
+import { useCallback, useRef } from 'react';
+import type { ClipboardItem } from '@/types/clipboard';
 
 export const CLIPBOARD_HISTORY_KEY = 'clipboard-history';
 

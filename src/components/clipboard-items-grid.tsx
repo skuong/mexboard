@@ -1,6 +1,6 @@
-import { SortableItem } from './sortable-item';
 import { Button } from '@/components/ui/button';
 import { useClipboards } from '@/features/clipboard/hooks/use-clipboards';
+import { SortableItem } from './sortable-item';
 
 type ClipboardItemsGridProps = {
 	ariaLabel?: string;

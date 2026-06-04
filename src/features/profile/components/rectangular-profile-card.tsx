@@ -1,10 +1,10 @@
+import type { CustomerState } from '@polar-sh/sdk/models/components/customerstate';
+import { Loader2, LogOut } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/features/auth/lib/better-auth-client';
 import { signOut } from '@/features/auth/lib/sign-out';
-import { useEffect, useState } from 'react';
-import { CustomerState } from '@polar-sh/sdk/models/components/customerstate';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Loader2, LogOut } from 'lucide-react';
 
 export function RectangularProfileCard() {
 	const [isSigningOut, setIsSigningOut] = useState(false);
@@ -18,7 +18,7 @@ export function RectangularProfileCard() {
 			if (!session) return;
 
 			const { data: state } = await authClient.customer.state();
-			//@ts-ignore
+			//@ts-expect-error
 			setCustomerState(state);
 		}
 

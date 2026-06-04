@@ -1,7 +1,7 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Cloud, Keyboard, Settings2 } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GeneralSettings } from '@/features/preferences/components/general-settings';
 import { HotkeysSettings } from '@/features/preferences/components/hotkeys-settings';
-import { Cloud, Keyboard, Settings2 } from 'lucide-react';
 import { SyncCloudConnect } from '@/features/sync/components/sync-cloud-connect';
 
 export function SettingsSheetBody() {

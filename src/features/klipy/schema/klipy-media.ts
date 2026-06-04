@@ -1,4 +1,4 @@
-import { KlipyStatic } from '@/features/klipy/schema/klipy-static';
+import type { KlipyStatic } from '@/features/klipy/schema/klipy-static';
 
 export type KlipyMedia = {
 	gif: KlipyStatic;

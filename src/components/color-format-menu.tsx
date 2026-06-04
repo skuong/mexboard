@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
+import { useCallback } from 'react';
 import { commands } from '@/bindings';
-import { cn } from '@/lib/utils';
 import { ColorPreview } from '@/components/color-preview';
+import { cn } from '@/lib/utils';
 import { convertColor } from '@/utils/color';
 
 const COLOR_FORMATS = [

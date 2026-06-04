@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import type { MexboardSymbol } from '@/features/symbols/types/symbol';
 import { useClipboard } from '@/hooks/use-clipboard';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { cn } from '@/utils/cn';
-import { Symbol } from '@/features/symbols/types/symbol';
 
-export function SymbolItem({ symbol }: { symbol: Symbol }) {
+export function SymbolItem({ symbol }: { symbol: MexboardSymbol }) {
 	const [copied, setCopied] = useState<string | null>(null);
 
 	const { writeTextToSystemClipboard } = useClipboard();

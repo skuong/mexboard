@@ -1,4 +1,4 @@
-import type { ClipboardItem, ClipboardContent } from '@/types/clipboard';
+import type { ClipboardContent, ClipboardItem } from '@/types/clipboard';
 
 export const isItemCopied = (item: ClipboardItem, content: ClipboardContent): boolean => {
 	if (content.type === 'text' && item.content_type === 'text') {

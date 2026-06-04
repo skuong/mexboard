@@ -1,7 +1,7 @@
+import { listen } from '@tauri-apps/api/event';
 import { useEffect, useRef } from 'react';
 import { commands } from '@/bindings';
-import { listen } from '@tauri-apps/api/event';
-import { ClipboardContent } from '@/types/clipboard';
+import type { ClipboardContent } from '@/types/clipboard';
 
 type ClipboardChangeEvent =
 	| { type: 'text'; text: string }

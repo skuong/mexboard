@@ -1,10 +1,10 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { formatForDisplay } from '@tanstack/react-hotkeys';
 import type { Hotkey } from '@tanstack/react-hotkeys';
+import { formatForDisplay } from '@tanstack/react-hotkeys';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+	getDefaultHotkeys,
 	HOTKEY_ACTIONS,
 	HOTKEY_META,
-	getDefaultHotkeys,
 	type HotkeyAction,
 	type HotkeyConfig,
 } from '@/features/hotkey/hotkey-actions';

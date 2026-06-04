@@ -10,9 +10,7 @@ import {
 	ShieldAlert,
 	Star,
 } from 'lucide-react';
-import { CONTENT_FILTER_LABELS, ContentFilter, DateRange, EMPTY_FILTERS } from '@/types/clipboard';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -24,11 +22,17 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-import { useSettings } from '@/hooks/use-settings';
 import { useClipboardHistory } from '@/features/clipboard/hooks/use-clipboard-history';
-import { useClipboardFilters } from '@/hooks/use-clipboard-filters';
 import { useClipboardSearchQueryStore } from '@/features/clipboard/stores/clipboard-search-query-store';
+import { useClipboardFilters } from '@/hooks/use-clipboard-filters';
+import { useSettings } from '@/hooks/use-settings';
+import { cn } from '@/lib/utils';
+import {
+	CONTENT_FILTER_LABELS,
+	type ContentFilter,
+	type DateRange,
+	EMPTY_FILTERS,
+} from '@/types/clipboard';
 
 const CONTENT_FILTER_ICONS: Record<ContentFilter, React.ReactNode> = {
 	image: <Image className="size-4" />,

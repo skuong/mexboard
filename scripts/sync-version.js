@@ -5,10 +5,9 @@
  * This script is called by semantic-release to keep versions in sync
  */
 
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,13 +17,21 @@ const packageJsonPath = join(rootDir, 'package.json');
 const cargoTomlPath = join(rootDir, 'src-tauri', 'Cargo.toml');
 const tauriConfPath = join(rootDir, 'src-tauri', 'tauri.conf.json');
 
+const requestedVersion = process.argv[2] || process.env.RELEASE_VERSION;
+
 // Read current version from package.json
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-const newVersion = packageJson.version;
+const newVersion = requestedVersion || packageJson.version;
 
 if (!newVersion) {
 	console.error('No version found in package.json');
 	process.exit(1);
+}
+
+if (requestedVersion) {
+	packageJson.version = requestedVersion;
+	writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, '\t')}\n`, 'utf-8');
+	console.log(`Updated package.json version to ${requestedVersion}`);
 }
 
 // Update Cargo.toml
@@ -36,5 +43,5 @@ console.log(`Updated Cargo.toml version to ${newVersion}`);
 // Update tauri.conf.json
 const tauriConf = JSON.parse(readFileSync(tauriConfPath, 'utf-8'));
 tauriConf.version = newVersion;
-writeFileSync(tauriConfPath, JSON.stringify(tauriConf, null, 2) + '\n', 'utf-8');
+writeFileSync(tauriConfPath, `${JSON.stringify(tauriConf, null, 2)}\n`, 'utf-8');
 console.log(`Updated tauri.conf.json version to ${newVersion}`);

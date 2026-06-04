@@ -1,4 +1,4 @@
-import { SymbolCategory } from '@/features/symbols/types/symbol-category';
+import type { SymbolCategory } from '@/features/symbols/types/symbol-category';
 
 export const SYMBOL_DATA: SymbolCategory[] = [
 	{

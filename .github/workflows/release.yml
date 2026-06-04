@@ -4,260 +4,124 @@ on:
   push:
     branches:
       - main
-      - master
+      - v2
 
 permissions:
   contents: write
 
 jobs:
-  create-release:
-    name: Create Release
+  plan-release:
+    name: Plan Release
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.check-release.outputs.version }}
-      released: ${{ steps.check-release.outputs.released }}
-      tag: ${{ steps.check-release.outputs.tag }}
+      released: ${{ steps.plan.outputs.released }}
+      version: ${{ steps.plan.outputs.version }}
+      tag: ${{ steps.plan.outputs.tag }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Compute next release
+        id: plan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/next-release-version.js
+
+      - name: Output release plan
+        run: |
+          echo "Release needed: ${{ steps.plan.outputs.released }}"
+          echo "Version: ${{ steps.plan.outputs.version }}"
+          echo "Tag: ${{ steps.plan.outputs.tag }}"
+
+  check-format:
+    needs: plan-release
+    if: needs.plan-release.outputs.released == 'true'
+    uses: ./.github/workflows/format.yml
+
+  build-linux:
+    needs:
+      - plan-release
+      - check-format
+    if: |
+      needs.plan-release.outputs.released == 'true' &&
+      needs.check-format.result == 'success'
+    uses: ./.github/workflows/build-linux.yml
+    with:
+      version: ${{ needs.plan-release.outputs.version }}
+    secrets: inherit
+
+  build-windows:
+    needs:
+      - plan-release
+      - check-format
+    if: |
+      needs.plan-release.outputs.released == 'true' &&
+      needs.check-format.result == 'success'
+    uses: ./.github/workflows/build-windows.yml
+    with:
+      version: ${{ needs.plan-release.outputs.version }}
+    secrets: inherit
+
+  build-macos:
+    needs:
+      - plan-release
+      - check-format
+    if: |
+      needs.plan-release.outputs.released == 'true' &&
+      needs.check-format.result == 'success'
+    uses: ./.github/workflows/build-macos.yml
+    with:
+      version: ${{ needs.plan-release.outputs.version }}
+    secrets: inherit
+
+  publish-release:
+    name: Publish Release
+    needs:
+      - plan-release
+      - check-format
+      - build-linux
+      - build-windows
+      - build-macos
+    if: |
+      needs.plan-release.outputs.released == 'true' &&
+      needs.check-format.result == 'success' &&
+      needs.build-linux.result == 'success' &&
+      needs.build-windows.result == 'success' &&
+      needs.build-macos.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
-      - name: Get tags before semantic-release
-        id: tags-before
-        run: |
-          git fetch --tags || true
-          TAGS_BEFORE=$(git tag --list | sort -V | tail -1 || echo "")
-          echo "tags_before=$TAGS_BEFORE" >> $GITHUB_OUTPUT
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: mexboard-*
+          path: release-assets
+          merge-multiple: true
 
-      - name: Run semantic-release
-        id: semantic
+      - name: Publish release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          npx semantic-release || true
-
-      - name: Check if release was created
-        id: check-release
-        run: |
-          git fetch --tags || true
-          TAGS_AFTER=$(git tag --list | sort -V | tail -1 || echo "")
-          TAGS_BEFORE="${{ steps.tags-before.outputs.tags_before }}"
-
-          # Check if a new tag was created
-          if [ -n "$TAGS_AFTER" ] && [ "$TAGS_AFTER" != "$TAGS_BEFORE" ]; then
-            VERSION=${TAGS_AFTER#v}
-            echo "version=$VERSION" >> $GITHUB_OUTPUT
-            echo "released=true" >> $GITHUB_OUTPUT
-            echo "tag=$TAGS_AFTER" >> $GITHUB_OUTPUT
-          else
-            echo "released=false" >> $GITHUB_OUTPUT
-            echo "version=" >> $GITHUB_OUTPUT
-            echo "tag=" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Output release status
-        run: |
-          echo "Release created: ${{ steps.check-release.outputs.released }}"
-          echo "Version: ${{ steps.check-release.outputs.version }}"
-          echo "Tag: ${{ steps.check-release.outputs.tag }}"
-
-  build-linux:
-    name: Build Linux
-    needs: create-release
-    if: needs.create-release.outputs.released == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ needs.create-release.outputs.tag }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
-            libappindicator3-dev \
-            librsvg2-dev \
-            patchelf \
-            xdg-utils
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Update version in config files
-        run: |
-          VERSION="${{ needs.create-release.outputs.version }}"
-          echo "Updating version to $VERSION"
-
-          # Update Cargo.toml
-          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" src-tauri/Cargo.toml
-
-          # Update tauri.conf.json
-          sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" src-tauri/tauri.conf.json
-
-          # Verify updates
-          echo "Cargo.toml version:"
-          grep "^version" src-tauri/Cargo.toml
-          echo "tauri.conf.json version:"
-          grep "version" src-tauri/tauri.conf.json
-
-      - name: Build Tauri app
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_KLIPY_API_BASE_URL: ${{ vars.VITE_KLIPY_API_BASE_URL }}
-          VITE_KLIPY_PER_PAGE_LIMIT: ${{ vars.VITE_KLIPY_PER_PAGE_LIMIT }}
-          VITE_KLIPY_API_KEY: ${{ secrets.VITE_KLIPY_API_KEY }}
-        with:
-          projectPath: .
-          tagName: ${{ needs.create-release.outputs.tag }}
-          releaseName: "${{ needs.create-release.outputs.tag }}"
-          releaseBody: "See the assets to download and install this version."
-          releaseDraft: false
-          prerelease: false
-          args: "--bundles appimage deb"
-
-  build-windows:
-    name: Build Windows
-    needs: create-release
-    if: needs.create-release.outputs.released == 'true'
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ needs.create-release.outputs.tag }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Update version in config files
-        shell: pwsh
-        run: |
-          $VERSION = "${{ needs.create-release.outputs.version }}"
-          Write-Host "Updating version to $VERSION"
-
-          # Update Cargo.toml
-          (Get-Content src-tauri/Cargo.toml) -replace '^version = ".*"', "version = `"$VERSION`"" | Set-Content src-tauri/Cargo.toml
-
-          # Update tauri.conf.json
-          (Get-Content src-tauri/tauri.conf.json) -replace '"version": ".*"', "`"version`": `"$VERSION`"" | Set-Content src-tauri/tauri.conf.json
-
-          # Verify updates
-          Write-Host "Cargo.toml version:"
-          Select-String -Path src-tauri/Cargo.toml -Pattern "^version"
-          Write-Host "tauri.conf.json version:"
-          Select-String -Path src-tauri/tauri.conf.json -Pattern "version"
-
-      - name: Build Tauri app
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_KLIPY_API_BASE_URL: ${{ vars.VITE_KLIPY_API_BASE_URL }}
-          VITE_KLIPY_PER_PAGE_LIMIT: ${{ vars.VITE_KLIPY_PER_PAGE_LIMIT }}
-          VITE_KLIPY_API_KEY: ${{ secrets.VITE_KLIPY_API_KEY }}
-        with:
-          projectPath: .
-          tagName: ${{ needs.create-release.outputs.tag }}
-          releaseName: "${{ needs.create-release.outputs.tag }}"
-          releaseBody: "See the assets to download and install this version."
-          releaseDraft: false
-          prerelease: false
-          args: "--bundles nsis msi"
-
-  build-macos:
-    name: Build macOS
-    needs: create-release
-    if: needs.create-release.outputs.released == 'true'
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ needs.create-release.outputs.tag }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Update version in config files
-        run: |
-          VERSION="${{ needs.create-release.outputs.version }}"
-          echo "Updating version to $VERSION"
-
-          # Update Cargo.toml (macOS sed syntax)
-          sed -i '' "s/^version = \".*\"/version = \"$VERSION\"/" src-tauri/Cargo.toml
-
-          # Update tauri.conf.json (macOS sed syntax)
-          sed -i '' "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" src-tauri/tauri.conf.json
-
-          # Verify updates
-          echo "Cargo.toml version:"
-          grep "^version" src-tauri/Cargo.toml
-          echo "tauri.conf.json version:"
-          grep "version" src-tauri/tauri.conf.json
-
-      - name: Build Tauri app
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_KLIPY_API_BASE_URL: ${{ vars.VITE_KLIPY_API_BASE_URL }}
-          VITE_KLIPY_PER_PAGE_LIMIT: ${{ vars.VITE_KLIPY_PER_PAGE_LIMIT }}
-          VITE_KLIPY_API_KEY: ${{ secrets.VITE_KLIPY_API_KEY }}
-        with:
-          projectPath: .
-          tagName: ${{ needs.create-release.outputs.tag }}
-          releaseName: "${{ needs.create-release.outputs.tag }}"
-          releaseBody: "See the assets to download and install this version."
-          releaseDraft: false
-          prerelease: false
-          args: "--bundles dmg"
+        run: pnpm exec semantic-release
