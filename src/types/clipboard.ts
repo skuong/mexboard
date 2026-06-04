@@ -1,69 +1,65 @@
-export type ClipboardItemType = "text" | "image";
+export type ClipboardItemType = 'text' | 'image';
 
 export type ClipboardItem = {
-  id: number;
-  content_type: ClipboardItemType;
-  text_content: string | null;
-  image_data: string | null;
-  image_width: number | null;
-  image_height: number | null;
-  line_count: number | null;
-  source_app: string | null;
-  is_favorite: boolean;
-  sort_order: string;
-  kv_key: string | null;
-  detected_date: string | null;
-  detected_color: string | null;
-  content_hash: string | null;
-  created_at: string;
-  updated_at: string;
-  is_env: boolean;
-  is_secret: boolean;
-  note: string | null;
-  file_mime: string | null;
+	id: number;
+	content_type: ClipboardItemType;
+	text_content: string | null;
+	image_data: string | null;
+	image_width: number | null;
+	image_height: number | null;
+	line_count: number | null;
+	source_app: string | null;
+	is_favorite: boolean;
+	sort_order: string;
+	kv_key: string | null;
+	detected_date: string | null;
+	detected_color: string | null;
+	content_hash: string | null;
+	created_at: string;
+	updated_at: string;
+	is_env: boolean;
+	is_secret: boolean;
+	note: string | null;
+	file_mime: string | null;
 };
 
-export type ContentFilter =
-  | "image"
-  | "secret"
-  | "env"
-  | "url"
+export type ContentFilter = 'image' | 'secret' | 'env' | 'url';
 
-export type DateRange = "all" | "today" | "week" | "month";
+export type DateRange = 'all' | 'today' | 'week' | 'month';
 
 export type ClipboardFilters = {
-  favorite: boolean;
-  contentTypes: Set<ContentFilter>;
-  dateRange: DateRange;
+	favorite: boolean;
+	contentTypes: Set<ContentFilter>;
+	dateRange: DateRange;
 };
 
 export const EMPTY_FILTERS: ClipboardFilters = {
-  favorite: false,
-  contentTypes: new Set(),
-  dateRange: "all",
+	favorite: false,
+	contentTypes: new Set(),
+	dateRange: 'all',
 };
 
 export const CONTENT_FILTER_LABELS: Record<ContentFilter, string> = {
-  image: "Images",
-  secret: "Secrets",
-  env: "Key-Value",
-  url: "URLs",
+	image: 'Images',
+	secret: 'Secrets',
+	env: 'Key-Value',
+	url: 'URLs',
 };
 
 export type ClipboardError = {
-  id: string;
-  message: string;
-  timestamp: Date;
-  retryable: boolean;
+	id: string;
+	message: string;
+	timestamp: Date;
+	retryable: boolean;
 };
 
 export type SystemInfo = {
-  isWayland: boolean;
-  isCosmicDataControlEnabled: boolean;
+	isWayland: boolean;
+	isCosmicDataControlEnabled: boolean;
 };
 
 // Type for clipboard content read from backend
 export type ClipboardContent =
-  | { type: "text"; text: string }
-  | { type: "image"; base64Data: string; width: number; height: number }
-  | { type: "empty" };
+	| { type: 'text'; text: string }
+	| { type: 'image'; base64Data: string; width: number; height: number }
+	| { type: 'empty' };

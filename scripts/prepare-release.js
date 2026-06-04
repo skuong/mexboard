@@ -6,4 +6,3 @@
  */
 
 import './sync-version.js';
-

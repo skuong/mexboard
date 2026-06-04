@@ -1,7 +1,7 @@
-import { memo } from "react";
+import { memo } from 'react';
 
-import { ClipboardItemCard } from "@/features/clipboard/components/clipboard-item-card";
+import { ClipboardItemCard } from '@/features/clipboard/components/clipboard-item-card';
 
 export const SearchResultItem = memo(function SearchResultItem() {
-  return <ClipboardItemCard />;
+	return <ClipboardItemCard />;
 });

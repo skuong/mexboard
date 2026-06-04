@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export function useContextMenu() {
-  useEffect(() => {
-    const contextMenuHandler = (event: MouseEvent) => {
-      if (event.defaultPrevented) return;
-      event.preventDefault();
-    };
+	useEffect(() => {
+		const contextMenuHandler = (event: MouseEvent) => {
+			if (event.defaultPrevented) return;
+			event.preventDefault();
+		};
 
-    window.addEventListener("contextmenu", contextMenuHandler);
+		window.addEventListener('contextmenu', contextMenuHandler);
 
-    return () => window.removeEventListener("contextmenu", contextMenuHandler);
-  }, []);
+		return () => window.removeEventListener('contextmenu', contextMenuHandler);
+	}, []);
 }

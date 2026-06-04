@@ -1,14 +1,11 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type ClipboardMonitoringState = {
-  isMonitoring: boolean;
-  toggleMonitoring: () => void;
+	isMonitoring: boolean;
+	toggleMonitoring: () => void;
 };
 
-export const useClipboardMonitoringStore = create<ClipboardMonitoringState>()(
-  (set) => ({
-    isMonitoring: true,
-    toggleMonitoring: () =>
-      set((state) => ({ isMonitoring: !state.isMonitoring })),
-  }),
-);
+export const useClipboardMonitoringStore = create<ClipboardMonitoringState>()((set) => ({
+	isMonitoring: true,
+	toggleMonitoring: () => set((state) => ({ isMonitoring: !state.isMonitoring })),
+}));

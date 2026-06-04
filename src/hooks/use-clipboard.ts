@@ -1,63 +1,57 @@
-import { useCallback  } from "react";
-import { commands } from "@/bindings";
-import {  ClipboardContent } from "@/types/clipboard";
+import { useCallback } from 'react';
+import { commands } from '@/bindings';
+import { ClipboardContent } from '@/types/clipboard';
 
 export const useClipboard = () => {
-  const read = useCallback(async (): Promise<string> => {
-    const result = await commands.readClipboard();
-    if (result.status === "ok") {
-      return result.data || "";
-    }
+	const read = useCallback(async (): Promise<string> => {
+		const result = await commands.readClipboard();
+		if (result.status === 'ok') {
+			return result.data || '';
+		}
 
-    return "";
-  }, []);
+		return '';
+	}, []);
 
-  const readContent = useCallback(async (): Promise<ClipboardContent> => {
-    const text = await read();
-    if (text) {
-      return { type: "text", text };
-    }
+	const readContent = useCallback(async (): Promise<ClipboardContent> => {
+		const text = await read();
+		if (text) {
+			return { type: 'text', text };
+		}
 
-    return { type: "empty" };
-  }, [read]);
+		return { type: 'empty' };
+	}, [read]);
 
-  const writeTextToClipboard = useCallback(
-    async (text: string) => {
-      const result = await commands.writeClipboard(text);
-      if (result.status === "ok") {
-        return;
-      }
+	const writeTextToClipboard = useCallback(async (text: string) => {
+		const result = await commands.writeClipboard(text);
+		if (result.status === 'ok') {
+			return;
+		}
 
-      throw result.error;
-    },
-    [],
-  );
+		throw result.error;
+	}, []);
 
-  const writeImageToClipboard = useCallback(
-    async (base64ImageData: string) => {
-      //@ts-ignore
-      const { status, error } = await commands.writeClipboardImage(base64ImageData);
-      if (status === 'ok') return
+	const writeImageToClipboard = useCallback(async (base64ImageData: string) => {
+		//@ts-ignore
+		const { status, error } = await commands.writeClipboardImage(base64ImageData);
+		if (status === 'ok') return;
 
-      throw error;
-    },
-    [],
-  );
+		throw error;
+	}, []);
 
-  const reinitialize = useCallback(async (): Promise<void> => {
-    const result = await commands.reinitializeClipboard();
-    if (result.status === "ok") {
-      return;
-    }
+	const reinitialize = useCallback(async (): Promise<void> => {
+		const result = await commands.reinitializeClipboard();
+		if (result.status === 'ok') {
+			return;
+		}
 
-    throw result.error;
-  }, []);
+		throw result.error;
+	}, []);
 
-  return {
-    read,
-    readContent,
-    writeTextToSystemClipboard: writeTextToClipboard,
-    writeImageToSystemClipboard: writeImageToClipboard,
-    reinitialize,
-  };
+	return {
+		read,
+		readContent,
+		writeTextToSystemClipboard: writeTextToClipboard,
+		writeImageToSystemClipboard: writeImageToClipboard,
+		reinitialize,
+	};
 };

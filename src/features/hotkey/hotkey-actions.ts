@@ -1,33 +1,33 @@
-import type { Hotkey } from "@tanstack/react-hotkeys";
+import type { Hotkey } from '@tanstack/react-hotkeys';
 
-function detectPlatform(): "mac" | "windows" | "linux" {
-  if (typeof navigator === "undefined") return "linux";
-  const ua = navigator.userAgent;
-  if (/Macintosh|Mac OS X/i.test(ua)) return "mac";
-  if (/Windows/i.test(ua)) return "windows";
-  return "linux";
+function detectPlatform(): 'mac' | 'windows' | 'linux' {
+	if (typeof navigator === 'undefined') return 'linux';
+	const ua = navigator.userAgent;
+	if (/Macintosh|Mac OS X/i.test(ua)) return 'mac';
+	if (/Windows/i.test(ua)) return 'windows';
+	return 'linux';
 }
 
 function getToggleWindowDefault(): Hotkey {
-  switch (detectPlatform()) {
-    case "mac":
-      return "Shift+Meta+V";
-    case "windows":
-      return "Alt+Meta+V";
-    default:
-      return "Meta+V";
-  }
+	switch (detectPlatform()) {
+		case 'mac':
+			return 'Shift+Meta+V';
+		case 'windows':
+			return 'Alt+Meta+V';
+		default:
+			return 'Meta+V';
+	}
 }
 
 type HotkeyMeta = { label: string; defaultKey: Hotkey };
 
 export const HOTKEY_META = {
-  cycleTabs: { label: "Cycle tabs", defaultKey: "T" },
-  search: { label: "Focus search", defaultKey: "/" },
-  toggleWindowVisibility: {
-    label: "Toggle window visibility",
-    defaultKey: getToggleWindowDefault(),
-  },
+	cycleTabs: { label: 'Cycle tabs', defaultKey: 'T' },
+	search: { label: 'Focus search', defaultKey: '/' },
+	toggleWindowVisibility: {
+		label: 'Toggle window visibility',
+		defaultKey: getToggleWindowDefault(),
+	},
 } satisfies Record<string, HotkeyMeta>;
 
 export type HotkeyAction = keyof typeof HOTKEY_META;
@@ -36,7 +36,7 @@ export type HotkeyConfig = Record<HotkeyAction, Hotkey>;
 export const HOTKEY_ACTIONS = Object.keys(HOTKEY_META) as HotkeyAction[];
 
 export function getDefaultHotkeys(): HotkeyConfig {
-  return Object.fromEntries(
-    HOTKEY_ACTIONS.map((action) => [action, HOTKEY_META[action].defaultKey]),
-  ) as HotkeyConfig;
+	return Object.fromEntries(
+		HOTKEY_ACTIONS.map((action) => [action, HOTKEY_META[action].defaultKey]),
+	) as HotkeyConfig;
 }

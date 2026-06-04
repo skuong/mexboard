@@ -1,4 +1,4 @@
 export type Symbol = {
-  char: string;
-  name: string;
+	char: string;
+	name: string;
 };

@@ -23,16 +23,13 @@ const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 const newVersion = packageJson.version;
 
 if (!newVersion) {
-  console.error('No version found in package.json');
-  process.exit(1);
+	console.error('No version found in package.json');
+	process.exit(1);
 }
 
 // Update Cargo.toml
 const cargoToml = readFileSync(cargoTomlPath, 'utf-8');
-const updatedCargoToml = cargoToml.replace(
-  /^version = ".*"$/m,
-  `version = "${newVersion}"`
-);
+const updatedCargoToml = cargoToml.replace(/^version = ".*"$/m, `version = "${newVersion}"`);
 writeFileSync(cargoTomlPath, updatedCargoToml, 'utf-8');
 console.log(`Updated Cargo.toml version to ${newVersion}`);
 
@@ -41,4 +38,3 @@ const tauriConf = JSON.parse(readFileSync(tauriConfPath, 'utf-8'));
 tauriConf.version = newVersion;
 writeFileSync(tauriConfPath, JSON.stringify(tauriConf, null, 2) + '\n', 'utf-8');
 console.log(`Updated tauri.conf.json version to ${newVersion}`);
-

@@ -1,20 +1,20 @@
-import { isTauri } from "@tauri-apps/api/core"
-import { getCurrent, onOpenUrl } from "@tauri-apps/plugin-deep-link"
-import { handleAuthDeepLinkUrls } from "@/features/auth/lib/handle-auth-deep-link-urls"
+import { isTauri } from '@tauri-apps/api/core';
+import { getCurrent, onOpenUrl } from '@tauri-apps/plugin-deep-link';
+import { handleAuthDeepLinkUrls } from '@/features/auth/lib/handle-auth-deep-link-urls';
 
 export function initializeBetterAuth() {
-  if (!isTauri()) return
+	if (!isTauri()) return;
 
-  const handleAuthDeepLinkUrlsCallback = (urls?: string[] | null) => {
-    handleAuthDeepLinkUrls({ urls })
-  }
+	const handleAuthDeepLinkUrlsCallback = (urls?: string[] | null) => {
+		handleAuthDeepLinkUrls({ urls });
+	};
 
-  if (!sessionStorage.getItem("isDeepLinkProcessed")) {
-    getCurrent().then(handleAuthDeepLinkUrlsCallback)
-    sessionStorage.setItem("isDeepLinkProcessed", "true")
-  }
+	if (!sessionStorage.getItem('isDeepLinkProcessed')) {
+		getCurrent().then(handleAuthDeepLinkUrlsCallback);
+		sessionStorage.setItem('isDeepLinkProcessed', 'true');
+	}
 
-  const unlisten = onOpenUrl(handleAuthDeepLinkUrlsCallback)
+	const unlisten = onOpenUrl(handleAuthDeepLinkUrlsCallback);
 
-  return () => void unlisten.then((f) => f())
+	return () => void unlisten.then((f) => f());
 }
