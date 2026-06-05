@@ -5,7 +5,7 @@ use tokio_tungstenite::tungstenite::Message;
 
 #[command]
 #[specta::specta]
-pub async fn send_websocket_message(
+pub async fn send_message_via_websocket(
     state: State<'_, WebSocketState>,
     message: String,
 ) -> Result<(), String> {
