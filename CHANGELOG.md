@@ -1,3 +1,10 @@
+# [1.26.0-beta.2](https://github.com/sokhuong-uon/mexboard/compare/v1.26.0-beta.1...v1.26.0-beta.2) (2026-06-05)
+
+
+### Features
+
+* can send text via websocket ([1f3b530](https://github.com/sokhuong-uon/mexboard/commit/1f3b53074a3ea67ea42170041353981fbcefcbe6))
+
 # [1.26.0-beta.1](https://github.com/sokhuong-uon/mexboard/compare/v1.25.0...v1.26.0-beta.1) (2026-06-04)
 
 
