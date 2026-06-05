@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 sokhuong-uon
+Copyright (c) 2026 Sokhuong
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

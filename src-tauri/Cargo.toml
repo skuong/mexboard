@@ -1,9 +1,10 @@
 [package]
 name = "mexboard"
 version = "1.26.0-beta.1"
-description = "Clipboard manager with symbols selection and customizable features"
-authors = ["Sokhuong of Mexdehor"]
+description = "Clipboard manager with symbols/emojis selection and customizable features"
+authors = ["Sokhuong"]
 edition = "2021"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
