@@ -2,6 +2,7 @@ use std::io::Cursor;
 
 use super::super::utils::*;
 use super::super::Database;
+use crate::clipboard::OnlyIdSelectClipboards;
 use crate::database::items::get_new_max_sort_order::get_new_max_sort_order;
 use crate::database::structs::InsertImageDbParams;
 use crate::schema::InsertClipboards;
@@ -11,7 +12,7 @@ use image::Rgba;
 use image::{ImageBuffer, ImageFormat};
 
 impl Database {
-    pub fn insert_image(&self, params: InsertImageDbParams) -> Result<(), String> {
+    pub fn insert_image(&self, params: InsertImageDbParams) -> Result<u32, String> {
         let drizzle = self.lock()?;
         let clipboards = &drizzle.schema.clipboards;
 
@@ -34,7 +35,7 @@ impl Database {
             .write_to(&mut Cursor::new(&mut preview_webp), ImageFormat::WebP)
             .map_err(|err| format!("Failed to encode image to WebP: {}", err))?;
 
-        drizzle
+        let clipboard = drizzle
             .db
             .insert(*clipboards)
             .values([InsertClipboards::new(
@@ -50,9 +51,10 @@ impl Database {
             .with_image_preview(preview_webp)
             .with_width(params.width)
             .with_height(params.height)])
-            .execute()
+            .returning(OnlyIdSelectClipboards::Select)
+            .get()
             .map_err(error_to_string)?;
 
-        Ok(())
+        Ok(clipboard.id)
     }
 }
