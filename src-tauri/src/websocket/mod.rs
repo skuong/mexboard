@@ -1,5 +1,4 @@
 pub mod commands;
-
 pub use commands::*;
 
 use futures_util::stream::SplitSink;
@@ -12,7 +11,6 @@ use tokio_tungstenite::{MaybeTlsStream, WebSocketStream};
 #[derive(Clone)]
 pub struct WebSocketState {
     pub write: Arc<Mutex<Option<SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, Message>>>>,
-
     pub read_handle: Arc<RwLock<Option<tokio::task::JoinHandle<()>>>>,
 }
 
