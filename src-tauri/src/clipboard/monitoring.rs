@@ -40,7 +40,7 @@ pub fn start(app_handle: &AppHandle) {
             match clipboard_text {
                 Ok(text) => {
                     if !text.is_empty() {
-                        compare_and_insert_text_if_not_exists(text, &db);
+                        let _result = compare_and_insert_text_if_not_exists(text, &db);
                     }
                 }
                 Err(_) => {
@@ -50,7 +50,7 @@ pub fn start(app_handle: &AppHandle) {
                     match clipboard_image {
                         Ok(image) => {
                             if let Some(image) = image {
-                                compare_and_insert_image_if_not_exists(image, &db);
+                                let _result = compare_and_insert_image_if_not_exists(image, &db);
                             }
                         }
                         Err(err) => {

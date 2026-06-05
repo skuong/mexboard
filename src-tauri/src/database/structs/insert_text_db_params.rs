@@ -1,6 +1,5 @@
 #[derive(Debug)]
 pub struct InsertTextDbParams {
-    pub content: Option<String>,
-
+    pub content: String,
     pub hash: Vec<u8>,
 }

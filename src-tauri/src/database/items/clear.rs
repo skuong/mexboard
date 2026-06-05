@@ -26,7 +26,7 @@ mod tests {
         let db = Database::new(":memory:").expect("Failed to create in-memory database");
 
         let params = InsertTextDbParams {
-            content: Some("Test clipboard item".to_string()),
+            content: "Test clipboard item".to_string(),
             hash: vec![1, 2, 3],
         };
         db.insert_text(params).expect("Failed to insert test item");
