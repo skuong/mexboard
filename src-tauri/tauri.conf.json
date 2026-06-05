@@ -64,6 +64,8 @@
     }
   },
   "bundle": {
+    "licenseFile": "../LICENSE.md",
+    "license": "MIT",
     "active": true,
     "targets": "all",
     "icon": [
