@@ -3485,7 +3485,7 @@ dependencies = [
 
 [[package]]
 name = "mexboard"
-version = "1.26.0-beta.1"
+version = "1.26.0-beta.2"
 dependencies = [
  "apple-native-keyring-store",
  "arboard",
