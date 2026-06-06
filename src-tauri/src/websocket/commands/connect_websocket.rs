@@ -27,7 +27,7 @@ pub async fn connect_websocket(
 
     let (ws_stream, _) = connect_async(request)
         .await
-        .map_err(|e| format!("Connect failed: {}", e))?;
+        .map_err(|err| format!("Connect failed: {}", err))?;
 
     let (write, mut read) = ws_stream.split();
 
@@ -35,14 +35,15 @@ pub async fn connect_websocket(
     let write_arc = Arc::clone(&state.write);
 
     let read_handle = tokio::spawn(async move {
-        while let Some(msg_res) = read.next().await {
-            match msg_res {
-                Ok(msg) => {
-                    let _ = app_clone.emit("ws-message", msg.to_string());
+        while let Some(read_result) = read.next().await {
+            match read_result {
+                Ok(message) => {
+                    log::info!("message: {}", message.to_string());
+                    let _ = app_clone.emit("ws-message", message.to_string());
                 }
-                Err(e) => {
-                    let _ = app_clone.emit("ws-error", e.to_string());
-                    let mut write_guard = write_arc.lock().await; // Use cloned Arc
+                Err(err) => {
+                    let _ = app_clone.emit("ws-error", err.to_string());
+                    let mut write_guard = write_arc.lock().await;
                     *write_guard = None;
                     break;
                 }
