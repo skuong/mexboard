@@ -1,7 +1,9 @@
+use crate::clipboard::compare_and_insert_text_if_not_exists::compare_and_insert_text_if_not_exists;
+use crate::database::Database;
 use crate::websocket::WebSocketState;
 use futures_util::StreamExt;
 use std::sync::Arc;
-use tauri::{command, AppHandle, Emitter, State};
+use tauri::{command, AppHandle, Emitter, Manager, State};
 use tokio_tungstenite::connect_async;
 use tokio_tungstenite::tungstenite::client::IntoClientRequest;
 
@@ -39,6 +41,12 @@ pub async fn connect_websocket(
             match read_result {
                 Ok(message) => {
                     log::info!("message: {}", message.to_string());
+
+                    let db = app.state::<Database>();
+
+                    let _insert_text_result =
+                        compare_and_insert_text_if_not_exists(message.to_string(), &db);
+
                     let _ = app_clone.emit("ws-message", message.to_string());
                 }
                 Err(err) => {

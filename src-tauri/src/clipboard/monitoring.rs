@@ -1,4 +1,4 @@
-use crate::websocket::{send_message_via_websocket, WebSocketState};
+use crate::websocket::{send_text_via_websocket, WebSocketState};
 use crate::{
     clipboard::{compare_and_insert_image_if_not_exists, compare_and_insert_text_if_not_exists},
     database::Database,
@@ -45,8 +45,10 @@ pub fn start(app_handle: &AppHandle) {
                         let insert_text_result =
                             compare_and_insert_text_if_not_exists(text.clone(), &db);
 
-                        if let Ok(_) = insert_text_result {
-                            let _result = send_message_via_websocket(socket, text).await;
+                        if let Ok((_, inserted)) = insert_text_result {
+                            if inserted {
+                                let _result = send_text_via_websocket(socket, text).await;
+                            }
                         }
                     }
                 }

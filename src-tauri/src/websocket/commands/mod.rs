@@ -7,5 +7,5 @@ pub use disconnect_websocket::*;
 pub mod is_websocket_connected;
 pub use is_websocket_connected::*;
 
-pub mod send_message_via_websocket;
-pub use send_message_via_websocket::*;
+pub mod send_text_via_websocket;
+pub use send_text_via_websocket::*;
