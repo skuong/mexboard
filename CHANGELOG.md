@@ -1,3 +1,11 @@
+# [1.26.0-beta.3](https://github.com/skuong/mexboard/compare/v1.26.0-beta.2...v1.26.0-beta.3) (2026-06-06)
+
+
+### Bug Fixes
+
+* only send new message in stead of repeatedly sending the same message via websocket ([fdf6632](https://github.com/skuong/mexboard/commit/fdf6632d444aea1fc74e673dd7924ddf60c7ddef))
+* set query client to refetch on window focus ([1fa00ff](https://github.com/skuong/mexboard/commit/1fa00ff1f50112fa24bc61664cc1fb325d9d705a))
+
 # [1.26.0-beta.2](https://github.com/sokhuong-uon/mexboard/compare/v1.26.0-beta.1...v1.26.0-beta.2) (2026-06-05)
 
 
