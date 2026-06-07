@@ -1,7 +1,7 @@
-import '@/main.css';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useEffect } from 'react';
+import '@/main.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeBetterAuth } from '@/features/auth/lib/initialize-better-auth';
 import { ClipboardTab } from '@/features/clipboard/components/clipboard-tab';
 import { useContextMenu } from '@/features/context-menu/hooks/use-context-menu';
@@ -10,7 +10,11 @@ import { SymbolsTab } from '@/features/symbols/components/symbols-tab';
 import { useTabs } from '@/features/tab/hooks/use-tabs';
 import { useSystemTheme } from '@/hooks/use-system-theme';
 
-export default function App() {
+export const Route = createFileRoute('/_app')({
+	component: RouteComponent,
+});
+
+function RouteComponent() {
 	useSystemTheme();
 	const { tabs, activeTab, setActiveTab } = useTabs();
 
@@ -21,7 +25,7 @@ export default function App() {
 	useContextMenu();
 
 	return (
-		<TooltipProvider>
+		<div className="h-full relative">
 			<Tabs
 				value={activeTab}
 				onValueChange={(tab) => setActiveTab(tab)}
@@ -53,6 +57,8 @@ export default function App() {
 					</TabsList>
 				</div>
 			</Tabs>
-		</TooltipProvider>
+
+			<Outlet />
+		</div>
 	);
 }
