@@ -1,3 +1,11 @@
+# [1.26.0-beta.5](https://github.com/skuong/mexboard/compare/v1.26.0-beta.4...v1.26.0-beta.5) (2026-06-07)
+
+
+### Features
+
+* add excalidraw ([0b34042](https://github.com/skuong/mexboard/commit/0b340429c829861c844b787d0e3bbdd48e657376))
+* can open a new window ([35a6a00](https://github.com/skuong/mexboard/commit/35a6a00773a8fc143d2ad43fefbc473d739eed71))
+
 # [1.26.0-beta.4](https://github.com/skuong/mexboard/compare/v1.26.0-beta.3...v1.26.0-beta.4) (2026-06-07)
 
 
