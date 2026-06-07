@@ -24,8 +24,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useClipboardHistory } from '@/features/clipboard/hooks/use-clipboard-history';
 import { useClipboardSearchQueryStore } from '@/features/clipboard/stores/clipboard-search-query-store';
+import { useClipboardPerPageLimitStore } from '@/features/clipboard/stores/use-clipboard-per-page-limit-store';
 import { useClipboardFilters } from '@/hooks/use-clipboard-filters';
-import { useSettings } from '@/hooks/use-settings';
 import { cn } from '@/lib/utils';
 import {
 	CONTENT_FILTER_LABELS,
@@ -67,8 +67,8 @@ const DATE_RANGE_OPTIONS: {
 export const ClipboardFilterMenu = () => {
 	const searchQuery = useClipboardSearchQueryStore((state) => state.searchQuery);
 
-	const { historyLimit } = useSettings();
-	const { history } = useClipboardHistory(historyLimit, false);
+	const perPageLimit = useClipboardPerPageLimitStore((state) => state.perPageLimit);
+	const { history } = useClipboardHistory(perPageLimit, false);
 
 	const { filters, setFilters } = useClipboardFilters(history, searchQuery);
 

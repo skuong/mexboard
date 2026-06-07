@@ -10,7 +10,7 @@ export function useClipboards(limit: number) {
 		string[],
 		number
 	>({
-		queryKey: [QUERY_KEY.CLIPBOARDS],
+		queryKey: [QUERY_KEY.CLIPBOARDS, limit.toString()],
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, allPages) => {
 			return allPages.length * limit < lastPage.total ? allPages.length : undefined;
@@ -22,5 +22,6 @@ export function useClipboards(limit: number) {
 
 			return result.data;
 		},
+		enabled: !!limit,
 	});
 }

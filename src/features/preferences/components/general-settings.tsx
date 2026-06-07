@@ -1,11 +1,10 @@
 import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SheetClose } from '@/components/ui/sheet';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useClearClipboardHistory } from '@/features/clipboard/hooks/use-clear-clipboard-history';
 import { useHasClipboardHistory } from '@/features/clipboard/hooks/use-has-clipboard-history';
 import { useClipboardMonitoringStore } from '@/features/clipboard/stores/clipboard-monitoring-store';
-import { PAGE_LIMIT_OPTIONS, useSettings } from '@/hooks/use-settings';
+import { ClipboardPerPageLimitSetting } from '@/features/preferences/components/clipboard-per-page-limit-setting';
 import { cn } from '@/lib/utils';
 import { SettingRow } from '../setting-row';
 
@@ -14,7 +13,6 @@ export function GeneralSettings() {
 	const toggleMonitoring = useClipboardMonitoringStore((state) => state.toggleMonitoring);
 	const hasHistory = useHasClipboardHistory();
 	const clearAll = useClearClipboardHistory();
-	const { historyLimit, setHistoryLimit } = useSettings();
 
 	return (
 		<div className="flex flex-col gap-1">
@@ -37,31 +35,7 @@ export function GeneralSettings() {
 
 			<div className="h-px bg-border/60 my-1" />
 
-			<div className="py-2">
-				<div className="flex items-center justify-between mb-2">
-					<span className="text-[13px] font-medium text-foreground">Page limit</span>
-				</div>
-
-				<ToggleGroup
-					variant="outline"
-					size="sm"
-					value={[String(historyLimit)]}
-					onValueChange={(value) => {
-						if (value.length > 0) setHistoryLimit(Number(value[value.length - 1]));
-					}}
-					className="w-full"
-				>
-					{PAGE_LIMIT_OPTIONS.map((option) => (
-						<ToggleGroupItem
-							key={option}
-							value={String(option)}
-							className="flex-1 text-xs cursor-pointer"
-						>
-							{option}
-						</ToggleGroupItem>
-					))}
-				</ToggleGroup>
-			</div>
+			<ClipboardPerPageLimitSetting />
 
 			{hasHistory && (
 				<>
