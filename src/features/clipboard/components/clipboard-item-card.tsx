@@ -7,7 +7,7 @@ export const ClipboardItemCard = memo(function ClipboardItem() {
 
 	return (
 		<Card ref={cardRef} className="group py-2 ring-accent/80">
-			<CardContent className="relative px-2">
+			<CardContent className="relative px-2 select-none">
 				<ClipboardItemContent />
 			</CardContent>
 		</Card>
