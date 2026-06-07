@@ -6,7 +6,13 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!!**/dist", "!!**/src-tauri", "!**/src/bindings.ts"]
+		"includes": [
+			"**",
+			"!!**/dist",
+			"!!**/src-tauri",
+			"!**/src/bindings.ts",
+			"!!**/src/routeTree.gen.ts"
+		]
 	},
 	"formatter": {
 		"enabled": true,
