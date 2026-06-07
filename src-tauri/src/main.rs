@@ -26,7 +26,7 @@ use tauri_plugin_store::StoreExt;
 use websocket::WebSocketState;
 
 fn main() {
-    dotenvy::from_path("../.env").ok();
+    dotenvy::from_path(".env").ok();
 
     let command_builder = create_command_builder();
 
@@ -75,7 +75,8 @@ fn main() {
             cli::handle_cli_args(app, None);
             commands::init_keyring().expect("Failed to initialize keyring store");
 
-            let settings_file_name = env::var("VITE_SETTINGS_FILE_NAME")?;
+            let settings_file_name =
+                env::var("VITE_SETTINGS_FILE_NAME").unwrap_or_else(|_| "settings.json".to_string());
             let _ = app.store(settings_file_name)?;
 
             let database = database::initialization::init(app);

@@ -1,3 +1,5 @@
+import { load } from '@tauri-apps/plugin-store';
+import { useEffect } from 'react';
 import { EmptyState } from '@/components/clipboard-empty-state';
 import { Button } from '@/components/ui/button';
 import { useClipboards } from '@/features/clipboard/hooks/use-clipboards';
@@ -6,8 +8,20 @@ import { useClipboardPerPageLimitStore } from '@/features/clipboard/stores/use-c
 import { SortableItem } from './sortable-item';
 
 export const ClipboardList = () => {
-	const { perPageLimit } = useClipboardPerPageLimitStore();
+	const { perPageLimit, setPerPageLimit } = useClipboardPerPageLimitStore();
 	const { data, hasNextPage, fetchNextPage } = useClipboards(perPageLimit);
+
+	useEffect(() => {
+		const getPerPageLimitFromTauriStore = async () => {
+			const store = await load(import.meta.env.VITE_SETTINGS_FILE_NAME);
+			const limit = await store.get<number>('clipboardPerPageLimit');
+			if (limit && perPageLimit !== limit) {
+				setPerPageLimit(limit);
+			}
+		};
+
+		getPerPageLimitFromTauriStore();
+	}, [perPageLimit, setPerPageLimit]);
 
 	const searchQuery = useClipboardSearchQueryStore((state) => state.searchQuery);
 
