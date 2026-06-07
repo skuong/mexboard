@@ -1,3 +1,17 @@
+# [1.26.0-beta.4](https://github.com/skuong/mexboard/compare/v1.26.0-beta.3...v1.26.0-beta.4) (2026-06-07)
+
+
+### Bug Fixes
+
+* load initial value for per page limit ([9f668d3](https://github.com/skuong/mexboard/commit/9f668d30309967afc1c07c4d013fc805eff719f0))
+* use switch component for toggle monitoring button ([a0cb8cc](https://github.com/skuong/mexboard/commit/a0cb8cc6c171d94d341325bf15c6da97310dd61a))
+
+
+### Features
+
+* use Tanstack router for code spliting and prepare for more features ([79712f8](https://github.com/skuong/mexboard/commit/79712f8e9eec6b9db258581c18f88f95bfe22b69))
+* use Tauri store for storing clipboard per page limit ([4a9ce57](https://github.com/skuong/mexboard/commit/4a9ce57f0840c43548c3274fd49d9c06e6064c5f))
+
 # [1.26.0-beta.3](https://github.com/skuong/mexboard/compare/v1.26.0-beta.2...v1.26.0-beta.3) (2026-06-06)
 
 
