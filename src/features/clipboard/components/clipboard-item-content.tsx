@@ -7,7 +7,7 @@ export function ClipboardItemContent() {
 		<>
 			{item.content && (
 				<pre
-					className={`whitespace-pre-wrap wrap-break-word text-card-foreground text-sm leading-relaxed font-[inherit]`}
+					className={`whitespace-pre-wrap line-clamp-5 wrap-break-word text-card-foreground text-sm leading-relaxed font-[inherit]`}
 				>
 					{item.content}
 				</pre>
