@@ -1,10 +1,13 @@
 import { EmptyState } from '@/components/clipboard-empty-state';
-import { ClipboardItemsGrid } from '@/components/clipboard-items-grid';
+import { Button } from '@/components/ui/button';
 import { useClipboards } from '@/features/clipboard/hooks/use-clipboards';
 import { useClipboardSearchQueryStore } from '@/features/clipboard/stores/clipboard-search-query-store';
+import { useClipboardPerPageLimitStore } from '@/features/clipboard/stores/use-clipboard-per-page-limit-store';
+import { SortableItem } from './sortable-item';
 
 export const ClipboardList = () => {
-	const { data } = useClipboards(5);
+	const { perPageLimit } = useClipboardPerPageLimitStore();
+	const { data, hasNextPage, fetchNextPage } = useClipboards(perPageLimit);
 
 	const searchQuery = useClipboardSearchQueryStore((state) => state.searchQuery);
 
@@ -14,5 +17,25 @@ export const ClipboardList = () => {
 		return <EmptyState isSearching={isSearching} />;
 	}
 
-	return <ClipboardItemsGrid />;
+	const clipboards = data.pages.flatMap((page) => page.items);
+
+	return (
+		<ul className="grid grid-cols-1 gap-3 px-4 pt-1 md:grid-cols-2">
+			{clipboards.map((clipboard) => (
+				<SortableItem key={clipboard.id} item={clipboard} />
+			))}
+
+			{hasNextPage && (
+				<li className="list-none">
+					<Button
+						variant="ghost"
+						className="w-full text-muted-foreground"
+						onClick={() => fetchNextPage()}
+					>
+						Load more
+					</Button>
+				</li>
+			)}
+		</ul>
+	);
 };

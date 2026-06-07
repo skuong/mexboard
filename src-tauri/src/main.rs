@@ -20,10 +20,14 @@ mod window;
 use clipboard::ClipboardManager;
 use commands::create_command_builder;
 use media::image_protocol_handler;
+use std::env;
 use tauri::Manager;
+use tauri_plugin_store::StoreExt;
 use websocket::WebSocketState;
 
 fn main() {
+    dotenvy::from_path("../.env").ok();
+
     let command_builder = create_command_builder();
 
     #[cfg(debug_assertions)]
@@ -46,7 +50,7 @@ fn main() {
         })
         .plugin(tauri_plugin_cli::init())
         .plugin(tauri_plugin_log::Builder::new().level(log_level).build())
-        .plugin(tauri_plugin_store::Builder::new().build())
+        .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
             cli::handle_cli_args(app, Some(args));
         }))
@@ -70,6 +74,9 @@ fn main() {
         .setup(move |app| {
             cli::handle_cli_args(app, None);
             commands::init_keyring().expect("Failed to initialize keyring store");
+
+            let settings_file_name = env::var("VITE_SETTINGS_FILE_NAME")?;
+            let _ = app.store(settings_file_name)?;
 
             let database = database::initialization::init(app);
             app.manage(database);

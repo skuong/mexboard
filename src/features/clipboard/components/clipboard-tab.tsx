@@ -2,11 +2,11 @@ import { ClipboardItemSkeletonList } from '@/components/clipboard-item-skeleton'
 import { ClipboardList } from '@/components/clipboard-list';
 import { ClipboardTabHeader } from '@/features/clipboard/components/clipboard-tab-header';
 import { useClipboardHistory } from '@/features/clipboard/hooks/use-clipboard-history';
-import { useSettings } from '@/hooks/use-settings';
+import { useClipboardPerPageLimitStore } from '@/features/clipboard/stores/use-clipboard-per-page-limit-store';
 
 export function ClipboardTab() {
-	const { historyLimit } = useSettings();
-	const { isLoaded } = useClipboardHistory(historyLimit, false);
+	const perPageLimit = useClipboardPerPageLimitStore((state) => state.perPageLimit);
+	const { isLoaded } = useClipboardHistory(perPageLimit, false);
 
 	return (
 		<>
