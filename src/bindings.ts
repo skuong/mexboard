@@ -4,6 +4,7 @@ import { invoke as __TAURI_INVOKE } from "@tauri-apps/api/core";
 
 /** Commands */
 export const commands = {
+	openDrawWindow: () => typedError<null, string>(__TAURI_INVOKE("open_draw_window")),
 	/**  Copies content to clipboard, hides the window, and simulates Ctrl+V. */
 	pasteItem: (contentType: string, textContent: string | null, imageData: string | null) => typedError<null, string>(__TAURI_INVOKE("paste_item", { contentType, textContent, imageData })),
 	readClipboard: () => typedError<string, string>(__TAURI_INVOKE("read_clipboard")),

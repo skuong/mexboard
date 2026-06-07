@@ -3,7 +3,8 @@
   "identifier": "default",
   "description": "Capability for the main window",
   "windows": [
-    "main"
+    "main",
+    "*"
   ],
   "permissions": [
     "core:default",
@@ -14,6 +15,8 @@
     "core:window:allow-is-visible",
     "core:window:allow-set-position",
     "core:window:allow-start-dragging",
+    "core:window:allow-create",
+    "core:webview:allow-create-webview",
     {
       "identifier": "opener:allow-open-url",
       "allow": [

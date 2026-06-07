@@ -14,10 +14,12 @@ pub use system::*;
 
 use crate::database::*;
 use crate::websocket::*;
+use crate::window::*;
 use tauri_specta::{collect_commands, Builder};
 
 pub fn create_command_builder() -> Builder<tauri::Wry> {
     Builder::new().commands(collect_commands![
+        open_draw_window,
         paste_item,
         read_clipboard,
         read_clipboard_image,
