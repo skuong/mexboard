@@ -14,10 +14,13 @@ export function ClipboardItemContent() {
 			)}
 
 			{!item.content && (
-				<img
-					src={`image://clipboards/preview?id=${item.id}`}
-					alt="Preview of the clipboard content"
-				/>
+				<div className="w-full flex">
+					<img
+						src={`image://clipboards/preview?id=${item.id}`}
+						alt="Preview of the clipboard content"
+						className="mx-auto"
+					/>
+				</div>
 			)}
 		</>
 	);
