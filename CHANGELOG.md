@@ -1,3 +1,11 @@
+# [1.26.0-beta.6](https://github.com/skuong/mexboard/compare/v1.26.0-beta.5...v1.26.0-beta.6) (2026-06-08)
+
+
+### Bug Fixes
+
+* add line clamp to clipboard text content ([5665043](https://github.com/skuong/mexboard/commit/566504346d1c9bc25794fc0be7a886b7af42dc4e))
+* center image ([7b33f1e](https://github.com/skuong/mexboard/commit/7b33f1e519ad87602124de63cde2bbf9e0c4f76b))
+
 # [1.26.0-beta.5](https://github.com/skuong/mexboard/compare/v1.26.0-beta.4...v1.26.0-beta.5) (2026-06-07)
 
 
