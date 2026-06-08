@@ -2,13 +2,12 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import '@/main.css';
 import { Plus } from 'lucide-react';
-import { commands } from '@/bindings';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { initializeBetterAuth } from '@/features/auth/lib/initialize-better-auth';
 import { ClipboardTab } from '@/features/clipboard/components/clipboard-tab';
 import { useContextMenu } from '@/features/context-menu/hooks/use-context-menu';
 import { SymbolsTab } from '@/features/symbols/components/symbols-tab';
+import { AddOnTabsContent } from '@/features/tab/components/add-on-tabs-content';
 import { useTabs } from '@/features/tab/hooks/use-tabs';
 import { useSystemTheme } from '@/hooks/use-system-theme';
 
@@ -48,18 +47,7 @@ function RouteComponent() {
 					<SymbolsTab />
 				</TabsContent>
 
-				<TabsContent
-					value="add-more-tab"
-					className="flex flex-col overflow-hidden min-h-0 data-hidden:hidden"
-				>
-					<ul>
-						{[1, 2, 3, 4, 5].map((range) => (
-							<li key={range} className="w-full py-2">
-								Feature {range}
-							</li>
-						))}
-					</ul>
-				</TabsContent>
+				<AddOnTabsContent />
 
 				<div data-tauri-drag-region className="flex items-center gap-2 px-3 pb-3 select-none">
 					<TabsList className="bg-transparent">
@@ -69,15 +57,9 @@ function RouteComponent() {
 							</TabsTrigger>
 						))}
 
-						<Button
-							variant="link"
-							onClick={() => {
-								commands.openDrawWindow();
-							}}
-							className="cursor-pointer"
-						>
+						<TabsTrigger key="add-more-tab" value="add-more-tab" className="cursor-pointer">
 							<Plus className="text-muted-foreground" />
-						</Button>
+						</TabsTrigger>
 					</TabsList>
 				</div>
 			</Tabs>
