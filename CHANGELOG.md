@@ -1,3 +1,10 @@
+# [1.26.0-beta.7](https://github.com/skuong/mexboard/compare/v1.26.0-beta.6...v1.26.0-beta.7) (2026-06-08)
+
+
+### Features
+
+* add cards for adding new tabs ([a5b084b](https://github.com/skuong/mexboard/commit/a5b084b66042bd714152226063a7bdfedfd8f597))
+
 # [1.26.0-beta.6](https://github.com/skuong/mexboard/compare/v1.26.0-beta.5...v1.26.0-beta.6) (2026-06-08)
 
 
