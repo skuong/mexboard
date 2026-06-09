@@ -1,3 +1,10 @@
+# [1.26.0-beta.8](https://github.com/skuong/mexboard/compare/v1.26.0-beta.7...v1.26.0-beta.8) (2026-06-09)
+
+
+### Features
+
+* can copy text to clipboard when click on item card ([098233f](https://github.com/skuong/mexboard/commit/098233fab52ecdbe239a2150b99c356e54772e27))
+
 # [1.26.0-beta.7](https://github.com/skuong/mexboard/compare/v1.26.0-beta.6...v1.26.0-beta.7) (2026-06-08)
 
 
