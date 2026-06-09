@@ -4,13 +4,13 @@ import { invoke as __TAURI_INVOKE } from "@tauri-apps/api/core";
 
 /** Commands */
 export const commands = {
+	writeClipboardItemToSystemClipboard: (id: number) => typedError<null, string>(__TAURI_INVOKE("write_clipboard_item_to_system_clipboard", { id })),
 	openDrawWindow: () => typedError<null, string>(__TAURI_INVOKE("open_draw_window")),
 	/**  Copies content to clipboard, hides the window, and simulates Ctrl+V. */
 	pasteItem: (contentType: string, textContent: string | null, imageData: string | null) => typedError<null, string>(__TAURI_INVOKE("paste_item", { contentType, textContent, imageData })),
 	readClipboard: () => typedError<string, string>(__TAURI_INVOKE("read_clipboard")),
 	readClipboardImage: () => typedError<[number[], number, number] | null, string>(__TAURI_INVOKE("read_clipboard_image")),
 	writeClipboard: (text: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard", { text })),
-	writeClipboardImage: (base64Data: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard_image", { base64Data })),
 	reinitializeClipboard: () => typedError<null, string>(__TAURI_INVOKE("reinitialize_clipboard")),
 	parseEnvContent: (text: string) => __TAURI_INVOKE<([string, string])[]>("parse_env_content", { text }),
 	setMonitoring: (enabled: boolean) => __TAURI_INVOKE<void>("set_monitoring", { enabled }),
