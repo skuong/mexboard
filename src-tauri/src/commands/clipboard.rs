@@ -30,15 +30,6 @@ pub async fn write_clipboard(
 
 #[tauri::command]
 #[specta::specta]
-pub async fn write_clipboard_image(
-    base64_data: String,
-    manager: State<'_, ClipboardManager>,
-) -> Result<(), String> {
-    manager.write_image(base64_data).await
-}
-
-#[tauri::command]
-#[specta::specta]
 pub async fn reinitialize_clipboard(manager: State<'_, ClipboardManager>) -> Result<(), String> {
     manager.reinitialize()
 }
@@ -74,10 +65,6 @@ pub async fn paste_item(
         "text" => {
             let text = text_content.ok_or("missing text_content")?;
             manager.write_text(text).await
-        }
-        "image" => {
-            let data = image_data.ok_or("missing image_data")?;
-            manager.write_image(data).await
         }
         _ => return Err(format!("unknown content_type: {content_type}")),
     };

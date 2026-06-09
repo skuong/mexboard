@@ -27,14 +27,12 @@ impl ClipboardManager {
         self.clipboard.write(text).await
     }
 
-    pub async fn write_image(&self, base64_data: String) -> Result<(), String> {
-        let png_bytes = BASE64
-            .decode(&base64_data)
-            .map_err(|e| format!("Failed to decode base64 image: {}", e))?;
-
-        let (rgba_bytes, width, height) = image::decode_png_to_rgba(&png_bytes)
-            .map_err(|e| format!("Failed to decode PNG: {}", e))?;
-
+    pub async fn write_image(
+        &self,
+        rgba_bytes: Vec<u8>,
+        width: u32,
+        height: u32,
+    ) -> Result<(), String> {
         self.clipboard.write_image(rgba_bytes, width, height).await
     }
 

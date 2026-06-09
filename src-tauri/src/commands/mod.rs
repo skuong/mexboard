@@ -12,6 +12,7 @@ pub use media::*;
 pub use shortcuts::*;
 pub use system::*;
 
+use crate::clipboard::write_clipboard_item_to_system_clipboard::*;
 use crate::database::*;
 use crate::websocket::*;
 use crate::window::*;
@@ -19,12 +20,12 @@ use tauri_specta::{collect_commands, Builder};
 
 pub fn create_command_builder() -> Builder<tauri::Wry> {
     Builder::new().commands(collect_commands![
+        write_clipboard_item_to_system_clipboard,
         open_draw_window,
         paste_item,
         read_clipboard,
         read_clipboard_image,
         write_clipboard,
-        write_clipboard_image,
         reinitialize_clipboard,
         parse_env_content,
         set_monitoring,
