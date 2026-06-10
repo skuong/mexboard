@@ -1,4 +1,3 @@
-import { info } from '@tauri-apps/plugin-log';
 import { memo, useRef } from 'react';
 import { commands } from '@/bindings';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,7 +13,6 @@ export const ClipboardItemCard = memo(function ClipboardItem() {
 			ref={cardRef}
 			className="group py-2 ring-accent/80"
 			onClick={async () => {
-				info(`Item id: ${item.id}`);
 				await commands.writeClipboardItemToSystemClipboard(item.id);
 			}}
 		>
