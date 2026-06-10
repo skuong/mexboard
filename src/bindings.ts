@@ -4,10 +4,9 @@ import { invoke as __TAURI_INVOKE } from "@tauri-apps/api/core";
 
 /** Commands */
 export const commands = {
+	pasteClipboardToOtherApp: (id: number) => typedError<null, string>(__TAURI_INVOKE("paste_clipboard_to_other_app", { id })),
 	writeClipboardItemToSystemClipboard: (id: number) => typedError<null, string>(__TAURI_INVOKE("write_clipboard_item_to_system_clipboard", { id })),
 	openDrawWindow: () => typedError<null, string>(__TAURI_INVOKE("open_draw_window")),
-	/**  Copies content to clipboard, hides the window, and simulates Ctrl+V. */
-	pasteItem: (contentType: string, textContent: string | null, imageData: string | null) => typedError<null, string>(__TAURI_INVOKE("paste_item", { contentType, textContent, imageData })),
 	readClipboard: () => typedError<string, string>(__TAURI_INVOKE("read_clipboard")),
 	readClipboardImage: () => typedError<[number[], number, number] | null, string>(__TAURI_INVOKE("read_clipboard_image")),
 	writeClipboard: (text: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard", { text })),

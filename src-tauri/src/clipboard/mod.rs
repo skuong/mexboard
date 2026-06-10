@@ -8,6 +8,7 @@ use drizzle::sqlite::SQLiteFromRow;
 pub use manager::ClipboardManager;
 use serde::{Deserialize, Serialize};
 
+pub(crate) use commands::paste_clipboard_to_other_app;
 pub(crate) use commands::write_clipboard_item_to_system_clipboard;
 pub(crate) use mexboard::compare_and_insert_image_if_not_exists;
 pub(crate) use mexboard::compare_and_insert_text_if_not_exists;
