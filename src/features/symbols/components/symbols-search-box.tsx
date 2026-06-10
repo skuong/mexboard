@@ -4,7 +4,6 @@ import { type ComponentProps, useRef } from 'react';
 import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
 import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
 import { useSymbolsSearchQueryStore } from '@/features/symbols/stores/symbols-search-query-store';
-import { useTabs } from '@/features/tab/hooks/use-tabs';
 import { cn } from '@/utils/cn';
 
 export function SymbolsSearchBox({ className }: ComponentProps<'div'>) {
@@ -14,9 +13,7 @@ export function SymbolsSearchBox({ className }: ComponentProps<'div'>) {
 	};
 
 	const { hotkeys } = useHotkeysConfig();
-	const { activeTab } = useTabs();
 	useHotkey(hotkeys.search, focusSearch, {
-		enabled: activeTab === 'symbols',
 		ignoreInputs: true,
 	});
 

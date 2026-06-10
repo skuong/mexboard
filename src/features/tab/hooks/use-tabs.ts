@@ -1,9 +1,9 @@
 import { useHotkey } from '@tanstack/react-hotkeys';
-import { Copy, SquarePercent } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import { useState } from 'react';
 import { useHotkeysConfig } from '@/features/hotkey/hooks/use-hotkeys-config';
 
-const TAB_ORDER = ['clipboard', 'symbols'] as const;
+const TAB_ORDER = ['clipboard'] as const;
 
 export function useTabs() {
 	const [activeTab, setActiveTab] = useState<(typeof TAB_ORDER)[number]>('clipboard');
@@ -29,11 +29,6 @@ export function useTabs() {
 				label: 'Clipboard',
 				value: 'clipboard',
 				icon: Copy,
-			},
-			{
-				label: 'Symbols',
-				value: 'symbols',
-				icon: SquarePercent,
 			},
 		],
 	};

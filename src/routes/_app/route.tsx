@@ -6,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { initializeBetterAuth } from '@/features/auth/lib/initialize-better-auth';
 import { ClipboardTab } from '@/features/clipboard/components/clipboard-tab';
 import { useContextMenu } from '@/features/context-menu/hooks/use-context-menu';
-import { SymbolsTab } from '@/features/symbols/components/symbols-tab';
 import { AddOnTabsContent } from '@/features/tab/components/add-on-tabs-content';
 import { useTabs } from '@/features/tab/hooks/use-tabs';
 import { useSystemTheme } from '@/hooks/use-system-theme';
@@ -37,14 +36,6 @@ function RouteComponent() {
 					className="flex flex-col overflow-hidden min-h-0 data-hidden:hidden"
 				>
 					<ClipboardTab />
-				</TabsContent>
-
-				<TabsContent
-					value="symbols"
-					keepMounted
-					className="flex flex-col overflow-hidden min-h-0 data-hidden:hidden"
-				>
-					<SymbolsTab />
 				</TabsContent>
 
 				<AddOnTabsContent />
