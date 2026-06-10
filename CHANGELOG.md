@@ -1,3 +1,10 @@
+# [1.26.0-beta.9](https://github.com/skuong/mexboard/compare/v1.26.0-beta.8...v1.26.0-beta.9) (2026-06-10)
+
+
+### Features
+
+* can copy image to system clipboard on click ([31f0961](https://github.com/skuong/mexboard/commit/31f096156dac34b8809aa0a08a656f27c0fd7afc))
+
 # [1.26.0-beta.8](https://github.com/skuong/mexboard/compare/v1.26.0-beta.7...v1.26.0-beta.8) (2026-06-09)
 
 
