@@ -1,3 +1,10 @@
+# [1.26.0-beta.11](https://github.com/skuong/mexboard/compare/v1.26.0-beta.10...v1.26.0-beta.11) (2026-06-10)
+
+
+### Bug Fixes
+
+* make pasting onto other app more reliable by adding some delay ([4e22ea9](https://github.com/skuong/mexboard/commit/4e22ea91477147f1180e829c7a8e658d065828da))
+
 # [1.26.0-beta.10](https://github.com/skuong/mexboard/compare/v1.26.0-beta.9...v1.26.0-beta.10) (2026-06-10)
 
 
