@@ -15,6 +15,9 @@ export const ClipboardItemCard = memo(function ClipboardItem() {
 			onClick={async () => {
 				await commands.writeClipboardItemToSystemClipboard(item.id);
 			}}
+			onDoubleClick={async () => {
+				commands.pasteClipboardToOtherApp(item.id);
+			}}
 		>
 			<CardContent className="relative px-2 select-none">
 				<ClipboardItemContent />

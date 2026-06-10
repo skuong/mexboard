@@ -1,9 +1,7 @@
 use crate::clipboard::monitoring::MonitorState;
 use crate::clipboard::ClipboardManager;
 use crate::detection::env;
-use crate::utils::simulate_ctrl_v::simulate_ctrl_v;
-use std::sync::atomic::Ordering;
-use tauri::{AppHandle, Manager, State};
+use tauri::State;
 
 #[tauri::command]
 #[specta::specta]
@@ -46,40 +44,4 @@ pub fn set_monitoring(enabled: bool, state: State<'_, MonitorState>) {
     state
         .is_monitoring
         .store(enabled, std::sync::atomic::Ordering::Relaxed);
-}
-
-/// Copies content to clipboard, hides the window, and simulates Ctrl+V.
-#[tauri::command]
-#[specta::specta]
-pub async fn paste_item(
-    content_type: String,
-    text_content: Option<String>,
-    image_data: Option<String>,
-    app: AppHandle,
-    manager: State<'_, ClipboardManager>,
-    monitor: State<'_, MonitorState>,
-) -> Result<(), String> {
-    let was_monitoring = monitor.is_monitoring.swap(false, Ordering::Relaxed);
-
-    let write_result = match content_type.as_str() {
-        "text" => {
-            let text = text_content.ok_or("missing text_content")?;
-            manager.write_text(text).await
-        }
-        _ => return Err(format!("unknown content_type: {content_type}")),
-    };
-
-    if was_monitoring {
-        monitor.is_monitoring.store(true, Ordering::Relaxed);
-    }
-
-    write_result?;
-
-    if let Some(window) = app.get_webview_window("main") {
-        let _ = window.hide();
-    }
-
-    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-
-    simulate_ctrl_v()
 }
