@@ -1,3 +1,10 @@
+# [1.26.0-beta.12](https://github.com/skuong/mexboard/compare/v1.26.0-beta.11...v1.26.0-beta.12) (2026-06-10)
+
+
+### Bug Fixes
+
+* **ci/cd:** retrieve envs correctly ([fde66d4](https://github.com/skuong/mexboard/commit/fde66d47a1a1a9fea604261cbb6c0f6a4711016a))
+
 # [1.26.0-beta.11](https://github.com/skuong/mexboard/compare/v1.26.0-beta.10...v1.26.0-beta.11) (2026-06-10)
 
 
