@@ -1,3 +1,15 @@
+# [1.26.0-beta.10](https://github.com/skuong/mexboard/compare/v1.26.0-beta.9...v1.26.0-beta.10) (2026-06-10)
+
+
+### Bug Fixes
+
+* remove unused use-paste-actions hook ([66be52c](https://github.com/skuong/mexboard/commit/66be52c74ffef546c3cc7637b81540fb594a419f))
+
+
+### Features
+
+* can paste clipboard onto other app ([56c224b](https://github.com/skuong/mexboard/commit/56c224b6ba2d63f5ab8440f2564b476ff9ad024f))
+
 # [1.26.0-beta.9](https://github.com/skuong/mexboard/compare/v1.26.0-beta.8...v1.26.0-beta.9) (2026-06-10)
 
 
