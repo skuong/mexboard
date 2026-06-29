@@ -63,7 +63,7 @@
       }
     },
     "updater": {
-       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEU5MjEzRTIxN0E0MTFERUYKUldUdkhVRjZJVDRoNldpNkxhM2NqRDJ4Y3pvOGU4ME1JT3JjVzE0RlNlbGFENUtIVUNnQjhaVXoK",
+       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDdENkU4NUExMkVCNkI1M0QKUldROXRiWXVvWVZ1ZlRKaFl0UG82Z28yRC9CQ2d0cUkzQVJQRUpiRndYcnl6Zm5tbWhjK05JK2EK",
        "endpoints": [
          "https://github.com/skuong/mexboard/releases/latest/download/latest.json"
        ],
