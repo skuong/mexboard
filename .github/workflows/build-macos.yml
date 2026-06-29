@@ -38,6 +38,7 @@ jobs:
           VITE_SETTINGS_FILE_NAME: ${{ vars.VITE_SETTINGS_FILE_NAME }}
           VITE_CLIPBOARD_PER_PAGE_LIMIT_OPTIONS: ${{ vars.VITE_CLIPBOARD_PER_PAGE_LIMIT_OPTIONS }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: pnpm tauri build --bundles dmg
 
       - name: Upload artifacts
