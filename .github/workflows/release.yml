@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   plan-release:
@@ -17,6 +18,7 @@ jobs:
       released: ${{ steps.plan.outputs.released }}
       version: ${{ steps.plan.outputs.version }}
       tag: ${{ steps.plan.outputs.tag }}
+      current-version: ${{ steps.current-version.outputs.version }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -44,15 +46,68 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/next-release-version.js
 
+      - name: Read current version
+        id: current-version
+        run: node -e "const fs = require('node:fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); fs.appendFileSync(process.env.GITHUB_OUTPUT, `version=${pkg.version}\n`);"
+
       - name: Output release plan
         run: |
           echo "Release needed: ${{ steps.plan.outputs.released }}"
           echo "Version: ${{ steps.plan.outputs.version }}"
           echo "Tag: ${{ steps.plan.outputs.tag }}"
+          echo "Current version: ${{ steps.current-version.outputs.version }}"
+
+  release-pr:
+    name: Release PR
+    needs: plan-release
+    if: |
+      needs.plan-release.outputs.released == 'true' &&
+      needs.plan-release.outputs.current-version != needs.plan-release.outputs.version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - uses: pnpm/action-setup@v6
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Fetch tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git fetch --tags --force
+
+      - name: Prepare release files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/prepare-release-pr.js
+
+      - name: Open release PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: release/${{ github.ref_name }}/${{ needs.plan-release.outputs.version }}
+          delete-branch: true
+          commit-message: "chore(release): ${{ needs.plan-release.outputs.version }}"
+          title: "chore(release): ${{ needs.plan-release.outputs.version }}"
+          body: |
+            Release PR for `${{ needs.plan-release.outputs.version }}`.
+
+            Merging this PR will trigger the release workflow again. Since the version files will already match the planned release version, that run will build artifacts and publish the GitHub Release.
 
   check-format:
     needs: plan-release
-    if: needs.plan-release.outputs.released == 'true'
+    if: |
+      needs.plan-release.outputs.released == 'true' &&
+      needs.plan-release.outputs.current-version == needs.plan-release.outputs.version
     uses: ./.github/workflows/format.yml
 
   release-linux:
@@ -62,6 +117,7 @@ jobs:
       - check-format
     if: |
       needs.plan-release.outputs.released == 'true' &&
+      needs.plan-release.outputs.current-version == needs.plan-release.outputs.version &&
       needs.check-format.result == 'success'
     uses: ./.github/workflows/build-linux.yml
     with:
@@ -75,6 +131,7 @@ jobs:
       - check-format
     if: |
       needs.plan-release.outputs.released == 'true' &&
+      needs.plan-release.outputs.current-version == needs.plan-release.outputs.version &&
       needs.check-format.result == 'success'
     uses: ./.github/workflows/build-windows.yml
     with:
@@ -88,6 +145,7 @@ jobs:
       - check-format
     if: |
       needs.plan-release.outputs.released == 'true' &&
+      needs.plan-release.outputs.current-version == needs.plan-release.outputs.version &&
       needs.check-format.result == 'success'
     uses: ./.github/workflows/build-macos.yml
     with:
@@ -104,6 +162,7 @@ jobs:
       - release-macos
     if: |
       needs.plan-release.outputs.released == 'true' &&
+      needs.plan-release.outputs.current-version == needs.plan-release.outputs.version &&
       needs.check-format.result == 'success' &&
       needs.release-linux.result == 'success' &&
       needs.release-windows.result == 'success' &&
