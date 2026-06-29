@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Mexboard",
-  "version": "1.26.0-12",
+  "version": "1.26.0",
   "identifier": "com.mexboard",
   "build": {
     "beforeDevCommand": "pnpm dev",
@@ -63,13 +63,13 @@
       }
     },
     "updater": {
-       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDdENkU4NUExMkVCNkI1M0QKUldROXRiWXVvWVZ1ZlRKaFl0UG82Z28yRC9CQ2d0cUkzQVJQRUpiRndYcnl6Zm5tbWhjK05JK2EK",
-       "endpoints": [
-         "https://github.com/skuong/mexboard/releases/latest/download/latest.json"
-       ],
-       "windows": {
-          "installMode": "basicUi"
-        }
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDdENkU4NUExMkVCNkI1M0QKUldROXRiWXVvWVZ1ZlRKaFl0UG82Z28yRC9CQ2d0cUkzQVJQRUpiRndYcnl6Zm5tbWhjK05JK2EK",
+      "endpoints": [
+        "https://github.com/skuong/mexboard/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "basicUi"
+      }
     }
   },
   "bundle": {
