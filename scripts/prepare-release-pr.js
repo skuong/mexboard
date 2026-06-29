@@ -52,9 +52,7 @@ const firstLine = notes.split('\n', 1)[0];
 if (changelog.startsWith(firstLine)) {
 	console.log(`CHANGELOG.md already starts with ${firstLine}`);
 } else {
-	const updatedChangelog = changelog.trim()
-		? `${notes}\n\n${changelog.trimStart()}`
-		: `${notes}\n`;
+	const updatedChangelog = changelog.trim() ? `${notes}\n\n${changelog.trimStart()}` : `${notes}\n`;
 
 	writeFileSync(changelogPath, updatedChangelog, 'utf-8');
 	console.log(`Updated CHANGELOG.md for ${version}`);
