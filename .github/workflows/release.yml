@@ -48,7 +48,7 @@ jobs:
 
       - name: Read current version
         id: current-version
-        run: node -e "const fs = require('node:fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); fs.appendFileSync(process.env.GITHUB_OUTPUT, `version=${pkg.version}\n`);"
+        run: node -e 'const fs = require("node:fs"); const pkg = JSON.parse(fs.readFileSync("package.json", "utf8")); fs.appendFileSync(process.env.GITHUB_OUTPUT, `version=${pkg.version}\n`);'
 
       - name: Output release plan
         run: |
