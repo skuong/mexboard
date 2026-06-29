@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * Syncs version from package.json to Cargo.toml
- * This script is called by semantic-release to keep versions in sync
+ * Syncs package, Cargo, and Tauri versions for release builds.
  */
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,6 +14,7 @@ const rootDir = join(__dirname, '..');
 
 const packageJsonPath = join(rootDir, 'package.json');
 const cargoTomlPath = join(rootDir, 'src-tauri', 'Cargo.toml');
+const cargoLockPath = join(rootDir, 'src-tauri', 'Cargo.lock');
 const tauriConfPath = join(rootDir, 'src-tauri', 'tauri.conf.json');
 
 const requestedVersion = process.argv[2] || process.env.RELEASE_VERSION;
@@ -39,6 +39,17 @@ const cargoToml = readFileSync(cargoTomlPath, 'utf-8');
 const updatedCargoToml = cargoToml.replace(/^version = ".*"$/m, `version = "${newVersion}"`);
 writeFileSync(cargoTomlPath, updatedCargoToml, 'utf-8');
 console.log(`Updated Cargo.toml version to ${newVersion}`);
+
+if (existsSync(cargoLockPath)) {
+	const cargoLock = readFileSync(cargoLockPath, 'utf-8');
+	const updatedCargoLock = cargoLock.replace(
+		/(\[\[package\]\]\nname = "mexboard"\nversion = ")[^"]+(")/,
+		`$1${newVersion}$2`,
+	);
+
+	writeFileSync(cargoLockPath, updatedCargoLock, 'utf-8');
+	console.log(`Updated Cargo.lock version to ${newVersion}`);
+}
 
 // Update tauri.conf.json
 const tauriConf = JSON.parse(readFileSync(tauriConfPath, 'utf-8'));
