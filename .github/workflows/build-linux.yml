@@ -47,6 +47,7 @@ jobs:
           VITE_WEBSOCKET_BASE_URL: ${{ vars.VITE_WEBSOCKET_BASE_URL }}
           VITE_SETTINGS_FILE_NAME: ${{ vars.VITE_SETTINGS_FILE_NAME }}
           VITE_CLIPBOARD_PER_PAGE_LIMIT_OPTIONS: ${{ vars.VITE_CLIPBOARD_PER_PAGE_LIMIT_OPTIONS }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
         run: pnpm tauri build --bundles appimage deb rpm
 
       - name: Upload artifacts
