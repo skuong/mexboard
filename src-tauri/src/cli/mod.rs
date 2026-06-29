@@ -21,6 +21,7 @@ pub fn handle_cli_args<R: tauri::Runtime>(
         Some(subcommand) if subcommand.name == "show" => {
             if let Some(window) = manager.get_webview_window("main") {
                 window.show().ok();
+                window.set_focus().ok();
             }
         }
         _ => {}
