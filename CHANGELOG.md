@@ -1,3 +1,54 @@
+# [1.26.0](https://github.com/skuong/mexboard/compare/v1.25.0...v1.26.0) (2026-06-29)
+
+
+### Bug Fixes
+
+* add line clamp to clipboard text content ([2a1bd40](https://github.com/skuong/mexboard/commit/2a1bd400f894e04f5ef0e581be011915705d04b4))
+* add TAURI_SIGNING_PRIVATE_KEY_PASSWORD secrets to prevent prompt on build ([2fb5d57](https://github.com/skuong/mexboard/commit/2fb5d570eee1d6143396be4a78f402b36ed25783))
+* add unique constrain to hash column without manually creating index ([23be8cf](https://github.com/skuong/mexboard/commit/23be8cf6ff7fcf5864e43733eb1669034c42d3c0))
+* center image ([1f7afac](https://github.com/skuong/mexboard/commit/1f7afac4f23a49d6ffe5a1096e49fd3266de7779))
+* **ci/cd:** fix bash and js syntax conflict ([650421d](https://github.com/skuong/mexboard/commit/650421d1823e88d64b4485d82274b272aa0d6afd))
+* **ci/cd:** fix bash and js syntax conflict ([b87d662](https://github.com/skuong/mexboard/commit/b87d66291fa0428d66d59a83f1d677588cc2c4e8))
+* **ci/cd:** retrieve envs correctly ([d098b15](https://github.com/skuong/mexboard/commit/d098b15eb42c7c08850a2717c4ff32134222209e))
+* focus window to make it a focused window on Windows OS ([ec8f589](https://github.com/skuong/mexboard/commit/ec8f58929ef329ccd11339f7ac24352e53529906))
+* focus window to make it a focused window on Windows OS ([35feba6](https://github.com/skuong/mexboard/commit/35feba611a7bcdb2243a9bd0dddc355729ede471))
+* load initial value for per page limit ([f3f180f](https://github.com/skuong/mexboard/commit/f3f180f267751643eb5999ca51c3ed59823ae67f))
+* make pasting onto other app more reliable by adding some delay ([de2878f](https://github.com/skuong/mexboard/commit/de2878f4edbb3be27c6bc6d4706451a9d56074a8))
+* only send new message in stead of repeatedly sending the same message via websocket ([de761f3](https://github.com/skuong/mexboard/commit/de761f373b463cc3eebce13d808c48f56203935c))
+* remove unnecessary flex class name for wraping image ([b45281f](https://github.com/skuong/mexboard/commit/b45281f3f6c148f0f455cbb7ce4c84971342c3e1))
+* remove unnecessary flex class name for wraping image ([1bc54e8](https://github.com/skuong/mexboard/commit/1bc54e8869d96640c6bd0974472e53e592af6d4e))
+* remove unused use-paste-actions hook ([a2f5e69](https://github.com/skuong/mexboard/commit/a2f5e69e0524ddf58fab776ad8fb7ee283a1c195))
+* set query client to refetch on window focus ([2913d19](https://github.com/skuong/mexboard/commit/2913d19edfb7a90985487f04ae0e28f07e561a44))
+* update bindings type matching with image type changes in db schema ([aa1e9d1](https://github.com/skuong/mexboard/commit/aa1e9d11bc6de60b08c7907f441b7b791aa4abdf))
+* use switch component for toggle monitoring button ([ceaafb9](https://github.com/skuong/mexboard/commit/ceaafb93e5bcec29c31e117de1b7d085c470a4f6))
+* use Vec<u8> for image blob and blake3 hash in db schema ([81b3a02](https://github.com/skuong/mexboard/commit/81b3a02abfc4b57bfdc24295daf869cc71412f82))
+
+
+### Features
+
+* add cards for adding new tabs ([7d12ca5](https://github.com/skuong/mexboard/commit/7d12ca55e6720498dc282fea65823e35be05d602))
+* add excalidraw ([c12c97c](https://github.com/skuong/mexboard/commit/c12c97c61eb624ccdd2708cb87fc6e635d45a863))
+* add hash comparision function ([a754da3](https://github.com/skuong/mexboard/commit/a754da3aef52b9b4d8cdc6df747086a6b8141ce3))
+* add image preview using webp format ([b8f40b6](https://github.com/skuong/mexboard/commit/b8f40b6e9566a79ec1955e0b3c7ef736ae9276cc))
+* add logging ([e461123](https://github.com/skuong/mexboard/commit/e461123638519f2bb425f25c9562463aff424fa1))
+* add sort_order for each item ([4ecaa4b](https://github.com/skuong/mexboard/commit/4ecaa4bc699a1fc8681aadea75b2a976ea456975))
+* can copy image to system clipboard on click ([f7c058d](https://github.com/skuong/mexboard/commit/f7c058da67fbe94fe366c1f74f7e4900076427f5))
+* can copy text to clipboard when click on item card ([ae80ec3](https://github.com/skuong/mexboard/commit/ae80ec389e75c3e04969ceaad5c07ee76a5dde7b))
+* can insert image ([9358c19](https://github.com/skuong/mexboard/commit/9358c19bbe10202aa0bf6abe283698182bcd1b12))
+* can insert text and check for duplicate item ([067d3f2](https://github.com/skuong/mexboard/commit/067d3f2375d10875399958b28e9c65acdf027fb8))
+* can list clipboards on the front-end—again! ([797221b](https://github.com/skuong/mexboard/commit/797221b6d34db9ba4e33b86e1b72eed53ee1bb56))
+* can load next page using infinite query ([e013ee2](https://github.com/skuong/mexboard/commit/e013ee2e8d63459736a383ebd8e3086a9f84d96a))
+* can open a new window ([6401686](https://github.com/skuong/mexboard/commit/6401686e44f0a607acb645323bc5f8123ed494bd))
+* can paste clipboard onto other app ([9e03583](https://github.com/skuong/mexboard/commit/9e03583d61a0d5d9bd3eaee8cdff3f839f242bbe))
+* can read text again ([a10d0ae](https://github.com/skuong/mexboard/commit/a10d0aef1260f5b179d18a896282c58d5218f710))
+* can send text via websocket ([73ce855](https://github.com/skuong/mexboard/commit/73ce855b20de60dab6e29c0048618433197a6bea))
+* config auto update plugin ([2747515](https://github.com/skuong/mexboard/commit/27475154d641ef19eb7ba7407ad412c1ceb9ac7c))
+* read image if getting ContentNotAvailable while reading text ([5a81fcc](https://github.com/skuong/mexboard/commit/5a81fcc46377b555554c6155bdb0ff8e9c15042a))
+* request image via async uri scheme ([6f5e80c](https://github.com/skuong/mexboard/commit/6f5e80cd8b813986efdaf3b3ec23ba4f714d969d))
+* store all image in webp ([2da3c82](https://github.com/skuong/mexboard/commit/2da3c82ec54ee9c3d71df80da50c256a4fa181c3))
+* use Tanstack router for code spliting and prepare for more features ([a2621c3](https://github.com/skuong/mexboard/commit/a2621c3e5232393614af9e4b0863bc6105cc60e6))
+* use Tauri store for storing clipboard per page limit ([543f482](https://github.com/skuong/mexboard/commit/543f4824e86997b3fe8e663c8f3fc34ffaecdb61))
+
 # [1.26.0-beta.12](https://github.com/skuong/mexboard/compare/v1.26.0-beta.11...v1.26.0-beta.12) (2026-06-10)
 
 
