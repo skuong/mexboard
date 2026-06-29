@@ -45,6 +45,7 @@ fn main() {
     };
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .register_asynchronous_uri_scheme_protocol("image", |context, request, responder| {
             image_protocol_handler(context, request, responder);
         })

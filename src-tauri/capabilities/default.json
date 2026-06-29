@@ -44,6 +44,7 @@
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
     "store:default",
-    "log:default"
+    "log:default",
+    "updater:default"
   ]
 }
