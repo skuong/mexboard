@@ -14,7 +14,7 @@ export function ClipboardItemContent() {
 			)}
 
 			{!item.content && (
-				<div className="w-full flex">
+				<div className="w-full">
 					<img
 						src={`image://clipboards/preview?id=${item.id}`}
 						alt="Preview of the clipboard content"
