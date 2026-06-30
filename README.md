@@ -94,7 +94,18 @@ pnpm i
 pnpm tauri dev
 ```
 
+#### Run the test suite
+
+```bash
+cd src-tauri
+cargo test
+```
+
 #### Build for production
 ```bash
 pnpm tauri build
 ```
+
+#### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `beta` branch.
