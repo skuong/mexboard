@@ -1,7 +1,12 @@
+import { platform } from '@tauri-apps/plugin-os';
 import { useClipboardItem } from '@/features/clipboard/hooks/use-clipboard-item';
 
 export function ClipboardItemContent() {
 	const item = useClipboardItem();
+	const previewSrc =
+		platform() === 'windows'
+			? `http://image.localhost/preview?id=${item.id}`
+			: `image://localhost/preview?id=${item.id}`;
 
 	return (
 		<>
@@ -15,11 +20,7 @@ export function ClipboardItemContent() {
 
 			{!item.content && (
 				<div className="w-full">
-					<img
-						src={`image://clipboards/preview?id=${item.id}`}
-						alt="Preview of the clipboard content"
-						className="mx-auto"
-					/>
+					<img src={previewSrc} alt="Preview of the clipboard content" className="mx-auto" />
 				</div>
 			)}
 		</>
