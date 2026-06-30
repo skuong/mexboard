@@ -1,5 +1,5 @@
 import { ClipboardItemSkeletonList } from '@/components/clipboard-item-skeleton';
-import { ClipboardList } from '@/components/clipboard-list';
+import { ClipboardList } from '@/features/clipboard/components/clipboard-list';
 import { ClipboardTabHeader } from '@/features/clipboard/components/clipboard-tab-header';
 import { useClipboardHistory } from '@/features/clipboard/hooks/use-clipboard-history';
 import { useClipboardPerPageLimitStore } from '@/features/clipboard/stores/use-clipboard-per-page-limit-store';
