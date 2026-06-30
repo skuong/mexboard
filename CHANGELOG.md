@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/skuong/mexboard/compare/v1.26.0...v1.26.1) (2026-06-30)
+
+
+### Bug Fixes
+
+* skip deeplink in cli arguments parsing ([4011972](https://github.com/skuong/mexboard/commit/4011972a85943ff89a93fa5a4d92146f7eeb7d31))
+
 # [1.26.0](https://github.com/skuong/mexboard/compare/v1.25.0...v1.26.0) (2026-06-29)
 
 
