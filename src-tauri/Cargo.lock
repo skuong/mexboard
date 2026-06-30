@@ -3509,7 +3509,7 @@ dependencies = [
 
 [[package]]
 name = "mexboard"
-version = "1.27.0"
+version = "1.28.0"
 dependencies = [
  "apple-native-keyring-store",
  "arboard",

@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/skuong/mexboard/compare/v1.27.0...v1.28.0) (2026-06-30)
+
+
+### Features
+
+* add context menu for copy and delete item ([19ffefa](https://github.com/skuong/mexboard/commit/19ffefa740a1ad79c32b6caf844dc35bbe49b39b))
+
 # [1.27.0](https://github.com/skuong/mexboard/compare/v1.26.1...v1.27.0) (2026-06-30)
 
 
