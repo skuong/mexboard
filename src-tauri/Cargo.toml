@@ -1,6 +1,6 @@
 [package]
 name = "mexboard"
-version = "1.26.1"
+version = "1.27.0"
 description = "Clipboard manager with symbols/emojis selection and customizable features"
 authors = ["Sokhuong"]
 edition = "2021"
