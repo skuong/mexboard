@@ -56,7 +56,14 @@ Details for **PowerToys**:
 - If running: `Start another` (Mexboard will handle single instance so don't need to worry whether multiple app will be opened)
 - Visibility: `Normal`
 
-## Development
+## 🤝 Contributing
+### Clone the repo
+```bash
+git clone https://github.com/skuong/mexboard.git
+cd mexboard
+```
+
+### Development
 
 **Requirements:**
 
@@ -64,19 +71,30 @@ Details for **PowerToys**:
 - [Tauri](https://tauri.app/) toolchain
 - System dependencies for Tauri (see [Tauri documentation](https://tauri.app/v1/guides/getting-started/prerequisites))
 
+#### Set up environment variables
+```bash
+cp .env.example .env
+```
 
-### Install dependencies
+VITE_BETTER_AUTH_BASE_URL=http://localhost:8787
+and
+VITE_WEBSOCKET_BASE_URL=ws://localhost:8787
+are for cloud sync.
+
+Don't worry about it for getting the app to work.
+
+#### Install dependencies
 
 ```bash
 pnpm i
 ```
 
-### Run in development mode
+#### Run in development mode
 ```bash
 pnpm tauri dev
 ```
 
-### Build for production
+#### Build for production
 ```bash
 pnpm tauri build
 ```
