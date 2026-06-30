@@ -1,3 +1,15 @@
+# [1.27.0](https://github.com/skuong/mexboard/compare/v1.26.1...v1.27.0) (2026-06-30)
+
+
+### Bug Fixes
+
+* handle image preview for Windows ([95ce989](https://github.com/skuong/mexboard/commit/95ce989f79f4b1019688fb17e825e2703dea834f))
+
+
+### Features
+
+* add infinite scroll ([31ce43e](https://github.com/skuong/mexboard/commit/31ce43e6f97477a9461f0b49f4969028e74a412b))
+
 ## [1.26.1](https://github.com/skuong/mexboard/compare/v1.26.0...v1.26.1) (2026-06-30)
 
 
