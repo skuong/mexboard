@@ -14,7 +14,7 @@ Many clipboard managers I used on Linux don't have features that I need i.e **ke
 
 Mexboard is fast, have most features that I need, and have nice UI.
 
-## Quick start
+## Quick Start
 Download the latest version from [Releases](https://github.com/skuong/mexboard/releases) and install.
 
 ## 📖 Usage
