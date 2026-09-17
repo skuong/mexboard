@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/skuong/mexboard/compare/v1.28.0...v1.28.1) (2026-09-17)
+
+
+### Bug Fixes
+
+* Refetch clipboards on window focus ([cfee809](https://github.com/skuong/mexboard/commit/cfee80937c2c6350397c3df71c930031021450b8))
+
 # [1.28.0](https://github.com/skuong/mexboard/compare/v1.27.0...v1.28.0) (2026-06-30)
 
 
