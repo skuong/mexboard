@@ -12,6 +12,7 @@ export function useClipboards(limit: number) {
 	>({
 		queryKey: [QUERY_KEY.CLIPBOARDS, limit.toString()],
 		initialPageParam: 0,
+		refetchOnWindowFocus: true,
 		getNextPageParam: (lastPage, allPages) => {
 			return allPages.length * limit < lastPage.total ? allPages.length : undefined;
 		},
