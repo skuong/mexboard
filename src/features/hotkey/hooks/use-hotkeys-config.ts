@@ -1,6 +1,6 @@
 import type { Hotkey } from '@tanstack/react-hotkeys';
 import { formatForDisplay } from '@tanstack/react-hotkeys';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
 	getDefaultHotkeys,
 	HOTKEY_ACTIONS,
@@ -11,13 +11,6 @@ import {
 
 export function useHotkeysConfig() {
 	const [hotkeys, setHotkeysState] = useState<HotkeyConfig>(getDefaultHotkeys);
-	const [isLoaded, setIsLoaded] = useState(false);
-
-	useEffect(() => {
-		(async () => {
-			setIsLoaded(true);
-		})();
-	}, []);
 
 	const setHotkey = useCallback((action: HotkeyAction, hotkey: Hotkey) => {
 		setHotkeysState((prev) => {
@@ -42,5 +35,5 @@ export function useHotkeysConfig() {
 		[hotkeys],
 	);
 
-	return { hotkeys, formatted, setHotkey, resetHotkey, isLoaded };
+	return { hotkeys, formatted, setHotkey, resetHotkey };
 }
