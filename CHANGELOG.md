@@ -1,3 +1,11 @@
+## [1.28.2](https://github.com/skuong/mexboard/compare/v1.28.1...v1.28.2) (2026-09-18)
+
+
+### Bug Fixes
+
+* Can (dis)connect from/to websocket based on actual connection state ([ea57d2c](https://github.com/skuong/mexboard/commit/ea57d2c728802f781086e4578c6d034de6a00e3b))
+* No flash of plan list if already subscribed ([4f0efb5](https://github.com/skuong/mexboard/commit/4f0efb5c7de3a4972597850608d5739065696653))
+
 ## [1.28.1](https://github.com/skuong/mexboard/compare/v1.28.0...v1.28.1) (2026-09-17)
 
 
