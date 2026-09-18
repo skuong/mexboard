@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { commands } from '@/bindings';
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/features/auth/lib/better-auth-client';
@@ -8,6 +8,22 @@ export function ConnectToServerButton() {
 
 	const [isConnecting, setIsConnecting] = useState(false);
 	const [isConnected, setIsConnected] = useState(false);
+
+	useEffect(() => {
+		let cancelled = false;
+		async function checkConnection() {
+			const isConnected = await commands.isWebsocketConnected();
+			if (!cancelled) {
+				setIsConnected(isConnected);
+			}
+		}
+
+		checkConnection();
+
+		return () => {
+			cancelled = true;
+		};
+	}, []);
 
 	const handleConnectWebsocket = async () => {
 		setIsConnecting(true);
