@@ -30,7 +30,7 @@ export function MagicLinkSignInForm({ className, ...props }: React.ComponentProp
 			const { data, error } = await authClient.signIn.magicLink(
 				{
 					email: values.email,
-					callbackURL: `${import.meta.env.VITE_TAURI_APP_SCHEME}://api/auth/`
+					callbackURL: `${import.meta.env.VITE_TAURI_APP_SCHEME}://api/auth/`,
 				},
 				{
 					headers: {
