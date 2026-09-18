@@ -25,7 +25,7 @@ export function SettingsSheetBody() {
 				<GeneralSettings />
 			</TabsContent>
 
-			<TabsContent value="cloud">
+			<TabsContent value="cloud" keepMounted>
 				<SyncCloudConnect />
 			</TabsContent>
 

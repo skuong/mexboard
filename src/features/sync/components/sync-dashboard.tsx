@@ -26,7 +26,7 @@ export function SyncDashboard() {
 		<div className="w-full min-h-[calc(100vh-9rem)] flex flex-col items-center gap-8 ">
 			<RectangularProfileCard />
 
-			{(customerState?.activeSubscriptions.length ?? 0) === 0 && <PricingAndPlans />}
+			{customerState && !customerState?.activeSubscriptions.length && <PricingAndPlans />}
 
 			{!!customerState?.activeSubscriptions.length && (
 				<>
