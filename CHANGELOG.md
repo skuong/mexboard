@@ -1,3 +1,10 @@
+## [1.28.3](https://github.com/skuong/mexboard/compare/v1.28.2...v1.28.3) (2026-09-19)
+
+
+### Bug Fixes
+
+* Use Tauri's window focus event for Tanstack focus ([78eb80f](https://github.com/skuong/mexboard/commit/78eb80f5cbd87dc724a35f4f638461016d560d5d))
+
 ## [1.28.2](https://github.com/skuong/mexboard/compare/v1.28.1...v1.28.2) (2026-09-18)
 
 
