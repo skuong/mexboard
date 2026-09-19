@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, focusManager } from '@tanstack/react-query';
 import { createHashHistory, createRouter, RouterProvider } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
@@ -8,8 +8,10 @@ import {
 	authBearerTokenStore,
 	useAuthBearerTokenStore,
 } from '@/features/auth/stores/auth-bearer-token-store';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 import { routeTree } from './routeTree.gen';
+import { UnlistenFn } from '@tauri-apps/api/event';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -18,6 +20,16 @@ const queryClient = new QueryClient({
 			retry: false,
 		},
 	},
+});
+
+focusManager.setEventListener((handleFocus) => {
+	let unlisten: UnlistenFn | undefined;
+
+	getCurrentWindow()
+		.onFocusChanged(({ payload: focused }) => handleFocus(focused))
+		.then((fn) => (unlisten = fn));
+
+	return () => unlisten?.();
 });
 
 useAuthBearerTokenStore.subscribe((state, prev) => {
