@@ -47,7 +47,7 @@ pub async fn connect_websocket(
                     let _insert_text_result =
                         compare_and_insert_text_if_not_exists(message.to_string(), &db);
 
-                    let _ = app_clone.emit("ws-message", message.to_string());
+                    let _ = app_clone.emit_to("main", "ws::new-clipboard", message.to_string());
                 }
                 Err(err) => {
                     let _ = app_clone.emit("ws-error", err.to_string());
