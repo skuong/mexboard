@@ -6,10 +6,18 @@ import { SortableClipboardItem } from '@/features/clipboard/components/sortable-
 import { useClipboards } from '@/features/clipboard/hooks/use-clipboards';
 import { useClipboardSearchQueryStore } from '@/features/clipboard/stores/clipboard-search-query-store';
 import { useClipboardPerPageLimitStore } from '@/features/clipboard/stores/use-clipboard-per-page-limit-store';
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 
 export const ClipboardList = () => {
 	const { perPageLimit, setPerPageLimit } = useClipboardPerPageLimitStore();
-	const { data, hasNextPage } = useClipboards(perPageLimit);
+	const { data, hasNextPage, refetch } = useClipboards(perPageLimit);
+
+	useEffect(() => {
+		const appWebview = getCurrentWebviewWindow();
+		appWebview.listen<string>('ws::new-clipboard', () => {
+			refetch();
+		});
+	}, []);
 
 	useEffect(() => {
 		const getPerPageLimitFromTauriStore = async () => {
