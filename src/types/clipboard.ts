@@ -23,7 +23,7 @@ export type ClipboardItem = {
 	file_mime: string | null;
 };
 
-export type ContentFilter = 'image' | 'secret' | 'env' | 'url';
+export type ContentFilter = 'image' | 'url';
 
 export type DateRange = 'all' | 'today' | 'week' | 'month';
 
@@ -41,8 +41,6 @@ export const EMPTY_FILTERS: ClipboardFilters = {
 
 export const CONTENT_FILTER_LABELS: Record<ContentFilter, string> = {
 	image: 'Images',
-	secret: 'Secrets',
-	env: 'Key-Value',
 	url: 'URLs',
 };
 

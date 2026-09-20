@@ -5,9 +5,7 @@ import {
 	Funnel,
 	FunnelPlus,
 	Image,
-	KeyRound,
 	Link,
-	ShieldAlert,
 	Star,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -36,8 +34,6 @@ import {
 
 const CONTENT_FILTER_ICONS: Record<ContentFilter, React.ReactNode> = {
 	image: <Image className="size-4" />,
-	secret: <ShieldAlert className="size-4" />,
-	env: <KeyRound className="size-4" />,
 	url: <Link className="size-4" />,
 };
 
