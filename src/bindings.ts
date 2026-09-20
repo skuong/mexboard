@@ -11,7 +11,6 @@ export const commands = {
 	readClipboardImage: () => typedError<[number[], number, number] | null, string>(__TAURI_INVOKE("read_clipboard_image")),
 	writeClipboard: (text: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard", { text })),
 	reinitializeClipboard: () => typedError<null, string>(__TAURI_INVOKE("reinitialize_clipboard")),
-	parseEnvContent: (text: string) => __TAURI_INVOKE<([string, string])[]>("parse_env_content", { text }),
 	setMonitoring: (enabled: boolean) => __TAURI_INVOKE<void>("set_monitoring", { enabled }),
 	isWaylandSession: () => __TAURI_INVOKE<boolean>("is_wayland_session"),
 	isCosmicDataControlEnabled: () => __TAURI_INVOKE<boolean>("is_cosmic_data_control_enabled"),

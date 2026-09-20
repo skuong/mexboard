@@ -1,5 +1,4 @@
 mod commands;
-mod image;
 mod manager;
 mod mexboard;
 pub mod monitoring;

@@ -2,10 +2,7 @@ use std::sync::Mutex;
 use zbus::blocking::{Connection, MessageIterator};
 use zbus::message::Message;
 
-/// Cached focused element from AT-SPI focus events.
 static FOCUSED_ELEMENT: Mutex<Option<(String, String)>> = Mutex::new(None);
-/// Cached AT-SPI connection for querying caret position.
-static QUERY_CONN: Mutex<Option<Connection>> = Mutex::new(None);
 
 /// Connect to the AT-SPI2 accessibility bus.
 fn atspi_connection() -> Option<Connection> {
@@ -125,48 +122,4 @@ fn process_message(msg: &Message) {
         }
         _ => {}
     }
-}
-
-pub fn get_caret_position() -> Option<(f64, f64, f64)> {
-    let (bus_name, obj_path) = {
-        let guard = FOCUSED_ELEMENT.lock().ok()?;
-        guard.clone()?
-    };
-
-    // Reuse cached connection or create a new one
-    let mut conn_guard = QUERY_CONN.lock().ok()?;
-    if conn_guard.is_none() {
-        *conn_guard = atspi_connection();
-    }
-    let conn = conn_guard.as_ref()?;
-
-    // Get caret offset via the Text interface
-    let caret_reply = conn
-        .call_method(
-            Some(bus_name.as_str()),
-            obj_path.as_str(),
-            Some("org.a11y.atspi.Text"),
-            "GetCaretOffset",
-            &(),
-        )
-        .ok()?;
-    let caret_offset: i32 = caret_reply.body().deserialize().ok()?;
-
-    // Get character extents at caret position (coord_type 0 = screen coordinates)
-    let extents_reply = conn
-        .call_method(
-            Some(bus_name.as_str()),
-            obj_path.as_str(),
-            Some("org.a11y.atspi.Text"),
-            "GetCharacterExtents",
-            &(caret_offset, 0u32),
-        )
-        .ok()?;
-    let (x, y, _w, h): (i32, i32, i32, i32) = extents_reply.body().deserialize().ok()?;
-
-    if x <= 0 && y <= 0 {
-        return None;
-    }
-
-    Some((x as f64, y as f64, (y + h) as f64))
 }
