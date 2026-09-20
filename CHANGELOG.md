@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/skuong/mexboard/compare/v1.29.0...v1.30.0) (2026-09-20)
+
+
+### Features
+
+* Can add a new drawing tab and click to open Excalidraw ([ac7ff54](https://github.com/skuong/mexboard/commit/ac7ff54e46e28632e2749a01515876463e970b6b))
+
 # [1.29.0](https://github.com/skuong/mexboard/compare/v1.28.3...v1.29.0) (2026-09-20)
 
 
