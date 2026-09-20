@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/skuong/mexboard/compare/v1.28.3...v1.29.0) (2026-09-20)
+
+
+### Features
+
+* Refetch clipboard on new websocket message event ([24705b1](https://github.com/skuong/mexboard/commit/24705b11188a613d179d6b4c57295f3de9f0fa00))
+
 ## [1.28.3](https://github.com/skuong/mexboard/compare/v1.28.2...v1.28.3) (2026-09-19)
 
 
