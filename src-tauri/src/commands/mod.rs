@@ -3,7 +3,6 @@ mod keyring;
 mod media;
 mod shortcuts;
 mod system;
-mod window;
 
 pub use clipboard::*;
 pub use keyring::init as init_keyring;
@@ -28,7 +27,6 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         read_clipboard_image,
         write_clipboard,
         reinitialize_clipboard,
-        parse_env_content,
         set_monitoring,
         is_wayland_session,
         is_cosmic_data_control_enabled,

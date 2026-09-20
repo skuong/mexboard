@@ -1,6 +1,5 @@
 use crate::clipboard::monitoring::MonitorState;
 use crate::clipboard::ClipboardManager;
-use crate::detection::env;
 use tauri::State;
 
 #[tauri::command]
@@ -30,12 +29,6 @@ pub async fn write_clipboard(
 #[specta::specta]
 pub async fn reinitialize_clipboard(manager: State<'_, ClipboardManager>) -> Result<(), String> {
     manager.reinitialize()
-}
-
-#[tauri::command]
-#[specta::specta]
-pub fn parse_env_content(text: String) -> Vec<(String, String)> {
-    env::parse_env(&text)
 }
 
 #[tauri::command]

@@ -8,7 +8,6 @@ mod commands;
 mod crypto;
 mod database;
 mod deep_link;
-mod detection;
 mod media;
 mod schema;
 mod shortcuts;

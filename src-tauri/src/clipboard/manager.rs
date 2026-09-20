@@ -1,17 +1,13 @@
-use super::image::{self, ImageCache};
 use super::mexboard::MexBoard;
-use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
 
 pub struct ClipboardManager {
     clipboard: MexBoard,
-    latest_image_cache: ImageCache,
 }
 
 impl ClipboardManager {
     pub fn new() -> Self {
         Self {
             clipboard: MexBoard::new(),
-            latest_image_cache: ImageCache::new(),
         }
     }
 
