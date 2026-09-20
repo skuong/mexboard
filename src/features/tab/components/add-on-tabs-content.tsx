@@ -1,9 +1,33 @@
 import { LineSquiggle, Smile, SquarePercent } from 'lucide-react';
-import { commands } from '@/bindings';
 import { Button } from '@/components/ui/button';
 import { TabsContent } from '@/components/ui/tabs';
+import { load } from '@tauri-apps/plugin-store';
+import { Tab } from '@/features/tab/hooks/use-tabs';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/features/clipboard/constant/query-key';
 
 export function AddOnTabsContent() {
+	const queryClient = useQueryClient();
+	const onAddDrawingTab = async () => {
+		const settingsStore = await load(import.meta.env.VITE_SETTINGS_FILE_NAME);
+
+		const tabs = await settingsStore.get<Tab[]>('tabs');
+		const drawingTabAlreadyExists = tabs?.find(tab => tab.value === 'draw')
+		if(drawingTabAlreadyExists) return
+
+		const newTabs = [
+			...(tabs ?? []),
+			{ icon: 'draw', label: 'Drawing', value: 'draw' },
+		] satisfies Tab[];
+
+		await settingsStore.set('tabs', newTabs);
+		await settingsStore.save();
+
+		await queryClient.invalidateQueries({
+			queryKey: [QUERY_KEY.TABS],
+		});
+	};
+
 	return (
 		<TabsContent
 			value="add-more-tab"
@@ -13,8 +37,8 @@ export function AddOnTabsContent() {
 				<li className="w-full">
 					<Button
 						variant="ghost"
-						onClick={() => {
-							commands.openDrawWindow();
+						onClick={async () => {
+							await onAddDrawingTab();
 						}}
 						className="cursor-pointer px-4 py-8 flex gap-2 w-full justify-start ring ring-accent"
 					>

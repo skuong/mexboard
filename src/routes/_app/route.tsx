@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import '@/main.css';
-import { Plus } from 'lucide-react';
+import { Copy, LineSquiggle, Plus, PlayingCardsFan } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { initializeBetterAuth } from '@/features/auth/lib/initialize-better-auth';
 import { ClipboardTab } from '@/features/clipboard/components/clipboard-tab';
@@ -9,6 +9,7 @@ import { useContextMenu } from '@/features/context-menu/hooks/use-context-menu';
 import { AddOnTabsContent } from '@/features/tab/components/add-on-tabs-content';
 import { useTabs } from '@/features/tab/hooks/use-tabs';
 import { useSystemTheme } from '@/hooks/use-system-theme';
+import { DrawingTabsContent } from '@/features/tab/components/drawing-tabs-content';
 
 export const Route = createFileRoute('/_app')({
 	component: RouteComponent,
@@ -38,13 +39,21 @@ function RouteComponent() {
 					<ClipboardTab />
 				</TabsContent>
 
+				<DrawingTabsContent />
+
 				<AddOnTabsContent />
 
 				<div data-tauri-drag-region className="flex items-center gap-2 px-3 pb-3 select-none">
 					<TabsList className="bg-transparent">
 						{tabs.map((tab) => (
 							<TabsTrigger key={tab.value} value={tab.value} className="cursor-pointer">
-								<tab.icon />
+								{tab.icon === 'copy' ? (
+									<Copy />
+								) : tab.icon === 'draw' ? (
+									<LineSquiggle />
+								) : (
+									<PlayingCardsFan />
+								)}
 							</TabsTrigger>
 						))}
 
