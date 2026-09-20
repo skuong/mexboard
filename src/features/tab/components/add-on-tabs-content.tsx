@@ -12,8 +12,8 @@ export function AddOnTabsContent() {
 		const settingsStore = await load(import.meta.env.VITE_SETTINGS_FILE_NAME);
 
 		const tabs = await settingsStore.get<Tab[]>('tabs');
-		const drawingTabAlreadyExists = tabs?.find(tab => tab.value === 'draw')
-		if(drawingTabAlreadyExists) return
+		const drawingTabAlreadyExists = tabs?.find((tab) => tab.value === 'draw');
+		if (drawingTabAlreadyExists) return;
 
 		const newTabs = [
 			...(tabs ?? []),
