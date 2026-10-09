@@ -35,23 +35,23 @@ export function GeneralSettings() {
 			<ClipboardPerPageLimitSetting />
 
 			{hasHistory && (
-			  <>
-				  <div className="h-px bg-border/60 my-1" />
-				  <div className="py-2">
-					  <SheetClose
-						  render={
-							  <Button
-								  onClick={clearAll}
-								  variant="destructive"
-								  className="flex items-center gap-2 cursor-pointer"
-							  />
-						  }
-					  >
-						  <Trash2 className="size-3.5" />
-						  Clear clipboard
-					  </SheetClose>
-				  </div>
-			  </>
+				<>
+					<div className="h-px bg-border/60 my-1" />
+					<div className="py-2">
+						<SheetClose
+							render={
+								<Button
+									onClick={clearAll}
+									variant="destructive"
+									className="flex items-center gap-2 cursor-pointer"
+								/>
+							}
+						>
+							<Trash2 className="size-3.5" />
+							Clear clipboard
+						</SheetClose>
+					</div>
+				</>
 			)}
 		</div>
 	);
