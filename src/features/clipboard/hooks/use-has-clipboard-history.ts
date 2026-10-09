@@ -1,24 +1,19 @@
-import { type InfiniteData, useQueryClient } from '@tanstack/react-query';
-import { useCallback, useSyncExternalStore } from 'react';
-import {
-	CLIPBOARD_HISTORY_KEY,
-	type ClipboardHistoryPage,
-} from '@/features/clipboard/hooks/use-clipboard-history-query';
+import { useQuery } from '@tanstack/react-query';
+import { commands } from '@/bindings';
+import { QUERY_KEY } from '@/features/clipboard/constant/query-key';
 
 export const useHasClipboardHistory = (): boolean => {
-	const queryClient = useQueryClient();
+	const { data } = useQuery({
+		queryKey: [QUERY_KEY.CLIPBOARDS, 'has-items'],
+		queryFn: async () => {
+			const result = await commands.getAllClipboardItems(1, 0);
 
-	const subscribe = useCallback(
-		(callback: () => void) => queryClient.getQueryCache().subscribe(callback),
-		[queryClient],
-	);
+			if (result.status === 'error') throw result.error;
 
-	const getSnapshot = useCallback(() => {
-		const queries = queryClient.getQueriesData<InfiniteData<ClipboardHistoryPage>>({
-			queryKey: [CLIPBOARD_HISTORY_KEY],
-		});
-		return queries.some(([, data]) => data?.pages?.some((page) => page.items.length > 0));
-	}, [queryClient]);
+			return result.data.total > 0;
+		},
+		refetchOnWindowFocus: true,
+	});
 
-	return useSyncExternalStore(subscribe, getSnapshot, () => false);
+	return data ?? false;
 };
