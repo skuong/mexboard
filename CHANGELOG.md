@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/skuong/mexboard/compare/v1.30.0...v1.31.0) (2026-10-09)
+
+
+### Features
+
+* Bring back the clear clipboard functionality ([83db75c](https://github.com/skuong/mexboard/commit/83db75c8d37fa6a9dfe22ad68573d7cf6194be8d))
+
 # [1.30.0](https://github.com/skuong/mexboard/compare/v1.29.0...v1.30.0) (2026-09-20)
 
 
