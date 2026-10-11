@@ -1,3 +1,10 @@
+# [1.32.0-beta.2](https://github.com/skuong/mexboard/compare/v1.32.0-beta.1...v1.32.0-beta.2) (2026-10-11)
+
+
+### Bug Fixes
+
+* Only use Wayland for Linux when pasting to prevent double paste ([85fa099](https://github.com/skuong/mexboard/commit/85fa099c62f53ca99186de8daad490f403ce75f1))
+
 # [1.32.0-beta.1](https://github.com/skuong/mexboard/compare/v1.31.0...v1.32.0-beta.1) (2026-10-11)
 
 
