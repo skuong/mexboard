@@ -15,13 +15,9 @@ export function EmojiSearchBox({ className }: ComponentProps<'div'>) {
 		wait: 100,
 	});
 
-	useHotkey(
-		hotkeys.search,
-		() => searchInputRef.current?.focus(),
-		{
-			ignoreInputs: true,
-		},
-	);
+	useHotkey(hotkeys.search, () => searchInputRef.current?.focus(), {
+		ignoreInputs: true,
+	});
 
 	return (
 		<div className={cn('relative size-full', className)}>
