@@ -6,7 +6,7 @@ pub async fn simulate_ctrl_v() -> Result<(), String> {
     let mut enigo = Enigo::new(&Settings::default()).map_err(|err| err.to_string())?;
 
     #[cfg(target_os = "macos")]
-    let modifier = Key::Command;
+    let modifier = Key::Meta;
     #[cfg(not(target_os = "macos"))]
     let modifier = Key::Control;
 
