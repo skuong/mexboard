@@ -47,7 +47,7 @@ jittered-fractional-indexing = "0.1"
 drizzle = { git = "https://github.com/themixednuts/drizzle-rs", features = ["rusqlite"] }
 rusqlite = { version = "0.37", features = ["bundled"] }
 image = "0.25.10"
-enigo = { version = "0.6", features = ["wayland", "x11rb"] }
+enigo = { version = "0.6", default-features = false, features = ["wayland"] }
 rand = "0.10.0"
 secretscan = "0.2"
 keyring-core = "1"
