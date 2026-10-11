@@ -1,3 +1,10 @@
+# [1.32.0-beta.1](https://github.com/skuong/mexboard/compare/v1.31.0...v1.32.0-beta.1) (2026-10-11)
+
+
+### Features
+
+* Add emoji tab ([151bbb6](https://github.com/skuong/mexboard/commit/151bbb66f0c0f8e7025947a73e7f920669015925))
+
 # [1.31.0](https://github.com/skuong/mexboard/compare/v1.30.0...v1.31.0) (2026-10-09)
 
 
