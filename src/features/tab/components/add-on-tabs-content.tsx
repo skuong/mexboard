@@ -28,6 +28,26 @@ export function AddOnTabsContent() {
 		});
 	};
 
+	const onAddEmojiTab = async () => {
+		const settingsStore = await load(import.meta.env.VITE_SETTINGS_FILE_NAME);
+
+		const tabs = await settingsStore.get<Tab[]>('tabs');
+		const emojiTabAlreadyExists = tabs?.find((tab) => tab.value === 'emoji');
+		if (emojiTabAlreadyExists) return;
+
+		const newTabs = [
+			...(tabs ?? []),
+			{ icon: 'emoji', label: 'Emoji', value: 'emoji' },
+		] satisfies Tab[];
+
+		await settingsStore.set('tabs', newTabs);
+		await settingsStore.save();
+
+		await queryClient.invalidateQueries({
+			queryKey: [QUERY_KEY.TABS],
+		});
+	};
+
 	return (
 		<TabsContent
 			value="add-more-tab"
@@ -68,6 +88,9 @@ export function AddOnTabsContent() {
 				<li className="w-full">
 					<Button
 						variant="ghost"
+						onClick={async () => {
+							await onAddEmojiTab();
+						}}
 						className="cursor-pointer px-4 py-8 flex gap-2 w-full justify-start ring ring-accent"
 					>
 						<Smile className="size-6" />
