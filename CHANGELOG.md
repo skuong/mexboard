@@ -1,3 +1,15 @@
+# [1.32.0](https://github.com/skuong/mexboard/compare/v1.31.0...v1.32.0) (2026-10-11)
+
+
+### Bug Fixes
+
+* Only use Wayland for Linux when pasting to prevent double paste ([03408aa](https://github.com/skuong/mexboard/commit/03408aa2b7a41fe0c100d53608a27cc017d785c9))
+
+
+### Features
+
+* Add emoji tab ([c27c690](https://github.com/skuong/mexboard/commit/c27c6909050af0b69e20199ef8dc31f607231af7))
+
 # [1.32.0-beta.2](https://github.com/skuong/mexboard/compare/v1.32.0-beta.1...v1.32.0-beta.2) (2026-10-11)
 
 
