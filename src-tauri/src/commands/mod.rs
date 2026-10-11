@@ -26,6 +26,7 @@ pub fn create_command_builder() -> Builder<tauri::Wry> {
         read_clipboard,
         read_clipboard_image,
         write_clipboard,
+        paste_emoji_to_other_app,
         reinitialize_clipboard,
         set_monitoring,
         is_wayland_session,

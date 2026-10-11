@@ -1,6 +1,7 @@
 use crate::clipboard::monitoring::MonitorState;
 use crate::clipboard::ClipboardManager;
-use tauri::State;
+use crate::utils::simulate_ctrl_v::simulate_ctrl_v;
+use tauri::{AppHandle, Manager, State};
 
 #[tauri::command]
 #[specta::specta]
@@ -23,6 +24,22 @@ pub async fn write_clipboard(
     manager: State<'_, ClipboardManager>,
 ) -> Result<(), String> {
     manager.write_text(text).await
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn paste_emoji_to_other_app(
+    emoji: String,
+    manager: State<'_, ClipboardManager>,
+    app_handle: AppHandle,
+) -> Result<(), String> {
+    let _ = manager.write_text(emoji).await;
+
+    if let Some(window) = app_handle.get_webview_window("main") {
+        let _ = window.hide();
+    }
+
+    simulate_ctrl_v().await
 }
 
 #[tauri::command]

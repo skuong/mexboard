@@ -10,6 +10,7 @@ export const commands = {
 	readClipboard: () => typedError<string, string>(__TAURI_INVOKE("read_clipboard")),
 	readClipboardImage: () => typedError<[number[], number, number] | null, string>(__TAURI_INVOKE("read_clipboard_image")),
 	writeClipboard: (text: string) => typedError<null, string>(__TAURI_INVOKE("write_clipboard", { text })),
+	pasteEmojiToOtherApp: (emoji: string) => typedError<null, string>(__TAURI_INVOKE("paste_emoji_to_other_app", { emoji })),
 	reinitializeClipboard: () => typedError<null, string>(__TAURI_INVOKE("reinitialize_clipboard")),
 	setMonitoring: (enabled: boolean) => __TAURI_INVOKE<void>("set_monitoring", { enabled }),
 	isWaylandSession: () => __TAURI_INVOKE<boolean>("is_wayland_session"),
