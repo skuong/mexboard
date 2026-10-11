@@ -7,8 +7,8 @@ import { QUERY_KEY } from '@/features/clipboard/constant/query-key';
 
 export type Tab = {
 	label: string;
-	value: 'clipboard' | 'draw';
-	icon: 'copy' | 'draw';
+	value: 'clipboard' | 'draw' | 'emoji';
+	icon: 'copy' | 'draw' | 'emoji';
 };
 
 export function useTabs() {
