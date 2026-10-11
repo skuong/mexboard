@@ -24,10 +24,7 @@ export const ClipboardItemCard = memo(function ClipboardItem() {
 			ref={cardRef}
 			className="group py-2 ring-accent/80"
 			onClick={async () => {
-				await commands.writeClipboardItemToSystemClipboard(item.id);
-			}}
-			onDoubleClick={async () => {
-				commands.pasteClipboardToOtherApp(item.id);
+				await commands.pasteClipboardToOtherApp(item.id);
 			}}
 		>
 			<ContextMenu>
